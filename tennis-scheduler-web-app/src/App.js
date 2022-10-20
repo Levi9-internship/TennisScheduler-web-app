@@ -1,22 +1,17 @@
 import './App.css';
 import React, { useState } from "react"
-
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Login } from './components/Login';
 import { Registration } from './components/Registration';
+import RouterTree from './components/RouteTree';
+
 
 function App() {
-
-  const [currentForm, setCurrentForm] = useState('login');
-
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
-
+  
   return (
     <div className="App">
-      {currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Registration onFormSwitch={toggleForm} />}
-
-    </div>
+     <RouterTree />
+   </div>
   );
 }
 

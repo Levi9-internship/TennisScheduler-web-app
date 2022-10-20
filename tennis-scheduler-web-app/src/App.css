@@ -15,12 +15,14 @@
   flex-direction: column;
   color: whitesmoke;
 
+
 }
 
 .auth-form-container {
   padding: 2rem;
   border: 1px solid rgba(255, 255, 0, 0.726);
-  border-radius: 10px;
+  border-radius: 10px; 
+   background-color: rgba(0,0,0,.5);
 }
 
 label {
