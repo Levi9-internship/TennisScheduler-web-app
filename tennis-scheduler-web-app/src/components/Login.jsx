@@ -1,8 +1,7 @@
 import React, { useState } from "react"
-import { useNavigate, Link } from 'react-router-dom'   
+import { Link } from 'react-router-dom'   
 
 export const Login = () => {
-    const navigate = useNavigate()
 
     const [email, setEmail] = useState('')
     const [pass, setPassword] = useState('')

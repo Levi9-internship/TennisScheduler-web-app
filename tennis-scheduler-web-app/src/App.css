@@ -11,11 +11,13 @@
 .auth-form-container,
 .login-form,
 .register-form {
+  text-align: center;
   display: flex;
   flex-direction: column;
   color: whitesmoke;
-
-
+  align-items: center;
+  justify-content: center;
+  height: max-content;
 }
 
 .auth-form-container {
@@ -57,3 +59,11 @@ button {
   color: rgba(255, 255, 0, 0.726);
   font-style: italic;
 }
+
+.nav-link{
+  margin-left: 2%;
+  text-decoration: none;
+  color: gray;
+}
+
+
