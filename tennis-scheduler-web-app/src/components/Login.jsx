@@ -22,14 +22,13 @@ export const Login = () => {
     const validation = form => {
         const errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!form.email) {
+        if (!form.email) 
             errors.email = "Email is required!"
-        } else if (!regex.test(form.email)) {
+        else if (!regex.test(form.email)) 
             errors.email = "This is not a valid email format!";
-        }
-        if (!form.password) {
+        if (!form.password) 
             errors.password = "Password is required!"
-        }
+        
         return errors;
     }
 
