@@ -16,15 +16,9 @@ export const Login = () => {
 
     const handleChange = e => {
         const { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value });
+        setFormValues((formValues) =>({ ...formValues, [name]: value }));
     };
-
-    useEffect(() => {
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formErrors);
-        }
-    }, [formErrors]);
-
+    
     const validation = form => {
         const errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;

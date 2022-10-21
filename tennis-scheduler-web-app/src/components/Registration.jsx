@@ -8,7 +8,7 @@ export const Registration = () => {
 
     const handleChange = e => {
         const { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value });
+        setFormValues((formValues) =>({ ...formValues, [name]: value }));
     };
 
     const registrationSubmit = e => {
@@ -16,12 +16,6 @@ export const Registration = () => {
         setFormErrors(validation(formValues));
         setIsSubmit(true);
     };
-
-    useEffect(() => {
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formErrors);
-        }
-    }, [formErrors]);
 
     const validation = form => {
         const errors = {};
