@@ -1,10 +1,9 @@
 import React, { useState } from "react"
 
-export const HomePage = () => {
+export const TennisCourts = () => {
 
     return (
         <> </>
     )
-
 }
 
