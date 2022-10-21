@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react"
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export const Registration = () => {
-    const initialValues = { name: "", surname: "", email: "", password: "", confirmPassword: "" }
-    const [formValues, setFormValues] = useState(initialValues);
+    const [formValues, setFormValues] = useState({ name: "", surname: "", email: "", password: "", confirmPassword: "" });
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
 
@@ -35,17 +34,17 @@ export const Registration = () => {
         }
         if (!form.email) {
             errors.email = "Email is required!"
-        }else if (!regex.test(form.email)) {
+        } else if (!regex.test(form.email)) {
             errors.email = "This is not a valid email format!";
-          }
+        }
         if (!form.password) {
             errors.password = "Password is required!"
-        }else if (form.password.length < 8) {
+        } else if (form.password.length < 8) {
             errors.password = "Password must have minimum 8 characters";
-          }
+        }
         if (!form.confirmPassword) {
             errors.confirmPassword = "Confirm password is required!"
-        } else if(form.confirmPassword != form.password){
+        } else if (form.confirmPassword != form.password) {
             errors.confirmPassword = "Passwords must be equals!";
             console.log(errors.confirmPassword);
         }

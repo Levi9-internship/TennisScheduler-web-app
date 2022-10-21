@@ -23,9 +23,9 @@
 .auth-form-container {
   padding: 1rem;
   border: 1px solid rgba(255, 255, 0, 0.726);
-  border-radius: 10px; 
-   background-color: rgba(0,0,0,.5);
-   margin-top: 2.5rem;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, .5);
+  margin-top: 2.5rem;
 }
 
 label {
@@ -61,14 +61,13 @@ button {
   font-style: italic;
 }
 
-.nav-link{
+.nav-link {
   margin-left: 2%;
   text-decoration: none;
   color: gray;
 }
 
-.errors{
+.errors {
   color: red;
   font-size: small;
 }
-

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Link } from 'react-router-dom'
 
 export const Login = () => {
-    const initialValues = { email: "", password: "" };
-    const [formValues, setFormValues] = useState(initialValues);
+    const [formValues, setFormValues] = useState({ email: "", password: "" });
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const [loginMessage, setLoginMessage] = useState("");
@@ -56,7 +55,6 @@ export const Login = () => {
             </form>
             <Link to="/registration" > <button className="link-button">  Don't have an account? Register here.</button></Link>
         </div>
-
     )
 
 }
