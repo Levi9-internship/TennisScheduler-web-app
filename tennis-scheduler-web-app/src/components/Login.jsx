@@ -7,18 +7,18 @@ export const Login = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [loginMessage, setLoginMessage] = useState("");
 
-  const loginSubmit = (e) => {
+  const loginSubmit = e => {
     e.preventDefault();
     setFormErrors(validation(formValues));
     //there will be login request, and loginMessage will be set if login is failed
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     setFormValues((formValues) => ({ ...formValues, [name]: value }));
   };
 
-  const validation = (form) => {
+  const validation = form => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     if (!form.email) errors.email = "Email is required!";
@@ -53,7 +53,7 @@ export const Login = () => {
           name="password"
         />
         <p className="errors"> {formErrors.password}</p>
-        <button type="submit"> Log in</button>
+        <button type="submit" className="button-forms"> Log in</button>
         <p className="errors">{loginMessage}</p>
       </form>
       <Link to="/registration">

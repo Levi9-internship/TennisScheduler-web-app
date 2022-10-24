@@ -94,7 +94,7 @@ export const Registration = () => {
           name="confirmPassword"
         />
         <p className="errors"> {formErrors.confirmPassword}</p>
-        <button type="submit"> Register</button>
+        <button type="submit" className="button-forms"> Register</button>
       </form>
       <Link to="/login">
         {" "}

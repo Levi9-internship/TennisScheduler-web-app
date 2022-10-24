@@ -13,6 +13,7 @@ export const NavbarStart = () => {
           <Nav className="me-auto">
             <Link className="nav-link" to="/login">Login</Link>
             <Link className="nav-link" to="/registration">Register</Link>
+            <Link className="nav-link" to="/profile">Profile</Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
