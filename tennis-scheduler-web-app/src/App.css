@@ -4,7 +4,11 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.021), rgba(255, 255, 255, 0.1)), url('images/background.jpg');
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.021),
+      rgba(255, 255, 255, 0.1)
+    ),
+    url("images/background.jpg");
   background-size: cover;
 }
 
@@ -24,7 +28,7 @@
   padding: 1rem;
   border: 1px solid rgba(255, 255, 0, 0.726);
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   margin-top: 4rem;
 }
 
@@ -70,4 +74,8 @@ button {
 .errors {
   color: red;
   font-size: small;
+}
+
+.link-text {
+  color: white;
 }
