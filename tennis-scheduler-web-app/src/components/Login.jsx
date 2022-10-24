@@ -53,7 +53,7 @@ export const Login = () => {
           name="password"
         />
         <p className="errors"> {formErrors.password}</p>
-        <button type="submit"> Log in</button>
+        <button className="loginButton" type="submit"> Log in</button>
         <p className="errors">{loginMessage}</p>
       </form>
       <Link to="/registration">

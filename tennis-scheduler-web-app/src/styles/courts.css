@@ -13,20 +13,18 @@
 }
 
 .courtList {
-  width: 70vw;
   height: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  place-items: center;
+  display: contents;
+  width: 80vw;
 }
 
 /* MENU ITEM STYLING */
 
 .courtItem {
   border-radius: 30px;
-  width: 300px;
+  
   height: max-content;
-  margin: 20px;
+  margin: 20px 20px 0px 20px;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
 }
 .courtItem:hover {
@@ -37,7 +35,7 @@
 
 .courtItem div {
   width: 100%;
-  height: 180px;
+  height: 190px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -68,8 +66,7 @@
 .courtInfo {
   background-color: whitesmoke;
   height: max-content;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  
 }
 
 .link-brand {
@@ -80,4 +77,25 @@
   text-decoration: none;
   white-space: nowrap;
   color: gray;
+}
+
+.addTimeslotBtn{
+
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+  background-color: rgba(255, 255, 0, 0.726);
+  color: rgb(4, 73, 4);
+  font-weight: bold;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.form{
+  background-color: white;
+  margin: 20px;
+  padding: 20px;
+}
+.courtItemBtn{
+  width: 80vw;
 }

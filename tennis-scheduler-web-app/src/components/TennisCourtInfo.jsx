@@ -1,3 +1,6 @@
+import "../styles/courts.css";
+
+
 function TennisCourtInfo({ image, name, surfaceType, description }) {
   return (
     <div className="courtItem">
@@ -9,6 +12,7 @@ function TennisCourtInfo({ image, name, surfaceType, description }) {
         <p> {description} </p>
         <p> {surfaceType} </p>
       </div>
+      <button className="addTimeslotBtn">Add timeslot</button>
     </div>
   );
 }

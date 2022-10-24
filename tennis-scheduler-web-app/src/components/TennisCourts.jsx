@@ -4,6 +4,8 @@ import RolandGarrosCentral from "../assets/RolandGarrosCentral.jpg";
 import TennisCourtInfo from "./TennisCourtInfo";
 import "../styles/courts.css";
 import { getTennisCourts } from "../api/TennisCourtApi";
+import AddTimeslot from "./AddTimeslot";
+
 
 export const TennisCourts = () => {
   const [tennisCourts, setTennisCourts] = useState([]);
@@ -16,24 +18,24 @@ export const TennisCourts = () => {
       });
     }
     getCourts();
-    console.log(tennisCourts);
   }, []);
   return (
     <>
       <div className="court">
         <h1 className="courtTitle">Tennis courts</h1>
         <div className="courtList">
-          {tennisCourts.map((tennisCourt, key) => {
-            return (
+          {tennisCourts.map((tennisCourt) => (
+              <div className="courtItemBtn" key={tennisCourt.id}>
               <TennisCourtInfo
-                key={key}
                 image={RolandGarrosCentral}
                 name={tennisCourt.name}
                 description={tennisCourt.description}
                 surfaceType={tennisCourt.surfaceType}
               />
-            );
-          })}
+              <AddTimeslot/>
+              </div>
+          )
+          )}
         </div>
       </div>
     </>
