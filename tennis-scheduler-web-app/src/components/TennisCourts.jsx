@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import RolandGarrosCentral from "../assets/RolandGarrosCentral.jpg";
 import TennisCourtInfo from "./TennisCourtInfo";
+import RolandGarrosCentral from "../assets/RolandGarrosCentral.jpg";
 import "../styles/courts.css";
 
 export const TennisCourts = () => {

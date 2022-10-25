@@ -1,8 +1,7 @@
-import "../styles/courts.css";
 import { useState } from "react";
 import AddTimeslot from "./AddTimeslot";
-import "../styles/courts.css";
 import axios from "axios";
+import "../styles/courts.css";
 
 export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) => {
 
@@ -22,8 +21,8 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
     await axios.post("http://localhost:8081/timeslots/", Timeslot).then(
       setTimeslotErrors("")
     )
-      .catch((err) => {
-        setTimeslotErrors(err.response.data.message[0].defaultMessage)
+      .catch((errorMessage) => {
+        setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage)
       })
   }
   const add = () => {
