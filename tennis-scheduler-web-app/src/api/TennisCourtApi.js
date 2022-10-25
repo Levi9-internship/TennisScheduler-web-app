@@ -1,5 +1,7 @@
 import axios from "axios";
 
 export async function getTennisCourts() {
-  return axios.get(process.env.REACT_APP_TENNIS_COURTS);
+  return axios.get(
+    `${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_TENNIS_COURTS}`
+  );
 }
