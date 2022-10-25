@@ -6,7 +6,8 @@ import { getTennisCourts } from "../api/TennisCourtApi";
 
 export const TennisCourts = () => {
   const [tennisCourts, setTennisCourts] = useState([]);
-
+  const [errorTenniCourt, setErrorTennisCourt] = useState("");
+  const [isShow, setIsShow] = useState(false);
   useEffect(() => {
     getCourts();
   }, []);
@@ -15,9 +16,13 @@ export const TennisCourts = () => {
     getTennisCourts()
       .then((data) => {
         setTennisCourts(data.data);
+        setErrorTennisCourt("");
+        setIsShow(false);
       })
       .catch((err) => {
+        setErrorTennisCourt("Couldn't load tennis courts.");
         console.log(err);
+        setIsShow(true);
       });
   }
 
@@ -25,6 +30,7 @@ export const TennisCourts = () => {
     <>
       <div className="court">
         <h1 className="courtTitle">Tennis courts</h1>
+        {isShow ? <h2 className="error-msg">{errorTenniCourt}</h2> : null}
         <div className="courtList">
           {tennisCourts.map((tennisCourt, key) => {
             return (

@@ -89,3 +89,8 @@ button {
   white-space: nowrap;
   color: grey;
 }
+
+.error-msg {
+  color: red;
+  font-size: 30px;
+}
