@@ -1,4 +1,4 @@
-function TennisCourtInfo({ image, name, surfaceType, description }) {
+export const TennisCourtInfo = ({ image, name, surfaceType, description }) => {
   return (
     <div className="courtItem">
       <div className="courtImage" style={{ backgroundImage: `url(${image})` }}>
@@ -11,6 +11,4 @@ function TennisCourtInfo({ image, name, surfaceType, description }) {
       </div>
     </div>
   );
-}
-
-export default TennisCourtInfo;
+};

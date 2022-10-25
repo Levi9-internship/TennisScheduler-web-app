@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import RolandGarrosCentral from "../assets/RolandGarrosCentral.jpg";
-import TennisCourtInfo from "./TennisCourtInfo";
+import { TennisCourtInfo } from "./TennisCourtInfo";
 import "../styles/courts.css";
 import { getTennisCourts } from "../api/TennisCourtApi";
 
@@ -9,15 +8,19 @@ export const TennisCourts = () => {
   const [tennisCourts, setTennisCourts] = useState([]);
 
   useEffect(() => {
-    async function getCourts() {
-      getTennisCourts().then((data) => {
-        setTennisCourts(data.data);
-        console.log(data.data);
-      });
-    }
     getCourts();
-    console.log(tennisCourts);
   }, []);
+
+  async function getCourts() {
+    getTennisCourts()
+      .then((data) => {
+        setTennisCourts(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <>
       <div className="court">
