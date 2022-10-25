@@ -66,7 +66,7 @@
 .courtInfo {
   background-color: whitesmoke;
   height: max-content;
-  
+  padding-top: 30px;
 }
 
 .link-brand {
@@ -95,7 +95,20 @@
   background-color: white;
   margin: 20px;
   padding: 20px;
+  border-radius: 20px;
 }
 .courtItemBtn{
   width: 80vw;
+}
+
+.form{
+  display: grid;
+}
+.text-muted{
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.text-muted p{
+color: rgb(158, 11, 11);
 }
