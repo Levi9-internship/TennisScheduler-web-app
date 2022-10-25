@@ -19,9 +19,9 @@ export const TennisCourts = () => {
         setErrorTennisCourt("");
         setIsShow(false);
       })
-      .catch((err) => {
+      .catch((error) => {
         setErrorTennisCourt("Couldn't load tennis courts.");
-        console.log(err);
+        console.log(error);
         setIsShow(true);
       });
   }
