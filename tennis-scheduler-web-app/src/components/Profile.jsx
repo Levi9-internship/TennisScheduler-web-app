@@ -8,19 +8,19 @@ import Moment from 'moment';
 export const Profile = () => {
     const [showModal, setShowModal] = useState(false);
     const [user, setUser] = useState({ id: undefined, firstName: "", lastName: "", email: "", phoneNumber: "", birthday: undefined, gender: undefined, address: { id: "", street: "", city: "", number: undefined, country: "" } });
-
+    const [errorMessage, setErrorMessage] = useState("")
     useEffect(() => {
-        getLoggedUser().then((response) => setUser(response.data)).catch((error) => console.log(error))
+        getLoggedUser().then((response) => setUser(response.data)).catch(() => setErrorMessage("Failed to load profile informations."))
     }, []);
 
     return (
-
         <div className="home-card">
             <div className="card">
                 <div className="card-header">
                     Your personal informations
                 </div>
                 <div className="card-body">
+                    <h1>{errorMessage}</h1>
                     <div className="row">
                         <div className="col-md-4">
                             <img className="profile-photo" src={require('../images/user_profile.png')} />
@@ -41,7 +41,8 @@ export const Profile = () => {
                                     </button>
                                 </div>
                                 <div className="col">
-                                    <Link to={{ pathname: "/profile-info" }}><button className="button-profile"> Edit profile</button> </Link> </div>
+                                    <Link to={{ pathname: "/profile-info" }}><button className="button-profile"> Edit profile</button> </Link>
+                                </div>
                             </div>
                         </div>
                     </div>

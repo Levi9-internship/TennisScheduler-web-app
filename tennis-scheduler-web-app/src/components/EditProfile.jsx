@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react"
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import '../styles/ProfileComponent.css';
-
 import { getLoggedUser } from "../api/PersonApi";
 
 export const EditProfile = () => {
     const [user, setUser] = useState({ id: 0, firstName: "", lastName: "", email: "", phoneNumber: "", birthday: "", gender: "", address: { id: 0, street: "", city: "", number: 0, country: "" } });
     const [formErrors, setFormErrors] = useState({});
+    const [ errorMessage, setErrorMessage] = useState("")
 
     useEffect(() => {
-        getLoggedUser().then((response) => setUser(response.data)).catch((error) => console.log(error))
+        getLoggedUser().then((response) => setUser(response.data)).catch((error) => setErrorMessage("Something went wrong, try again."))
     }, []);
 
     const handleChange = e => {
@@ -30,7 +30,6 @@ export const EditProfile = () => {
     };
 
     return (
-        <>
             <div className="home-card">
                 <div className="card">
                     <div className="card-header">
@@ -38,11 +37,9 @@ export const EditProfile = () => {
                     </div>
                     <div className="card-body">
                         <div className="row">
-
                             <div className="col-md-4">
                                 <img className="profile-photo-edit" src={require('../images/user_profile.png')} />
                             </div>
-
                             <div className="col-md-7 informations">
                                 <form onSubmit={editProfileSubmit}>
                                     <label htmlFor="name"> Name</label>
@@ -74,7 +71,6 @@ export const EditProfile = () => {
                                             <input type="text" className="form-control" defaultValue={user.address.number} onChange={handleChange} />
                                         </div>
                                     </div>
-
                                     <div className="row">
                                         <div className="col">
                                             <label>City</label>
@@ -93,11 +89,11 @@ export const EditProfile = () => {
                                     <div className="col">
                                         <button className="button-save" type="submit" onClick={editProfileSubmit}> Save changes</button></div>
                                 </div>
+                                <p className="errors">{errorMessage}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </>
     )
 }

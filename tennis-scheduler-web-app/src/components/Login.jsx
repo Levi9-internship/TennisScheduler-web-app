@@ -18,7 +18,7 @@ export const Login = () => {
         localStorage.setItem("role", response.data.role);
         navigate('/profile');
         window.location.reload();
-      }).catch(_ => setLoginMessage("Wrong credencials, try again!"))
+      }).catch(() => setLoginMessage("Wrong credencials, try again!"))
     }
   };
 

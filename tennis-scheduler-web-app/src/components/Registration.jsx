@@ -33,7 +33,7 @@ export const Registration = () => {
     setFormErrors(validation(formValues));
 
     if (Object.keys(formErrors).length === 0 && !isFormEmpty) {
-      register(formValues).then(_ =>
+      register(formValues).then(() =>
         setRegistrationMessage("You registred sucessfully, go and log in with your email and password"))
         .catch((error) => {
           console.log(error);

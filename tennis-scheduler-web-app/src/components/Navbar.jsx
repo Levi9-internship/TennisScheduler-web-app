@@ -35,11 +35,10 @@ export const NavbarStart = () => {
           {(() => {
             if (!admin && !tennisPlayer) {
               return (
-                <>
-                  <Nav className="me-auto">
-                    <Link className="nav-link" to="/login">Login</Link>
-                    <Link className="nav-link" to="/registration">Register</Link> </Nav>
-                </>
+                <Nav className="me-auto">
+                  <Link className="nav-link" to="/login">Login</Link>
+                  <Link className="nav-link" to="/registration">Register</Link>
+                </Nav>
               )
             } else {
               return (
