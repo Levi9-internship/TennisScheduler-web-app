@@ -15,7 +15,6 @@ export const Login = () => {
     if (Object.keys(formErrors).length === 0) {
       login(formValues).then((response) => {
         localStorage.setItem("token", response.data.accessToken);
-        localStorage.setItem("role", response.data.role);
         navigate('/profile');
         window.location.reload();
       }).catch(() => setLoginMessage("Wrong credencials, try again!"))
