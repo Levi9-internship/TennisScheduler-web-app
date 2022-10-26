@@ -9,7 +9,6 @@ import { Profile } from './components/Profile';
 import { EditProfile } from './components/EditProfile';
 
 function App() {
-
   return (
     <div className="App">
       <NavbarStart />
