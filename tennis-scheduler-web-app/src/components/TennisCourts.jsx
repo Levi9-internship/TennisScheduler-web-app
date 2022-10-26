@@ -27,24 +27,22 @@ export const TennisCourts = () => {
   }
 
   return (
-    <>
-      <div className="court">
-        <h1 className="courtTitle">Tennis courts</h1>
-        {isShow ? <h2 className="error-msg">{errorTenniCourt}</h2> : null}
-        <div className="courtList">
-          {tennisCourts.map((tennisCourt, key) => {
-            return (
-              <TennisCourtInfo
-                key={key}
-                image={RolandGarrosCentral}
-                name={tennisCourt.name}
-                description={tennisCourt.description}
-                surfaceType={tennisCourt.surfaceType}
-              />
-            );
-          })}
-        </div>
+    <div className="court">
+      <h1 className="courtTitle">Tennis courts</h1>
+      {isShow ? <h2 className="error-msg">{errorTenniCourt}</h2> : null}
+      <div className="courtList">
+        {tennisCourts.map((tennisCourt, key) => {
+          return (
+            <TennisCourtInfo
+              key={key}
+              image={RolandGarrosCentral}
+              name={tennisCourt.name}
+              description={tennisCourt.description}
+              surfaceType={tennisCourt.surfaceType}
+            />
+          );
+        })}
       </div>
-    </>
+    </div>
   );
 };
