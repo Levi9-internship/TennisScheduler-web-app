@@ -47,6 +47,4 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
       {showAddTimeslot && <AddTimeslot errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
     </>
   );
-}
-
-export default TennisCourtInfo;
+};
