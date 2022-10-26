@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link, useNavigate } from 'react-router-dom'
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 
 export const NavbarStart = () => {
   const [tennisPlayer, setTennisPlayer] = useState(false);
@@ -22,15 +22,15 @@ export const NavbarStart = () => {
 
   const whoAmI = () => {
     
-    if (getUserRole() === 'ROLE_TENNIS_PLAYER')
+    // if (getUserRole() === 'ROLE_TENNIS_PLAYER')
       setTennisPlayer(true);
-    if (getUserRole() === 'ROLE_ADMIN')
+    // if (getUserRole() === 'ROLE_ADMIN')
       setAdmin(true);
   }
 
-const getUserRole = () => {
-  return jwt_decode(localStorage.getItem("token")).role;
-}
+// const getUserRole = () => {
+//   return jwt_decode(localStorage.getItem("token")).role;
+// }
 
   return (
     <Navbar bg="light" expand="lg" fixed="top">
