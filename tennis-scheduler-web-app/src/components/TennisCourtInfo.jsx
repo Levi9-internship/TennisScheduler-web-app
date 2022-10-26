@@ -18,11 +18,11 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
       courtId: timeslot.id
     };
 
-    postTimeslot(newTimeslot).then((response) => {
+    postTimeslot(newTimeslot).then(() => {
       setTimeslotErrors("");
-      }).catch((errorMessage) => {
+    }).catch((errorMessage) => {
         setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
-      })
+    })
     
   }
 
