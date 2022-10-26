@@ -1,0 +1,83 @@
+.court {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.court .courtTitle {
+  font-family: cursive;
+  font-size: 60px;
+  padding-top: 4rem;
+}
+
+.courtList {
+  width: 70vw;
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  place-items: center;
+}
+
+/* MENU ITEM STYLING */
+
+.courtItem {
+  border-radius: 30px;
+  width: 300px;
+  height: max-content;
+  margin: 20px;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+}
+.courtItem:hover {
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.5);
+  transition: 0.3s ease-in;
+  cursor: pointer;
+}
+
+.courtItem div {
+  width: 100%;
+  height: 180px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.courtImage {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.courtItem h1,
+.courtItem p {
+  margin-left: 20px;
+}
+
+@media only screen and (max-width: 1300px) {
+  .courtList {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .courtList {
+    grid-template-columns: 1fr;
+  }
+}
+
+.courtInfo {
+  background-color: whitesmoke;
+  height: max-content;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.link-brand {
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+  margin-right: 1rem;
+  font-size: 1.25rem;
+  text-decoration: none;
+  white-space: nowrap;
+  color: gray;
+}
