@@ -1,7 +1,9 @@
-import axios from "axios";
+
+import { axiosInstance } from './AxiosInstance'
 
 export async function getTennisCourts() {
-  return axios.get(
-    `${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_TENNIS_COURTS}`
-  );
+  const response = await axiosInstance.get('tennis-courts/');
+  return response;
 }
+
+
