@@ -12,13 +12,13 @@ export const Login = () => {
     e.preventDefault();
     setFormErrors(validation(formValues));
 
-    if(Object.keys(formErrors).length === 0){
+    if (Object.keys(formErrors).length === 0) {
       login(formValues).then((response) => {
         localStorage.setItem("token", response.data.accessToken);
         localStorage.setItem("role", response.data.role);
         navigate('/profile');
         window.location.reload();
-    }).catch( _ =>  setLoginMessage("Wrong credencials, try again!"))
+      }).catch(_ => setLoginMessage("Wrong credencials, try again!"))
     }
   };
 

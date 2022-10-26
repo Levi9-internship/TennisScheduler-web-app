@@ -26,7 +26,7 @@ export const ChangePassword = props => {
         else if (form.oldPassword === form.newPassword) errors.newPassword = "New password must be deferent then old one!"
         if (!form.confirmPassword) errors.confirmPassword = "Confirm password is required";
         else if (form.newPassword !== form.confirmPassword) errors.confirmPassword = "New password and confirm password must be the same!"
-       
+
         return errors;
     };
 
@@ -39,7 +39,7 @@ export const ChangePassword = props => {
                 <form onSubmit={changePasswordSubmit}>
                     <label htmlFor="oldPassword">Old password</label>
                     <input type="password" value={formValues.oldPassword} placeholder="********" name="oldPassword"
-                     className="form-control" id="oldPassword" onChange={handleChange}/>
+                        className="form-control" id="oldPassword" onChange={handleChange} />
                     <p className="errors">{formErrors.oldPassword}</p>
                     <label htmlFor="newPassword"> New password</label>
                     <input type="password" placeholder="********" id="newPassword" name="newPassword" className="form-control"
@@ -47,7 +47,7 @@ export const ChangePassword = props => {
                     <p className="errors">{formErrors.newPassword}</p>
                     <label htmlFor="confirmPassword"> Confirm password</label>
                     <input type="password" placeholder="********" id="confirmPassword" name="confirmPassword"
-                        className="form-control" onChange={handleChange} value={formValues.confirmPassword}/>
+                        className="form-control" onChange={handleChange} value={formValues.confirmPassword} />
                     <p className="errors">{formErrors.confirmPassword}</p>
                 </form>
                 <p className="errors">{passwordMessage} </p>

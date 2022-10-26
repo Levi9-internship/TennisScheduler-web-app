@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react"
 import { Link, useParams } from "react-router-dom";
 import '../styles/ProfileComponent.css';
 
-import { getUserById } from "../api/PersonApi";
+import { getLoggedUser } from "../api/PersonApi";
 
 export const EditProfile = () => {
     const [user, setUser] = useState({ id: 0, firstName: "", lastName: "", email: "", phoneNumber: "", birthday: "", gender: "", address: { id: 0, street: "", city: "", number: 0, country: "" } });
     const [formErrors, setFormErrors] = useState({});
-    const params = useParams();
 
     useEffect(() => {
-        getUserById(parseInt(params.id)).then((response) => setUser(response.data)).catch((error) => console.log(error))
+        getLoggedUser().then((response) => setUser(response.data)).catch((error) => console.log(error))
     }, []);
 
     const handleChange = e => {
@@ -47,13 +46,13 @@ export const EditProfile = () => {
                             <div className="col-md-7 informations">
                                 <form onSubmit={editProfileSubmit}>
                                     <label htmlFor="name"> Name</label>
-                                    <input type="text"  value={user.firstName} onChange={handleChange} className="form-control" id="name" name="firstName"/>
+                                    <input type="text" value={user.firstName} onChange={handleChange} className="form-control" id="name" name="firstName" />
                                     <p className="errors">{formErrors.name}</p>
                                     <label htmlFor="surname"> Surname</label>
                                     <input type="text" value={user.lastName} onChange={handleChange} className="form-control" id="surname" name="lastName" />
                                     <p className="errors">{formErrors.surname}</p>
                                     <label htmlFor="phone">Phone number</label>
-                                    <input type="text" value={user.phoneNumber} onChange={handleChange} className="form-control" id="phone"  name="phoneNumber"/>
+                                    <input type="text" value={user.phoneNumber} onChange={handleChange} className="form-control" id="phone" name="phoneNumber" />
                                     <label htmlFor="gender">Gender</label>
                                     <div className="row ">
                                         <div className="col">
@@ -72,7 +71,7 @@ export const EditProfile = () => {
                                         </div>
                                         <div className="col">
                                             <label>Street number</label>
-                                            <input type="text" className="form-control"  defaultValue={user.address.number} onChange={handleChange}/>
+                                            <input type="text" className="form-control" defaultValue={user.address.number} onChange={handleChange} />
                                         </div>
                                     </div>
 
@@ -83,7 +82,7 @@ export const EditProfile = () => {
                                         </div>
                                         <div className="col">
                                             <label>Country</label>
-                                            <input type="text" className="form-control"  defaultValue={user.address.country} onChange={handleChange}/>
+                                            <input type="text" className="form-control" defaultValue={user.address.country} onChange={handleChange} />
                                         </div>
                                     </div>
                                 </form>

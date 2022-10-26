@@ -5,6 +5,11 @@ export async function login(loginInformations) {
     return response;
 }
 
+export async function register(registrationInformations) {
+    const response = await axiosInstance.post('persons/', registrationInformations);
+    return response;
+}
+
 export async function getLoggedUser() {
     const response = await axiosInstance.get('authentication/logged-user');
     return response;

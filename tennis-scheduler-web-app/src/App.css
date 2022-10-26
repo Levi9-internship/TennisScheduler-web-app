@@ -42,7 +42,7 @@ input {
 
 .button-forms {
   border:  2px solid gray;
-  padding: 15px;
+  padding: 12px;
   border-radius: 10px;
   cursor: pointer;
   background-color: rgba(255, 255, 0, 0.726);
@@ -82,4 +82,8 @@ input {
     background-color: gray;
     color: white;
     font-weight: bold;
+}
+
+.gender-row{
+  width: 10rem;
 }

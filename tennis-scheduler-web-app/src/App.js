@@ -18,7 +18,7 @@ function App() {
         <Route path="/registration" element={<Registration/>} />
         <Route path="/" element={<TennisCourts />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/profile/:id" element={<EditProfile />} />
+        <Route path="/profile-info" element={<EditProfile />} />
       </Routes>
     </div>
   );

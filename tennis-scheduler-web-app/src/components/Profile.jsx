@@ -41,7 +41,7 @@ export const Profile = () => {
                                     </button>
                                 </div>
                                 <div className="col">
-                                    <Link to={{ pathname: "/profile/" + user.id }}><button className="button-profile"> Edit profile</button> </Link> </div>
+                                    <Link to={{ pathname: "/profile-info" }}><button className="button-profile"> Edit profile</button> </Link> </div>
                             </div>
                         </div>
                     </div>
