@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AddTimeslot from "./AddTimeslot";
-import axios from "axios";
+import {postTimeslot} from "../api/TimeslotApi"
 import "../styles/courts.css";
 
 export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) => {
@@ -9,7 +9,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
   const [buttonName, setButtonName] = useState("Add timeslot");
   const [showAddTimeslot, setAddTimeslot] = useState(false);
 
-  const addTimeslot = async (timeslot) => {
+  const addTimeslot = async(timeslot) => {
 
     let Timeslot = {
       dateStart: `${timeslot.timeslotDate}T${timeslot.startTime}:02.174Z`,
@@ -18,13 +18,14 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
       courtId: timeslot.id
     };
 
-    await axios.post("http://localhost:8081/timeslots/", Timeslot).then(
-      setTimeslotErrors("")
-    )
-      .catch((errorMessage) => {
-        setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage)
+    postTimeslot(Timeslot).then((response) => {
+      setTimeslotErrors("");
+      }).catch((errorMessage) => {
+        setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
       })
+    
   }
+
   const add = () => {
     setAddTimeslot(!showAddTimeslot);
     showAddTimeslot ? setButtonName("Add timeslot") : setButtonName("Close form")

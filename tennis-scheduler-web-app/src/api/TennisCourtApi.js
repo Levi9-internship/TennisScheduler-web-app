@@ -1,7 +1,7 @@
-import axios from "axios";
-
-let baseUrl = "http://localhost:8081/tennis-courts/";
+import { axiosInstance } from './AxiosInstance'
 
 export async function getTennisCourts() {
-  return axios.get(baseUrl);
+  const response = await axiosInstance.get('tennis-courts/');
+  return response;
 }
+
