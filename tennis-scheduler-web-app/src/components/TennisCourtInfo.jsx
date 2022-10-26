@@ -11,14 +11,14 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
 
   const addTimeslot = async(timeslot) => {
 
-    let Timeslot = {
+    let newTimeslot = {
       dateStart: `${timeslot.timeslotDate}T${timeslot.startTime}:02.174Z`,
       dateEnd: `${timeslot.timeslotDate}T${timeslot.endTime}:02.174Z`,
       personId: 1,
       courtId: timeslot.id
     };
 
-    postTimeslot(Timeslot).then((response) => {
+    postTimeslot(newTimeslot).then((response) => {
       setTimeslotErrors("");
       }).catch((errorMessage) => {
         setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
