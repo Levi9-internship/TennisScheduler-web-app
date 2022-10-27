@@ -187,3 +187,9 @@ color: rgb(158, 11, 11);
 .dropdown-style{
  height: auto;
 }
+.select-option{
+  color: black;
+  margin-top: 1rem;
+  width: 20rem;
+  border-radius: 10px;
+}

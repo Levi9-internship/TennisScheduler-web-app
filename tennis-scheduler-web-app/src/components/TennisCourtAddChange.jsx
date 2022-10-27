@@ -8,7 +8,8 @@ export const TennisCourtAddChange = () => {
     const [surface, setSurface] = useState('')
     const [image, setImage] = useState("")
     const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: 0, description: "", image: "", address: address })
-    const [ check, setCheck] = useState(false);
+    const [check, setCheck] = useState(false);
+    const [changedType, setChangedType] = useState('');
     const id = useParams().id
     const navigate = useNavigate();
 
@@ -34,7 +35,6 @@ export const TennisCourtAddChange = () => {
         tennisCourt.address = address
         tennisCourt.surfaceType = surface
         addTennisCourt(tennisCourt).then(() =>
-            console.log(tennisCourt),
             navigate('/'),
             window.location.reload()
         )
@@ -42,6 +42,7 @@ export const TennisCourtAddChange = () => {
 
     const handleChangeSurfaceType = e => {
         setSurface(e.target.value)
+        setChangedType(e.target.value)
     }
 
     const onCancel = e => navigate('/')
@@ -54,6 +55,7 @@ export const TennisCourtAddChange = () => {
                     setAddress(response.data.address)
                     setCheck(true)
                     setImage(response.data.image)
+                    setChangedType(response.data.surfaceType)
                 }
             )
     }, [])
@@ -73,15 +75,13 @@ export const TennisCourtAddChange = () => {
                 <input type="file" class="form-control" onChange={setImages} />
             </div>
             {
-                check ? <img className='picture-preview' src={require('../images/' + image)} /> : ""   
+                check ? <img className='picture-preview' src={require('../images/' + image)} /> : ""
             }
-            <div>
-                <select className="dropdown-style" value={tennisCourt.surfaceType} onChange={handleChangeSurfaceType}>
-                    <option value="GRASS" onSelect={handleChangeSurfaceType}>GRASS</option>
-                    <option value="CLAY" onSelect={handleChangeSurfaceType}>CLAY</option>
-                    <option value="HARD" onSelect={handleChangeSurfaceType}>HARD</option>
-                </select>
-            </div>
+            <select class="form-select select-option" value={changedType} onChange={handleChangeSurfaceType}>
+                <option value="GRASS" onSelect={handleChangeSurfaceType}>GRASS</option>
+                <option value="CLAY" onSelect={handleChangeSurfaceType}>CLAY</option>
+                <option value="HARD" onSelect={handleChangeSurfaceType}>HARD</option>
+            </select>
             <div>
                 <label>Country</label>
                 <input type='text' placeholder="Add country" className="addTennisCourt-input" id="country" name='country' value={address.country} onChange={handleChangeAddress}></input>
