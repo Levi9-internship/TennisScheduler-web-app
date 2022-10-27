@@ -28,11 +28,11 @@ export const NavbarStart = () => {
       setAdmin(true);
   }
 
-const getUserRole = () => {
-  if(localStorage.getItem("token"))
-   return jwtDecode(localStorage.getItem("token")).role;
-   else return ""
-}
+  const getUserRole = () => {
+    if (localStorage.getItem("token"))
+      return jwtDecode(localStorage.getItem("token")).role;
+    else return ""
+  }
 
   return (
     <Navbar bg="light" expand="lg" fixed="top">
@@ -50,7 +50,7 @@ const getUserRole = () => {
                   <Link className="nav-link" to="/registration">Register</Link>
                 </Nav>
               )
-            } else {
+            } if (admin)
               return (
                 <>
                   <Nav className="me-auto">
@@ -59,7 +59,15 @@ const getUserRole = () => {
                   <button className="logout-button" onClick={logout}>Log out</button>
                 </>
               )
-            }
+            if (tennisPlayer)
+              return (
+                <>
+                  <Nav className="me-auto">
+                    <Link className="nav-link" to="/profile">Profile</Link>
+                  </Nav>
+                  <button className="logout-button" onClick={logout}>Log out</button>
+                </>
+              )
           })()}
         </Navbar.Collapse>
       </Container>

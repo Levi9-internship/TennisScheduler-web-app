@@ -10,7 +10,7 @@ export const EditProfile = () => {
     const [errorMessage, setErrorMessage] = useState("")
 
     useEffect(() => {
-        getLoggedUser().then((response) => setUser(response.data)).catch((error) => setErrorMessage("Something went wrong, try again."))
+        getLoggedUser().then((response) => setUser(response.data)).catch(() => setErrorMessage("Something went wrong, try again."))
     }, []);
 
     const handleChange = e => {

@@ -23,10 +23,9 @@ export const ChangePassword = props => {
         const errors = {};
         if (!form.oldPassword) errors.oldPassword = "Old password is required!";
         if (!form.newPassword) errors.newPassword = "New password is required!";
-        else if (form.oldPassword === form.newPassword) errors.newPassword = "New password must be deferent then old one!"
+        else if (form.oldPassword === form.newPassword) errors.newPassword = "New password must be different then old password!"
         if (!form.confirmPassword) errors.confirmPassword = "Confirm password is required";
         else if (form.newPassword !== form.confirmPassword) errors.confirmPassword = "New password and confirm password must be the same!"
-
         return errors;
     };
 
