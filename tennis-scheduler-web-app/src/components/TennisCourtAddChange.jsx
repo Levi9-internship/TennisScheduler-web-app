@@ -7,7 +7,7 @@ export const TennisCourtAddChange = () => {
     const [address, setAddress] = useState({ country: "", city: "", street: "", number: "" })
     const [surface, setSurface] = useState('')
     const [image, setImage] = useState("")
-    const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: 0, description: "", image: "", address: address })
+    const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: "", description: "", image: "", address: address })
     const [check, setCheck] = useState(false);
     const [changedType, setChangedType] = useState('');
     const id = useParams().id
@@ -36,12 +36,12 @@ export const TennisCourtAddChange = () => {
         tennisCourt.surfaceType = surface
         if (id)
             changeTennisCourt(tennisCourt).then(() => {
-                navigate('/'),
+                navigate('/');
                 window.location.reload()
             })
         else
             addTennisCourt(tennisCourt).then(() => {
-                navigate('/'),
+                navigate('/');
                 window.location.reload()
             })
     }
@@ -62,6 +62,7 @@ export const TennisCourtAddChange = () => {
                     setCheck(true)
                     setImage(response.data.image)
                     setChangedType(response.data.surfaceType)
+                    setSurface(response.data.surfaceType)
                 }
             )
     }, [])
