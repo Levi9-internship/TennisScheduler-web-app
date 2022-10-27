@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import Timeslot from "../components/Timeslot";
 import { getTimeslot } from "../api/TimeslotApi";

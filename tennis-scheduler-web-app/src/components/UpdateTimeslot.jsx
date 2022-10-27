@@ -2,9 +2,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { getTimeslot } from "../api/TimeslotApi";
 import { updateTimeslot } from '../api/TimeslotApi'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-const UpdateTimeslot = ({ setTimeslots,existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson }) => {
+const UpdateTimeslot = ({ setTimeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson }) => {
 
     const [invalidDate, setInvalidDate] = useState("");
     const [invalidStarTime, setInvalidStartTime] = useState("");
@@ -34,11 +34,6 @@ const UpdateTimeslot = ({ setTimeslots,existingTimeslot, setTimeslot, timeslotId
             .catch((errorMessage) => {
                 setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
             })
-
-
-        // setTimeslotDate(timeslot.updatedDate.filter((timesl=>timesl.id!==timeslotId)))
-        // setTimeslot(timeslots.filter((timeslot)=>timeslot.id!==timeslot.timeslotId,))
-        // setTimeslot(timeslots.filter((timeslot)=>timeslot.id!==timeslotId))
 
         getTimeslot().then((data) => {
             setTimeslots(data.data);
@@ -74,7 +69,7 @@ const UpdateTimeslot = ({ setTimeslots,existingTimeslot, setTimeslot, timeslotId
 
     }
 
-    
+
 
     return (
         <Form className='form' onSubmit={onSubmit}>

@@ -2,10 +2,10 @@ import { useState, useEffect } from "react"
 import { getTennisCourts } from "../api/TennisCourtApi";
 import { getPerson } from "../api/PersonApi";
 import UpdateTimeslot from "./UpdateTimeslot";
-import moment from 'moment'
 import { deleteTimeslot } from "../api/TimeslotApi";
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
+import moment from "moment/moment";
 import '../styles/timeslot.css'
 
 
