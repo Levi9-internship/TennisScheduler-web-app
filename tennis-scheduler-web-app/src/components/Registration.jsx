@@ -14,7 +14,7 @@ export const Registration = () => {
     gender: "MALE",
     address: {
       street: "",
-      number: 0,
+      number: undefined,
       city: "",
       country: ""
     }
@@ -36,12 +36,12 @@ export const Registration = () => {
       register(formValues).then(() => {
         toast.success('You registred sucessfully, go and log in with your email and password', { position: toast.POSITION.BOTTOM_CENTER });
       }).catch((error) => {
-          if (error.response.status === 401) {
-            toast.error('This email is taken', { position: toast.POSITION.BOTTOM_CENTER });
-          } else {
-            toast.error('Something went wrong, try again later.', { position: toast.POSITION.BOTTOM_CENTER });
-          }
-        })
+        if (error.response.status === 401) {
+          toast.error('This email is taken', { position: toast.POSITION.BOTTOM_CENTER });
+        } else {
+          toast.error('Something went wrong, try again later.', { position: toast.POSITION.BOTTOM_CENTER });
+        }
+      })
     }
   };
 

@@ -7,7 +7,7 @@ import Moment from 'moment';
 
 export const Profile = () => {
     const [showModal, setShowModal] = useState(false);
-    const [user, setUser] = useState({ id: undefined, firstName: "", lastName: "", email: "", phoneNumber: "", birthday: undefined, gender: undefined, address: { id: "", street: "", city: "", number: undefined, country: "" } });
+    const [user, setUser] = useState({ id: undefined, firstName: "", lastName: "", email: "", phoneNumber: "", birthday: undefined, gender: undefined, address: { id: undefined, street: "", city: "", number: undefined, country: "" } });
     const [errorMessage, setErrorMessage] = useState("");
     const [check, setCheck] = useState(false);
 
@@ -20,7 +20,7 @@ export const Profile = () => {
             getLoggedUser().then((response) => setUser(response.data)).catch(() => setErrorMessage("Failed to load profile informations."))
             setCheck(true)
         }
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         if (parseInt(id) === user.id) setCheck(true);
@@ -30,7 +30,7 @@ export const Profile = () => {
         <div className="home-card">
             <div className="card">
                 <div className="card-header">
-                    Your personal informations
+                    Personal information
                 </div>
                 <div className="card-body">
                     <h1>{errorMessage}</h1>
@@ -42,27 +42,21 @@ export const Profile = () => {
                             <h5 className="card-title">{user.firstName} {user.lastName}</h5>
                             <p>{user.email}</p>
                             <p>{user.phoneNumber}</p>
-                            <p>{Moment(user.birthday).format('MMMM Do YYYY.')}</p>
+                           { user.birthday ?  <p>  { Moment(user.birthday).format('MMMM Do YYYY.')} </p> : "/"} 
                             <p>{user.gender}</p>
-                            <p>{user.address.street} {user.address.number}, {user.address.city} {user.address.country}</p>
-                            {(() => {
-                                if (check) {
-                                    return (
-                                        <div className="row">
-                                            <div className="col">
-                                                <ChangePassword show={showModal} close={() => setShowModal(false)}>
-                                                </ChangePassword>
-                                                <button type="button" className="button-profile" onClick={() => { setShowModal(true) }}>
-                                                    Change password
-                                                </button>
-                                            </div>
-                                            <div className="col">
-                                                <Link to={{ pathname: "/profile-info" }}><button className="button-profile"> Edit profile</button> </Link>
-                                            </div>
-                                        </div>
-                                    )
-                                }
-                            })()}
+                            {user.address.street ? <p> {user.address.street} {user.address.number} {user.address.city} {user.address.country} </p> : "/"}
+                            {check ? <div className="row">
+                                <div className="col">
+                                    <ChangePassword show={showModal} close={() => setShowModal(false)}>
+                                    </ChangePassword>
+                                    <button type="button" className="button-profile" onClick={() => { setShowModal(true) }}>
+                                        Change password
+                                    </button>
+                                </div>
+                                <div className="col">
+                                    <Link to={{ pathname: "/profile-info" }}><button className="button-profile"> Edit profile</button> </Link>
+                                </div>
+                            </div> : ""}
                         </div>
                     </div>
                 </div>
