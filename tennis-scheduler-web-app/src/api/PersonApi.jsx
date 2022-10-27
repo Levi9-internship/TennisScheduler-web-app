@@ -19,3 +19,7 @@ export async function getUserById(id) {
     const response = await axiosInstance.get(`persons/${id}`);
     return response;
 }
+
+export async function getTennisPlayers() {
+    return await axiosInstance.get('persons/');
+  }

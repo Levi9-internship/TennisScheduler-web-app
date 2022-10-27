@@ -53,3 +53,9 @@
     padding-left: 3px;
     padding-right: 3px;
 }
+
+.profile-info-link{
+    text-decoration: none;
+    font-size: large;
+    color: black;
+}

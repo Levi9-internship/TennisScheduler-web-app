@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
-import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
+import { ToastContainer, toast } from 'react-toastify';
 import '../styles/ProfileComponent.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { getLoggedUser } from "../api/PersonApi";
 
 export const EditProfile = () => {
@@ -104,6 +105,7 @@ export const EditProfile = () => {
                                     <button className="button-save" type="submit" onClick={editProfileSubmit}> Save changes</button></div>
                             </div>
                             <p className="errors">{errorMessage}</p>
+                            <ToastContainer/>
                         </div>
                     </div>
                 </div>

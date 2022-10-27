@@ -70,6 +70,7 @@ input {
   margin-left: 2%;
   text-decoration: none;
   color: gray;
+  width: max-content;
 }
 
 .errors {
@@ -110,3 +111,8 @@ input {
   font-size: 30px;
 }
 
+.player-table{
+  width: 70%;
+  height: max-content;
+  background-color: white;
+}
