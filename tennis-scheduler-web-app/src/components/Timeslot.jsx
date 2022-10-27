@@ -28,11 +28,11 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
   useEffect(() => {
     getTennisCourts().then((data) => {
       setTennisCourts(data.data);
-      setErrorMessageTennisCourts("")
-      setIsShowTennisCourts(false)
+      setErrorMessageTennisCourts("");
+      setIsShowTennisCourts(false);
     }).catch(() => {
-      setErrorMessageTennisCourts("Couldn't load tennis courts.")
-      setIsShowTennisCourts(true)
+      setErrorMessageTennisCourts("Couldn't load tennis courts.");
+      setIsShowTennisCourts(true);
     })
   }, []);
   useEffect(() => {
@@ -61,7 +61,7 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
       {isShowMessagePersons ? <h2 className="error-msg">{errorMessagePersons}</h2> : null}
       {isShowMessageTennisCourts ? <h2 className="error-msg">{errorMessageTennisCourts}</h2> : null}
       <ListGroup className='timeslotItem'>
-        <ListGroup.Item className='date'><b>Date:</b> {date}</ListGroup.Item>
+        <ListGroup.Item className='date'>Date: {date}</ListGroup.Item>
         <ListGroup.Item className='startTime'>Start time: {startTime}</ListGroup.Item>
         <ListGroup.Item className='endTime'>End time: {endTime}</ListGroup.Item>
         <ListGroup.Item className="personTimeslot">
@@ -95,6 +95,7 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
           persId={newTimeslot.personId}
           persons={persons}
           setPerson={setPerson}
+          timeslots={timeslots}
           setTimeslots={setTimeslots}
         />}
       </ListGroup>

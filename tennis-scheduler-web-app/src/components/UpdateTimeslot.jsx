@@ -4,7 +4,7 @@ import { getTimeslot } from "../api/TimeslotApi";
 import { updateTimeslot } from '../api/TimeslotApi'
 import { useState } from 'react';
 
-const UpdateTimeslot = ({ setTimeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson }) => {
+const UpdateTimeslot = ({ setTimeslots,timeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson }) => {
 
     const [invalidDate, setInvalidDate] = useState("");
     const [invalidStarTime, setInvalidStartTime] = useState("");
@@ -28,17 +28,15 @@ const UpdateTimeslot = ({ setTimeslots, existingTimeslot, setTimeslot, timeslotI
             "courtId": timeslot.tennisCourtId
         };
 
-        updateTimeslot(id, newTimeslot).then(() => {
+        updateTimeslot(timeslot.id, newTimeslot).then(() => {
             setTimeslotErrors("");
+        }).catch((errorMessage) => {
+            setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
         })
-            .catch((errorMessage) => {
-                setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
-            })
 
-        getTimeslot().then((data) => {
-            setTimeslots(data.data);
-        })
-    }
+        
+        
+        }
 
     const onSubmit = (e) => {
 
@@ -62,10 +60,11 @@ const UpdateTimeslot = ({ setTimeslots, existingTimeslot, setTimeslot, timeslotI
         }
 
         addTimeslot({ id, updatedStartTime, updatedEndTime, updatedDate, personId, tennisCourtId });
-        // window.location.reload(false);
+        window.location.reload(false);
         setTimeslotDate(updatedDate);
         setStartTime(updatedStartTime);
         setEndTime(updatedEndTime);
+        setTimeslots(timeslots);
 
     }
 
