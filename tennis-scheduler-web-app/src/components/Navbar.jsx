@@ -11,12 +11,6 @@ export const NavbarStart = () => {
   const [admin, setAdmin] = useState(false);
   const navigation = useNavigate();
 
-  const getUserRole = () => {
-    if (localStorage.getItem("token"))
-      return jwtDecode(localStorage.getItem("token")).role;
-    else return ""
-  }
-
   useEffect(() => {
     whoAmI()
   }, []);
@@ -32,6 +26,12 @@ export const NavbarStart = () => {
       setTennisPlayer(true);
     if (getUserRole() === 'ROLE_ADMIN')
       setAdmin(true);
+  }
+
+  const getUserRole = () => {
+    if (localStorage.getItem("token"))
+      return jwtDecode(localStorage.getItem("token")).role;
+    else return ""
   }
 
   return (

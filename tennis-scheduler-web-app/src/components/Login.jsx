@@ -11,7 +11,6 @@ export const Login = () => {
   const loginSubmit = e => {
     e.preventDefault();
     setFormErrors(validation(formValues));
-
     if (Object.keys(formErrors).length === 0) {
       login(formValues).then((response) => {
         localStorage.setItem("token", response.data.accessToken);
