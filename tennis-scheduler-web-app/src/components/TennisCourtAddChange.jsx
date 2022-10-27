@@ -28,14 +28,23 @@ export const TennisCourtAddChange = () => {
     const setImages = e => {
         const im = e.target.value.split("fakepath")[1].substring(1);
         setImage(im)
-        tennisCourt.image = im
+        setTennisCourt( tennisCourt => ({
+            ...tennisCourt,
+            image: im
+        }))
         setCheck(true)
     }
 
     const onSubmit = e => {
         e.preventDefault()
-        tennisCourt.address = address
-        tennisCourt.surfaceType = surface;
+        setTennisCourt( tennisCourt => ({
+            ...tennisCourt,
+            address: address
+        }))
+        setTennisCourt( tennisCourt => ({
+            ...tennisCourt,
+            surfaceType: surface
+        }))
         setFormErrors(validation(tennisCourt))
         if (Object.keys(formErrors).length === 0 && !emptyForm) {
             if (id)
