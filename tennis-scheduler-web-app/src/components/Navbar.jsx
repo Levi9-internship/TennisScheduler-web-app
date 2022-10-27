@@ -1,10 +1,9 @@
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import jwtDecode from 'jwt-decode'
 import { useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Link, useNavigate } from 'react-router-dom'
-import jwtDecode from 'jwt-decode';
-
+import { Link, useNavigate } from 'react-router-dom';
 
 export const NavbarStart = () => {
   const [tennisPlayer, setTennisPlayer] = useState(false);
@@ -57,6 +56,7 @@ export const NavbarStart = () => {
                     <Link className="nav-link" to="/profile">Profile</Link>
                     <Link className="nav-link" to="/court">New tennis court</Link>
                     <Link className='nav-link' to="/players">Tennis players</Link>
+                    <Link className="nav-link" to="/timeslots">Timeslots</Link>
                   </Nav>
                   <button className="logout-button" onClick={logout}>Log out</button>
                 </>
@@ -67,11 +67,12 @@ export const NavbarStart = () => {
                   <Nav className="me-auto">
                     <Link className="nav-link" to="/profile">Profile</Link>
                     <Link className='nav-link' to="/players">Tennis players</Link>
+                    <Link className="nav-link" to="/timeslots">Timeslots</Link>
                   </Nav>
                   <button className="logout-button" onClick={logout}>Log out</button>
                 </>
               )
-          })()}
+          })()} 
         </Navbar.Collapse>
       </Container>
     </Navbar>

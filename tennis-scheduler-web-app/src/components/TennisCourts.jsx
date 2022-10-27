@@ -16,7 +16,7 @@ export const TennisCourts = () => {
       setErrorTennisCourt("");
       setIsShow(false);
     })
-    .catch((error) => {
+    .catch(() => {
       setErrorTennisCourt("Couldn't load tennis courts.");
       setIsShow(true);
     });

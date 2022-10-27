@@ -31,3 +31,8 @@ export async function changePassword(passwordData) {
 export async function changeProfileInformation(personalInformation) {
     return await axiosInstance.put(`persons/${personalInformation.id}`, personalInformation);
 }
+
+export async function getAllPerson() {
+    const response = await axiosInstance.get('persons/');
+    return response;
+}
