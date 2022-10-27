@@ -19,3 +19,15 @@ export async function getUserById(id) {
     const response = await axiosInstance.get(`persons/${id}`);
     return response;
 }
+
+export async function getTennisPlayers() {
+    return await axiosInstance.get('persons/');
+}
+
+export async function changePassword(passwordData) {
+    return await axiosInstance.put('authentication/change-password', passwordData);
+}
+
+export async function changeProfileInformation(personalInformation) {
+    return await axiosInstance.put(`persons/${personalInformation.id}`, personalInformation);
+}

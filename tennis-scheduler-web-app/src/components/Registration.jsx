@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 import { register } from "../api/PersonApi";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Registration = () => {
   const [formValues, setFormValues] = useState({
@@ -12,15 +14,13 @@ export const Registration = () => {
     gender: "MALE",
     address: {
       street: "",
-      number: 0,
+      number: undefined,
       city: "",
       country: ""
     }
   });
 
   const [formErrors, setFormErrors] = useState({});
-  const [registrationMessage, setRegistrationMessage] = useState('');
-  const [colorChange, setColorChange] = useState(false);
   const [isFormEmpty, setIsFormEmpty] = useState(true);
 
   const handleChange = e => {
@@ -33,13 +33,15 @@ export const Registration = () => {
     setFormErrors(validation(formValues));
 
     if (Object.keys(formErrors).length === 0 && !isFormEmpty) {
-      register(formValues).then(() =>
-        setRegistrationMessage("You registred sucessfully, go and log in with your email and password"))
-        .catch((error) => {
-          console.log(error);
-          setRegistrationMessage("Your registration failed, try again!");
-          setColorChange(true);
-        })
+      register(formValues).then(() => {
+        toast.success('You registred sucessfully, go and log in with your email and password', { position: toast.POSITION.BOTTOM_CENTER });
+      }).catch((error) => {
+        if (error.response.status === 401) {
+          toast.error('This email is taken', { position: toast.POSITION.BOTTOM_CENTER });
+        } else {
+          toast.error('Something went wrong, try again later.', { position: toast.POSITION.BOTTOM_CENTER });
+        }
+      })
     }
   };
 
@@ -93,7 +95,7 @@ export const Registration = () => {
         <input type="password" value={formValues.confirmPassword} onChange={handleChange} placeholder="********" id="confirmPassword" name="confirmPassword" />
         <p className="errors"> {formErrors.confirmPassword}</p>
         <button type="submit" className="button-forms"> Register</button>
-        <p style={{ backgroundColor: 'white', color: colorChange ? 'red' : 'green' }}> {registrationMessage}</p>
+        <ToastContainer />
       </form>
       <Link to="/login">
         <button className="link-button">
