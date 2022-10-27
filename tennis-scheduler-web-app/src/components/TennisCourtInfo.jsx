@@ -3,12 +3,33 @@ import AddTimeslot from "./AddTimeslot";
 import { postTimeslot } from "../api/TimeslotApi"
 import "../styles/courts.css";
 import { Link } from "react-router-dom";
+import jwtDecode from "jwt-decode";
+import { useEffect } from "react";
 
 export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) => {
 
   const [timeslotErrors, setTimeslotErrors] = useState("");
   const [buttonName, setButtonName] = useState("Add timeslot");
   const [showAddTimeslot, setAddTimeslot] = useState(false);
+  const [tennisPlayer, setTennisPlayer] = useState(false);
+  const [admin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    whoAmI()
+  }, []);
+
+  const getUserRole = () => {
+    if (localStorage.getItem("token"))
+      return jwtDecode(localStorage.getItem("token")).role;
+    else return ""
+  }
+
+  const whoAmI = () => {
+    if (getUserRole() === 'ROLE_TENNIS_PLAYER')
+      setTennisPlayer(true);
+    if (getUserRole() === 'ROLE_ADMIN')
+      setAdmin(true);
+  }
 
   const addTimeslot = async (timeslot) => {
 
@@ -42,12 +63,12 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
           <p> {surfaceType} </p>
         </div>
         <button className="addTimeslotBtn" onClick={add}>{buttonName}</button>
-            <Link to={`/court/${id}`}>
-              <button className="addTimeslotBtn" >Change</button>
-            </Link>
-            <Link to="/court">
-              <button className="addTimeslotBtn"> Delete</button>
-            </Link> 
+        { admin ? <span><Link to={`/court/${id}`}>
+          <button className="addTimeslotBtn" >Change</button>
+        </Link>
+        <Link to="/court">
+          <button className="addTimeslotBtn"> Delete</button>
+        </Link></span> : ""}
       </div>
       {showAddTimeslot && <AddTimeslot errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
     </>

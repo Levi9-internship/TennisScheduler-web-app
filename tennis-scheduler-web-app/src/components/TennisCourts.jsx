@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {TennisCourtInfo} from "./TennisCourtInfo";
-import RolandGarrosCentral from "../assets/RolandGarrosCentral.jpg";
 import {getTennisCourts} from "../api/TennisCourtApi";
 import { Link } from "react-router-dom";
 
 import "../styles/courts.css";
 
 export const TennisCourts = () => {
-
   const [tennisCourts, setTennisCourts] = useState([]);
   const [errorTenniCourt, setErrorTennisCourt] = useState("");
   const [isShow, setIsShow] = useState(false);

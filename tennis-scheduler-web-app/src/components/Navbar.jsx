@@ -20,7 +20,7 @@ export const NavbarStart = () => {
               Register
             </Link>
             <Link className="nav-link" to="/court">
-           New tennis coart
+              New tennis court
             </Link>
           </Nav>
         </Navbar.Collapse>
