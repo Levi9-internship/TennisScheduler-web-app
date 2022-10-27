@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import '../styles/ProfileComponent.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { getLoggedUser } from "../api/PersonApi";
+import { getLoggedUser, changeProfileInformation } from "../api/PersonApi";
 
 export const EditProfile = () => {
-    const [user, setUser] = useState({ id: 0, firstName: "", lastName: "", email: "", phoneNumber: "", birthday: "", gender: "", address: { id: 0, street: "", city: "", number: 0, country: "" } });
+    const [user, setUser] = useState({ id: 0, firstName: "", lastName: "", email: "", phoneNumber: "", birthday: undefined, gender: undefined, address: { id: 0, street: "", city: "", number: undefined, country: "" } });
     const [formErrors, setFormErrors] = useState({});
     const [errorMessage, setErrorMessage] = useState("")
+    const [isFormEmpty, setIsFormEmpty] = useState(true)
 
     useEffect(() => {
         getLoggedUser().then((response) => setUser(response.data)).catch(() => setErrorMessage("Something went wrong, try again."))
@@ -22,20 +23,28 @@ export const EditProfile = () => {
     const editProfileSubmit = e => {
         e.preventDefault();
         setFormErrors(validation(user));
+        if (Object.keys(formErrors).length === 0 && !isFormEmpty) {
+            changeProfileInformation(user).then((response) => {
+                setUser(response.data);
+                toast.success("You successfully changed your data!", { position: toast.POSITION.BOTTOM_CENTER })
+            }).catch(() => toast.error("Failed to change information. Try again", { position: toast.POSITION.BOTTOM_CENTER }))
+        }
     };
 
     const validation = form => {
         const errors = {};
         const phoneRegex = new RegExp(/^$|^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i);
         const lettersRegex = new RegExp(/^$|^[A-Za-z ]+$/);
-        const streetNumberRegex = new RegExp(/^([a-zA-z0-9 /\\''(),-\s]{2,20})$/);
+        const streetNumberRegex = new RegExp("^\\d+$");
+
         if (!form.firstName) errors.name = "Name is required!";
         if (!form.lastName) errors.surname = "Surname is required!";
         if (!phoneRegex.test(form.phoneNumber)) errors.phoneNumber = "Please enter valid format for phone number!"
         if (!lettersRegex.test(form.address.country)) errors.country = "Only letters are valid!"
         if (!lettersRegex.test(form.address.city)) errors.city = "Only letters are valid!"
         if (!lettersRegex.test(form.address.street)) errors.street = "Only letters are valid!"
-        if (!streetNumberRegex.test(form.address.number)) errors.number = "Wrong format for street number!"
+        if (!streetNumberRegex.test(form.address.number)) errors.number = "Only numbers are allowed!"
+        setIsFormEmpty(false);
         return errors;
     };
 
@@ -59,7 +68,7 @@ export const EditProfile = () => {
                                 <input type="text" value={user.lastName} onChange={handleChange} className="form-control" id="surname" name="lastName" />
                                 <p className="errors">{formErrors.surname}</p>
                                 <label htmlFor="phone">Phone number</label>
-                                <input type="text" value={user.phoneNumber} onChange={handleChange} className="form-control" id="phone" name="phoneNumber" />
+                                <input type="number" value={user.phoneNumber} onChange={handleChange} className="form-control" id="phone" name="phoneNumber" />
                                 <p className="errors">{formErrors.phoneNumber} </p>
                                 <label htmlFor="gender">Gender</label>
                                 <div className="row ">
@@ -105,7 +114,7 @@ export const EditProfile = () => {
                                     <button className="button-save" type="submit" onClick={editProfileSubmit}> Save changes</button></div>
                             </div>
                             <p className="errors">{errorMessage}</p>
-                            <ToastContainer/>
+                            <ToastContainer />
                         </div>
                     </div>
                 </div>

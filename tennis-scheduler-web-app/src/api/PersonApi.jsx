@@ -22,4 +22,12 @@ export async function getUserById(id) {
 
 export async function getTennisPlayers() {
     return await axiosInstance.get('persons/');
-  }
+}
+
+export async function changePassword(passwordData) {
+    return await axiosInstance.put('authentication/change-password', passwordData);
+}
+
+export async function changeProfileInformation(personalInformation) {
+    return await axiosInstance.put(`persons/${personalInformation.id}`, personalInformation);
+}
