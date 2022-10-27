@@ -10,6 +10,9 @@ export const Login = () => {
   const loginSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validation(formValues));
+    localStorage.setItem("token",
+     "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJUZW5uaXNTY2hlZHVsZXIiLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTY2Njg3NjE5MSwiZXhwIjoxNjY2OTYyNTkxfQ.gSx6XD43KJDkeD5kVAaHmnXboY9JocIUy5BKkOGwUWq9x3ywVY14n3eV0zocjQGZ8U4xg817JlpuViuw7obPRw")
+    localStorage.setItem("role", "ROLE_ADMIN")
     //there will be login request, and loginMessage will be set if login is failed
   };
 
