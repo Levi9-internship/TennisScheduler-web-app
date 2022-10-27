@@ -4,7 +4,7 @@ import { getTimeslot } from "../api/TimeslotApi";
 import { updateTimeslot } from '../api/TimeslotApi'
 import { useState } from 'react';
 
-const UpdateTimeslot = ({ setTimeslots,timeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson }) => {
+const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson }) => {
 
     const [invalidDate, setInvalidDate] = useState("");
     const [invalidStarTime, setInvalidStartTime] = useState("");
@@ -28,15 +28,12 @@ const UpdateTimeslot = ({ setTimeslots,timeslots, existingTimeslot, setTimeslot,
             "courtId": timeslot.tennisCourtId
         };
 
-        updateTimeslot(timeslot.id, newTimeslot).then(() => {
+        await updateTimeslot(timeslot.id, newTimeslot).then(() => {
             setTimeslotErrors("");
         }).catch((errorMessage) => {
             setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
         })
-
-        
-        
-        }
+    }
 
     const onSubmit = (e) => {
 
@@ -60,16 +57,13 @@ const UpdateTimeslot = ({ setTimeslots,timeslots, existingTimeslot, setTimeslot,
         }
 
         addTimeslot({ id, updatedStartTime, updatedEndTime, updatedDate, personId, tennisCourtId });
-        window.location.reload(false);
+
         setTimeslotDate(updatedDate);
         setStartTime(updatedStartTime);
         setEndTime(updatedEndTime);
-        setTimeslots(timeslots);
-
+        window.location.reload(false);
     }
-
-
-
+    
     return (
         <Form className='form' onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -111,7 +105,6 @@ const UpdateTimeslot = ({ setTimeslots,timeslots, existingTimeslot, setTimeslot,
                             {tennisCourt.name}
                         </option>
                     ))}
-
                 </Form.Select>
             </Form.Group>
             <Form.Group>

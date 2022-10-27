@@ -14,22 +14,23 @@ const Timeslots = () => {
       setTimeslots(data.data);
       setErrorMessage("");
       setIsShow(false);
-    }).catch(()=>{
+    }).catch(() => {
       setErrorMessage("Couldn't load timeslots.");
       setIsShow(true);
     })
   }, []);
+
   return (
     <div className="timeslotList">
       <h1>Timeslots</h1>
       {isShow ? <h2 className="error-msg">{errorMessage}</h2> : null}
-      {timeslots.map((timeslot) => (
-          <Timeslot
-            key={timeslot.id}
-            newTimeslot={timeslot}
-            setTimeslots={setTimeslots}
-            timeslots={timeslots}
-          />
+      {timeslots.sort((a, b) => a.id > b.id ? 1 : -1).map((timeslot) => (
+        <Timeslot
+          key={timeslot.id}
+          newTimeslot={timeslot}
+          setTimeslots={setTimeslots}
+          timeslots={timeslots}
+        />
       ))}
     </div>
   )
