@@ -1,0 +1,55 @@
+.home-card {
+    width: 50%;
+    height: 100%;
+}
+
+.profile-photo-edit {
+    height: 40%;
+    width: 100%;
+}
+
+.profile-photo {
+    height: 80%;
+    width: 100%;
+}
+
+.informations {
+    text-align: left;
+}
+
+.button-edit {
+    border:  2px solid gray;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+    width: 70%;
+}
+
+.button-save {
+    border:  2px solid gray;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 0, 0.726);
+    color: black;
+    font-weight: bold;
+    width: 70%;
+}
+
+.button-profile {
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+}
+
+.label-inf {
+    padding-left: 3px;
+    padding-right: 3px;
+}
