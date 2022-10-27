@@ -60,3 +60,12 @@
     font-weight: bolder;
     color: rgb(92, 30, 13);
 }
+
+.back-button-div{
+    width: 90%;
+    text-align: right;
+}
+
+.cursor{
+    cursor: pointer;
+}

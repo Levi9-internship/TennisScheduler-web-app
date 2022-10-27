@@ -10,7 +10,6 @@ export const ChangePassword = props => {
 
     const [formValues, setFormValues] = useState({ oldPassword: "", newPassword: "", confirmPassword: "" });
     const [formErrors, setFormErrors] = useState({});
-    const [passwordMessage, setPasswordMessage] = useState("");
     const [isFormEmpty, setIsFormEmpty] = useState(false);
 
     const changePasswordSubmit = e => {
@@ -19,7 +18,6 @@ export const ChangePassword = props => {
         if(Object.keys(formErrors).length === 0 && !isFormEmpty){
             changePassword(formValues).then((response)=>{
                 localStorage.setItem("token", response.data.userTokenStateDto.accessToken);
-                console.log(localStorage.getItem('token'));
             toast.success("You successfully changed your password!", { position: toast.POSITION.BOTTOM_CENTER }); })
             .catch(()=>  toast.error("Failed to change password. Try again", { position: toast.POSITION.BOTTOM_CENTER }))
         }
@@ -61,7 +59,6 @@ export const ChangePassword = props => {
                         className="form-control" onChange={handleChange} value={formValues.confirmPassword} />
                     <p className="errors">{formErrors.confirmPassword}</p>
                 </form>
-                <p className="errors">{passwordMessage} </p>
             </Modal.Body>
             <Modal.Footer>
                 <button onClick={props.close} className="button-profile">Close</button>

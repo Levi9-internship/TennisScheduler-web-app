@@ -4,6 +4,7 @@ import { getTennisPlayers } from "../api/PersonApi";
 import Table from 'react-bootstrap/Table';
 import { Link } from "react-router-dom";
 import Moment from 'moment'
+import { TennisPlayerInfo } from "./TennisPlayerInfo";
 
 export const TennisPlayers = () => {
     const [players, setPlayers] = useState([]);
@@ -28,20 +29,19 @@ export const TennisPlayers = () => {
                         <th>Email</th>
                         <th>Birthday</th>
                         <th>Gender</th>
-                        <th>Profile</th>
                     </tr>
                 </thead>
                 <tbody>
                     {players.map((tennisPlayer) => {
                         return (
-                            <tr>
-                                <td>{tennisPlayer.firstName} </td>
-                                <td>{tennisPlayer.lastName} </td>
-                                <td>{tennisPlayer.email} </td>
-                                <td> {tennisPlayer.birthday ? Moment(tennisPlayer.birthday).format('MMMM Do YYYY.') : "/"}</td>
-                                <td>{tennisPlayer.gender} </td>
-                                <td> <Link to={{ pathname: "/profile/" + tennisPlayer.id }} className="profile-info-link"> See profile</Link></td>
-                            </tr>
+                            <TennisPlayerInfo
+                                id={tennisPlayer.id}
+                                firstName={tennisPlayer.firstName}
+                                lastName= {tennisPlayer.lastName}
+                                email={tennisPlayer.email}
+                                birthday={tennisPlayer.birthday}
+                                gender={tennisPlayer.gender}
+                            />
                         )
                     })}
                 </tbody>

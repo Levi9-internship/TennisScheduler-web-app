@@ -15,7 +15,7 @@ export const Profile = () => {
 
     useEffect(() => {
         if (id)
-            getUserById(parseInt(id)).then((response) => setUser(response.data)).catch(() => setErrorMessage("Failed to load profile informations."))
+          getUserById(parseInt(id)).then((response) => setUser(response.data)).catch(() => setErrorMessage("Failed to load profile informations."))
         else {
             getLoggedUser().then((response) => setUser(response.data)).catch(() => setErrorMessage("Failed to load profile informations."))
             setCheck(true)
@@ -45,7 +45,7 @@ export const Profile = () => {
                            { user.birthday ?  <p>  { Moment(user.birthday).format('MMMM Do YYYY.')} </p> : "/"} 
                             <p>{user.gender}</p>
                             {user.address.street ? <p> {user.address.street} {user.address.number} {user.address.city} {user.address.country} </p> : "/"}
-                            {check ? <div className="row">
+                           {check ? <div className="row">
                                 <div className="col">
                                     <ChangePassword show={showModal} close={() => setShowModal(false)}>
                                     </ChangePassword>
@@ -56,7 +56,7 @@ export const Profile = () => {
                                 <div className="col">
                                     <Link to={{ pathname: "/profile-info" }}><button className="button-profile"> Edit profile</button> </Link>
                                 </div>
-                            </div> : ""}
+                            </div> : <div className="back-button-div"> <Link to="/players"><button className="button-profile"> Back</button> </Link></div>}
                         </div>
                     </div>
                 </div>
