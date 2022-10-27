@@ -1,12 +1,15 @@
+
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
 import jwtDecode from 'jwt-decode'
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const NavbarStart = () => {
+  const [tennisPlayer, setTennisPlayer] = useState(false);
+  const [admin, setAdmin] = useState(false);
+  const navigation = useNavigate();
 
   const getUserRole = () => {
     if (localStorage.getItem("token"))
@@ -18,16 +21,18 @@ export const NavbarStart = () => {
     whoAmI()
   }, []);
 
+  const logout = () => {
+    localStorage.clear();
+    navigation('');
+    window.location.reload();
+  }
+
   const whoAmI = () => {
     if (getUserRole() === 'ROLE_TENNIS_PLAYER')
       setTennisPlayer(true);
     if (getUserRole() === 'ROLE_ADMIN')
       setAdmin(true);
   }
-
-  const [tennisPlayer, setTennisPlayer] = useState(false);
-  const [admin, setAdmin] = useState(false);
-
 
   return (
     <Navbar bg="light" expand="lg" fixed="top">
@@ -37,18 +42,34 @@ export const NavbarStart = () => {
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Link className="nav-link" to="/login">
-              Login
-            </Link>
-            <Link className="nav-link" to="/registration">
-              Register
-            </Link>
-            {admin ? <span>
-            <Link className="nav-link" to="/timeslots">
-              Timeslots
-            </Link></span> : ""}
-          </Nav>
+          {(() => {
+            if (!admin && !tennisPlayer) {
+              return (
+                <Nav className="me-auto">
+                  <Link className="nav-link" to="/login">Login</Link>
+                  <Link className="nav-link" to="/registration">Register</Link>
+                </Nav>
+              )
+            } if (admin)
+              return (
+                <>
+                  <Nav className="me-auto">
+                    <Link className="nav-link" to="/profile">Profile</Link>
+                    <Link className="nav-link" to="/timeslots">Timeslots</Link>
+                  </Nav>
+                  <button className="logout-button" onClick={logout}>Log out</button>
+                </>
+              )
+            if (tennisPlayer)
+              return (
+                <>
+                  <Nav className="me-auto">
+                    <Link className="nav-link" to="/profile">Profile</Link>
+                  </Nav>
+                  <button className="logout-button" onClick={logout}>Log out</button>
+                </>
+              )
+          })()}
         </Navbar.Collapse>
       </Container>
     </Navbar>
