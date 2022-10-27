@@ -17,8 +17,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration/>} />
         <Route path="/" element={<TennisCourts />} />
-        <Route path="/court" element={<TennisCourtAddChange />} />
-        <Route path="/court/:id" element={<TennisCourtAddChange />} />
+        <Route path="/tennis-court" element={<TennisCourtAddChange />} />
+        <Route path="/tennis-court/:id" element={<TennisCourtAddChange />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile-info" element={<EditProfile />} />
       </Routes>

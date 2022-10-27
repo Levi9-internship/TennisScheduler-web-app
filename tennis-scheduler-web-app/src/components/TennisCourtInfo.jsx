@@ -73,7 +73,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
           <p> {surfaceType} </p>
         </div>
         { (admin && tennisPlayer) ? <button className="addTimeslotBtn" onClick={add}>{buttonName}</button> : ""}
-        { admin ? <span><Link to={`/court/${id}`}>
+        { admin ? <span><Link to={`/tennis-court/${id}`}>
           <button className="addTimeslotBtn" >Change</button>
         </Link>
         <button className="addTimeslotBtn" onClick={deleteTC}> Delete</button>

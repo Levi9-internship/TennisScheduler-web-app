@@ -26,7 +26,7 @@ export const TennisCourtAddChange = () => {
     };
 
     const setImages = e => {
-        var im = e.target.value.split("fakepath")[1].substring(1);
+        const im = e.target.value.split("fakepath")[1].substring(1);
         setImage(im)
         tennisCourt.image = im
         setCheck(true)
@@ -39,17 +39,24 @@ export const TennisCourtAddChange = () => {
         setFormErrors(validation(tennisCourt))
         if (Object.keys(formErrors).length === 0 && !emptyForm) {
             if (id)
-
-                changeTennisCourt(tennisCourt).then(() => {
-                    navigate('/');
-                    window.location.reload()
-                })
+                tennisCourtChange();
             else
-                addTennisCourt(tennisCourt).then(() => {
-                    navigate('/');
-                    window.location.reload()
-                })
+                tennisCourtAdd();
         }
+    }
+
+    const tennisCourtChange = () => {
+        changeTennisCourt(tennisCourt).then(() => {
+            navigate('/');
+            window.location.reload()
+        })
+    }
+
+    const tennisCourtAdd = () => {
+        addTennisCourt(tennisCourt).then(() => {
+            navigate('/');
+            window.location.reload()
+        })
     }
 
     const validation = (court) => {
@@ -76,7 +83,6 @@ export const TennisCourtAddChange = () => {
 
     useEffect(() => {
         if (id)
-
             getTennisCourt(id).then(
                 response => {
                     setTennisCourt(response.data)
