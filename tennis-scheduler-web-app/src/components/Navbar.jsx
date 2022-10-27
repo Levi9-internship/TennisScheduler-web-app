@@ -1,4 +1,3 @@
-
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -65,6 +64,7 @@ export const NavbarStart = () => {
                 <>
                   <Nav className="me-auto">
                     <Link className="nav-link" to="/profile">Profile</Link>
+                    <Link className="nav-link" to="/timeslots">Timeslots</Link>
                   </Nav>
                   <button className="logout-button" onClick={logout}>Log out</button>
                 </>
