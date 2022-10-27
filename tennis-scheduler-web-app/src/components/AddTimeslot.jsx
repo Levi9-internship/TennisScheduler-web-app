@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import "../styles/courts.css";
 
-const AddTimeslot = ({ onAdd, id, errorMessage}) => {
+const AddTimeslot = ({ onAdd, id, errorMessage }) => {
 
   const [timeslotDate, setTimeslotDate] = useState("");
   const [startTime, setStartTime] = useState("");
@@ -20,15 +20,15 @@ const AddTimeslot = ({ onAdd, id, errorMessage}) => {
     setInvalidStartTime("");
     setInvalidEndTime("");
 
-    if(timeslotDate===""){
+    if (timeslotDate === "") {
       setInvalidDate("Please choose date");
       return
     }
-    if(startTime===""){
+    if (startTime === "") {
       setInvalidStartTime("Please choose start time");
       return
     }
-    if(endTime===""){
+    if (endTime === "") {
       setInvalidEndTime("Please choose end time");
       return
     }
@@ -48,9 +48,9 @@ const AddTimeslot = ({ onAdd, id, errorMessage}) => {
           type="date"
           value={timeslotDate}
           onChange={(e) => setTimeslotDate(e.target.value.toString())} />
-          <Form.Text className="text-muted">
-            <p>{invalidDate}</p>
-          </Form.Text>
+        <Form.Text className="text-muted">
+          <p>{invalidDate}</p>
+        </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Start time:</Form.Label>
@@ -58,18 +58,18 @@ const AddTimeslot = ({ onAdd, id, errorMessage}) => {
           type="time"
           value={startTime}
           onChange={(e) => setStartTime(e.target.value.toString())} />
-          <Form.Text className="text-muted">
-            <p>{invalidStarTime}</p>
-          </Form.Text>
+        <Form.Text className="text-muted">
+          <p>{invalidStarTime}</p>
+        </Form.Text>
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>End time:</Form.Label>
         <Form.Control type="time"
           value={endTime}
           onChange={(e) => setEndTime(e.target.value.toString())} />
-          <Form.Text className="text-muted">
-            <p>{invalidEndTime}</p>
-          </Form.Text>
+        <Form.Text className="text-muted">
+          <p>{invalidEndTime}</p>
+        </Form.Text>
       </Form.Group>
       <Button variant="primary" type="submit">
         Save reservation

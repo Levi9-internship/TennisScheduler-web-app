@@ -19,7 +19,7 @@ const Timeslots = () => {
       {timeslots.map((timeslot) => (
           <Timeslot
             key={timeslot.id}
-            timesl={timeslot}
+            newTimeslot={timeslot}
             setTimeslots={setTimeslots}
             timeslots={timeslots}
           />

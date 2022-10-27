@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
-import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
-import '../styles/ProfileComponent.css';
 import { getLoggedUser } from "../api/PersonApi";
+import '../styles/ProfileComponent.css';
 
 export const EditProfile = () => {
     const [user, setUser] = useState({ id: 0, firstName: "", lastName: "", email: "", phoneNumber: "", birthday: "", gender: "", address: { id: 0, street: "", city: "", number: 0, country: "" } });

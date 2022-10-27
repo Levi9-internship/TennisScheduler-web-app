@@ -69,7 +69,7 @@ export const NavbarStart = () => {
                   <button className="logout-button" onClick={logout}>Log out</button>
                 </>
               )
-          })()}
+          })()} 
         </Navbar.Collapse>
       </Container>
     </Navbar>
