@@ -17,6 +17,7 @@ export async function deleteTimeslot(id) {
 }
 
 export async function updateTimeslot(id,timeslot) {
+    timeslot.id = id;
     const response = await axiosInstance.put(`timeslots/${id}`,timeslot);
     return response;
 }
