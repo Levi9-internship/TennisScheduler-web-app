@@ -17,7 +17,7 @@ export async function addTennisCourt(tennisCourt) {
 }
 
 export async function changeTennisCourt(tennisCourt) {
-  const response = await axiosInstance.put('tennis-courts/', tennisCourt);
+  const response = await axiosInstance.put(`tennis-courts/${tennisCourt.id}`, tennisCourt);
   return response;
 }
 

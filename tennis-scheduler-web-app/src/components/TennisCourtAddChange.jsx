@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useEffect } from 'react';
-import { addTennisCourt, getTennisCourt } from '../api/TennisCourtApi'
+import { addTennisCourt, getTennisCourt , changeTennisCourt} from '../api/TennisCourtApi'
 import { useNavigate, useParams } from "react-router-dom";
 
 export const TennisCourtAddChange = () => {
@@ -34,10 +34,16 @@ export const TennisCourtAddChange = () => {
         e.preventDefault()
         tennisCourt.address = address
         tennisCourt.surfaceType = surface
-        addTennisCourt(tennisCourt).then(() =>
-            navigate('/'),
-            window.location.reload()
-        )
+        if (id)
+            changeTennisCourt(tennisCourt).then(() => {
+                navigate('/'),
+                window.location.reload()
+            })
+        else
+            addTennisCourt(tennisCourt).then(() => {
+                navigate('/'),
+                window.location.reload()
+            })
     }
 
     const handleChangeSurfaceType = e => {
@@ -72,12 +78,12 @@ export const TennisCourtAddChange = () => {
             </div>
             <div>
                 <label>Image</label>
-                <input type="file" class="form-control" onChange={setImages} />
+                <input type="file" className="form-control" onChange={setImages} />
             </div>
             {
                 check ? <img className='picture-preview' src={require('../images/' + image)} /> : ""
             }
-            <select class="form-select select-option" value={changedType} onChange={handleChangeSurfaceType}>
+            <select className="form-select select-option" value={changedType} onChange={handleChangeSurfaceType}>
                 <option value="GRASS" onSelect={handleChangeSurfaceType}>GRASS</option>
                 <option value="CLAY" onSelect={handleChangeSurfaceType}>CLAY</option>
                 <option value="HARD" onSelect={handleChangeSurfaceType}>HARD</option>
