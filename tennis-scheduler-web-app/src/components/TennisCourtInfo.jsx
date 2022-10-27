@@ -2,9 +2,10 @@ import { useState } from "react";
 import AddTimeslot from "./AddTimeslot";
 import { postTimeslot } from "../api/TimeslotApi"
 import "../styles/courts.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { useEffect } from "react";
+import { deleteTennisCourt } from '../api/TennisCourtApi'
 
 export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) => {
 
@@ -24,11 +25,20 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
     else return ""
   }
 
+  const navigate = useNavigate();
+
   const whoAmI = () => {
     if (getUserRole() === 'ROLE_TENNIS_PLAYER')
       setTennisPlayer(true);
     if (getUserRole() === 'ROLE_ADMIN')
       setAdmin(true);
+  }
+
+  const deleteTC = () => {
+    deleteTennisCourt(id).then (
+      navigate('/'),
+      window.location.reload()
+    )
   }
 
   const addTimeslot = async (timeslot) => {
@@ -66,9 +76,8 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
         { admin ? <span><Link to={`/court/${id}`}>
           <button className="addTimeslotBtn" >Change</button>
         </Link>
-        <Link to="/court">
-          <button className="addTimeslotBtn"> Delete</button>
-        </Link></span> : ""}
+        <button className="addTimeslotBtn" onClick={deleteTC}> Delete</button>
+        </span> : ""}
       </div>
       {showAddTimeslot && <AddTimeslot errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
     </>
