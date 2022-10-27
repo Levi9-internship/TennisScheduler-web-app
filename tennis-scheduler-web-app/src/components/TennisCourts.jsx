@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import {TennisCourtInfo} from "./TennisCourtInfo";
 import RolandGarrosCentral from "../assets/RolandGarrosCentral.jpg";
 import {getTennisCourts} from "../api/TennisCourtApi";
+import { Link } from "react-router-dom";
+
 import "../styles/courts.css";
 
 export const TennisCourts = () => {
@@ -24,14 +26,14 @@ export const TennisCourts = () => {
 
   return (
     <div className="court">
-      <h1 className="courtTitle">Tennis courts</h1>
+      {/* <h1 className="courtTitle">Tennis courts</h1> */}
       {isShow ? <h2 className="error-msg">{errorTenniCourt}</h2> : null}
       <div className="courtList">
         {tennisCourts.map((tennisCourt) => (
-          <div className="courtItemBtn" key={tennisCourt.id}>
+          <div className="courtItemCard" key={tennisCourt.id}>
             <TennisCourtInfo
               id={tennisCourt.id}
-              image={RolandGarrosCentral}
+              image={tennisCourt.image}
               name={tennisCourt.name}
               description={tennisCourt.description}
               surfaceType={tennisCourt.surfaceType}

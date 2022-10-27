@@ -10,7 +10,9 @@ export const Login = () => {
   const loginSubmit = (e) => {
     e.preventDefault();
     setFormErrors(validation(formValues));
-    //there will be login request, and loginMessage will be set if login is failed
+    //there will be login request, it's done on another branch, for now it's hardcoded
+    localStorage.setItem("token", "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJUZW5uaXNTY2hlZHVsZXIiLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjY4MTIxMjgsImV4cCI6MTY2Njg5ODUyOH0.2RPmmBO7q8lqX4KrJ0bGijzvYPaNkwwI7XRP4U-3Fk40KP7l5dhgoD6evhHNXlNlbu9yLvmF7uYCR-7OtSq-QA")
+    localStorage.setItem("role", "ROLE_ADMIN")
   };
 
   const handleChange = (e) => {

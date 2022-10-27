@@ -1,5 +1,5 @@
 .court {
-  width: 100%;
+  width: 90%;
   height: auto;
   display: flex;
   justify-content: center;
@@ -15,14 +15,14 @@
 .courtList {
   height: auto;
   display: contents;
-  width: 80vw;
+  width: 80%;
 }
 
 /* MENU ITEM STYLING */
 
 .courtItem {
   border-radius: 30px;
-  
+  background-color: whitesmoke;
   height: max-content;
   margin: 20px 20px 0px 20px;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
@@ -35,7 +35,7 @@
 
 .courtItem div {
   width: 100%;
-  height: 190px;
+  height: 160px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -44,6 +44,8 @@
 .courtImage {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+  height:25rem;
+  width:100%;
 }
 
 .courtItem h1,
@@ -80,25 +82,28 @@
 }
 
 .addTimeslotBtn{
-
   border: none;
   padding: 10px;
+  margin-left: 5px;
+  margin-top: 5px;
   cursor: pointer;
-  width: 100%;
+  width: 32%;
   background-color: rgba(255, 255, 0, 0.726);
   color: rgb(4, 73, 4);
   font-weight: bold;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  border-radius: 10px;
 }
+
 .form{
   background-color: white;
   margin: 20px;
   padding: 20px;
   border-radius: 20px;
 }
-.courtItemBtn{
-  width: 80vw;
+.courtItemCard{
+  margin-top: 3rem;
+  width: 70%;
+  height: max-content;
 }
 
 .form{
@@ -112,3 +117,61 @@
 .text-muted p{
 color: rgb(158, 11, 11);
 }
+
+.addTennisCourt-form {
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 0, 0.726);
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-top: 4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  color: whitesmoke;
+  align-items: center;
+  justify-content: center;
+  height: max-content;
+}
+
+.addTennisCourt-input {
+  color: black;
+  height: max-content;
+  margin-left: 5%;
+  margin-right: 1rem;
+  width: 20rem;
+}
+
+.addTennisCourt-cancelBtn {
+  color:white;
+  border-radius: 10px;
+  height: max-content;
+  margin-left: 5%;
+  margin-right: 1rem;
+  width: 5rem;
+  padding: 12px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 0, 0.726);
+}
+
+.addTennisCourt-addButton {
+  color: black;
+  font-weight: bold;
+  border-radius: 10px;
+  height: max-content;
+  margin-left: 5%;
+  margin-right: 1rem;
+  width: 5rem;
+  padding: 12px;
+  background-color: rgba(255, 255, 0, 0.726);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.addTennisCourtButton{
+  border: 1px solid rgba(255, 255, 0, 0.726);
+}
+
+.picture-preview {
+  height: 10rem;
+  width: 20rem;
+}
+

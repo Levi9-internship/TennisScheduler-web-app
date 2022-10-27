@@ -19,6 +19,9 @@ export const NavbarStart = () => {
             <Link className="nav-link" to="/registration">
               Register
             </Link>
+            <Link className="nav-link" to="/court">
+           New tennis coart
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
