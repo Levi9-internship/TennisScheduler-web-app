@@ -42,6 +42,7 @@ const AddTimeslot = ({ onAdd, id, errorMessage}) => {
 
   return (
     <Form className='form' onSubmit={onSubmit}>
+      <div className="form-position"> 
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Choose date:</Form.Label>
         <Form.Control
@@ -77,6 +78,7 @@ const AddTimeslot = ({ onAdd, id, errorMessage}) => {
       <Form.Text className="text-muted">
         <p>{errorMessage}</p>
       </Form.Text>
+      </div>
     </Form>
   )
 }

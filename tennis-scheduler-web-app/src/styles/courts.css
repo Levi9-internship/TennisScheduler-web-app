@@ -99,7 +99,16 @@
   margin: 20px;
   padding: 20px;
   border-radius: 20px;
+  align-content: center;
 }
+.form-position{
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  align-items: center;
+  justify-content: center;
+}
+
 .courtItemCard{
   margin-top: 3rem;
   width: 70%;
