@@ -9,7 +9,7 @@ export const TennisCourtAddChange = () => {
     const [image, setImage] = useState("")
     const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: 0, description: "", image: "", address: address })
     const [ check, setCheck] = useState(false);
-
+    const id = useParams().id
     const navigate = useNavigate();
 
     const handleChange = e => {
@@ -32,6 +32,7 @@ export const TennisCourtAddChange = () => {
     const onSubmit = e => {
         e.preventDefault()
         tennisCourt.address = address
+        tennisCourt.surfaceType = surface
         addTennisCourt(tennisCourt).then(() =>
             console.log(tennisCourt),
             navigate('/'),
@@ -39,15 +40,11 @@ export const TennisCourtAddChange = () => {
         )
     }
 
-    const persons = ["GRASS", "CLAY", "HARD"]
-
     const handleChangeSurfaceType = e => {
         setSurface(e.target.value)
     }
 
     const onCancel = e => navigate('/')
-
-    const id = useParams().id
 
     useEffect(() => {
         if (id)
@@ -78,37 +75,12 @@ export const TennisCourtAddChange = () => {
             {
                 check ? <img className='picture-preview' src={require('../images/' + image)} /> : ""   
             }
-           
-            {/* POSTAVI VREDNOST */}
-            {/* <div>
-                <select value={tennisCourt.surfaceType} onChange={handleChangeSurfaceType}>
-                    <option value="GRASS">GRASS</option>
-                    <option value="CLAY">CLAY</option>
-                    <option value="HARD">HARD</option>
-                </select></div> */}
             <div>
-                {/* PROMENI */}
-                {/* <DropdownButton
-            title='Choose'
-            value={surface}
-            name="surfaceType"
-            id="dropdown-menu-align-right" onSelect={handleChangeSurfaceType}>
-                    <Dropdown.Item eventKey="GRASS">GRASS</Dropdown.Item>
-                    <Dropdown.Item eventKey="CLAY">CLAY</Dropdown.Item>
-                    <Dropdown.Item eventKey="HARD">HARD</Dropdown.Item>
-            </DropdownButton>*/}
-                {/* <Form.Group>
-                    <Form.Label>Surface</Form.Label>
-                    <Form.Select>
-                        {persons.map(person => (
-                            <option key={person}
-                                value={person}
-                                onSelect={handleChangeSurfaceType}>
-                                {person}
-                            </option>
-                        ))}
-                    </Form.Select>
-                </Form.Group> */}
+                <select className="dropdown-style" value={tennisCourt.surfaceType} onChange={handleChangeSurfaceType}>
+                    <option value="GRASS" onSelect={handleChangeSurfaceType}>GRASS</option>
+                    <option value="CLAY" onSelect={handleChangeSurfaceType}>CLAY</option>
+                    <option value="HARD" onSelect={handleChangeSurfaceType}>HARD</option>
+                </select>
             </div>
             <div>
                 <label>Country</label>
