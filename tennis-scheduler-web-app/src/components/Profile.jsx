@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import '../styles/ProfileComponent.css';
 import { Link, useParams } from 'react-router-dom'
 import { ChangePassword } from "./ChangePassword";
 import { getLoggedUser, getUserById } from "../api/PersonApi";

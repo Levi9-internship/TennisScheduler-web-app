@@ -14,7 +14,7 @@ export const TennisPlayerInfo = (tennisPlayer) => {
             <td>{tennisPlayer.firstName} </td>
             <td>{tennisPlayer.lastName} </td>
             <td>{tennisPlayer.email} </td>
-            <td>{Moment(tennisPlayer.birthday).format('MMMM Do YYYY.')} </td>
+            <td>{tennisPlayer.birthday ? Moment(tennisPlayer.birthday).format('MMMM Do YYYY.') : "/"} </td>
             <td>{tennisPlayer.gender} </td>
         </tr>
     )

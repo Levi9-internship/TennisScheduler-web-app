@@ -42,7 +42,7 @@ export const Login = () => {
       <h2 className="header-style"> Login</h2>
       <form onSubmit={loginSubmit} className="login-form">
         <label htmlFor="email"> Your email</label>
-        <input type="text" value={formValues.email} onChange={handleChange} placeholder="youremail@mail.com" id="email" name="email" />
+        <input type="text" value={formValues.email} onChange={handleChange} placeholder="email" id="email" name="email" />
         <p className="errors"> {formErrors.email}</p>
         <label htmlFor="password"> Your password</label>
         <input type="password" value={formValues.password} onChange={handleChange} placeholder="********" id="password" name="password" />

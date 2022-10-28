@@ -11,7 +11,6 @@ import { EditProfile } from './components/EditProfile';
 import { TennisPlayers } from './components/TennisPlayers';
 import Timeslots from "./pages/Timeslots";
 
-
 function App() {
   return (
     <div className="App">

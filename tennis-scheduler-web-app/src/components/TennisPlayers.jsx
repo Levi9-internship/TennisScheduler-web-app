@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect  } from "react";
 import { getTennisPlayers } from "../api/PersonApi";
 import Table from 'react-bootstrap/Table';
-import { Link } from "react-router-dom";
-import Moment from 'moment'
 import { TennisPlayerInfo } from "./TennisPlayerInfo";
 
 export const TennisPlayers = () => {
