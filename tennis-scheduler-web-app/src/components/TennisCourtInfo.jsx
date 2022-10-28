@@ -1,6 +1,8 @@
 import { useState } from "react";
 import AddTimeslot from "./AddTimeslot";
 import {postTimeslot} from "../api/TimeslotApi"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../styles/courts.css";
 
 export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) => {
@@ -20,6 +22,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
 
     postTimeslot(newTimeslot).then(() => {
       setTimeslotErrors("");
+      toast.success('You sucessfully reserved your timeslot!', { position: toast.POSITION.BOTTOM_CENTER })
     }).catch((errorMessage) => {
         setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
     })
