@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddTimeslot from "./AddTimeslot";
 import { postTimeslot } from "../api/TimeslotApi"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "../styles/courts.css";
 import { Link, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-import { useEffect } from "react";
 import { deleteTennisCourt } from '../api/TennisCourtApi'
 
 export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) => {
@@ -52,6 +53,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
 
     postTimeslot(newTimeslot).then(() => {
       setTimeslotErrors("");
+      toast.success('You sucessfully reserved your timeslot!', { position: toast.POSITION.BOTTOM_CENTER })
     }).catch((errorMessage) => {
       setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
     })
@@ -80,6 +82,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
         </span> : ""}
       </div>
       {showAddTimeslot && <AddTimeslot errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
+      <ToastContainer></ToastContainer>
     </>
   );
 };
