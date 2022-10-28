@@ -1,21 +1,22 @@
-import { useState } from 'react'
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import { addTennisCourt, getTennisCourt, changeTennisCourt } from '../api/TennisCourtApi'
 import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const TennisCourtAddChange = () => {
     const [address, setAddress] = useState({ country: "", city: "", street: "", number: "" })
-    const [surface, setSurface] = useState('')
+    const [surface, setSurface] = useState("")
     const [image, setImage] = useState("")
     const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: "", description: "", image: "", address: address })
     const [check, setCheck] = useState(false);
-    const [changedType, setChangedType] = useState('');
+    const [changedType, setChangedType] = useState("");
     const [formErrors, setFormErrors] = useState({});
     const [emptyForm, setEmptyForm] = useState(true);
     const id = useParams().id
     const navigate = useNavigate();
 
-    const handleChange = e => {
+    const handleChangeOfTennisCourt = e => {
         const { name, value } = e.target;
         setTennisCourt((tennisCourt) => ({ ...tennisCourt, [name]: value }));
     };
@@ -25,31 +26,48 @@ export const TennisCourtAddChange = () => {
         setAddress((address) => ({ ...address, [name]: value }));
     };
 
-    const setImages = e => {
-        var im = e.target.value.split("fakepath")[1].substring(1);
-        setImage(im)
-        tennisCourt.image = im
+    const onImageChange = e => {
+        const tennisCourtImage = e.target.value.split("fakepath")[1].substring(1);
+        setImage(tennisCourtImage)
+        setTennisCourt(tennisCourt => ({
+            ...tennisCourt,
+            image: tennisCourtImage
+        }))
         setCheck(true)
     }
 
     const onSubmit = e => {
         e.preventDefault()
-        tennisCourt.address = address
-        tennisCourt.surfaceType = surface;
+        setTennisCourt(tennisCourt => ({
+            ...tennisCourt,
+            address: address
+        }))
+        setTennisCourt(tennisCourt => ({
+            ...tennisCourt,
+            surfaceType: surface
+        }))
         setFormErrors(validation(tennisCourt))
         if (Object.keys(formErrors).length === 0 && !emptyForm) {
             if (id)
-
-                changeTennisCourt(tennisCourt).then(() => {
-                    navigate('/');
-                    window.location.reload()
-                })
+                tennisCourtChange();
             else
-                addTennisCourt(tennisCourt).then(() => {
-                    navigate('/');
-                    window.location.reload()
-                })
+                tennisCourtAdd();
         }
+    }
+
+    const tennisCourtChange = () => {
+        changeTennisCourt(tennisCourt).then(() => {
+            navigate('/');
+            window.location.reload()
+        }).catch(() =>
+            toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
+    }
+
+    const tennisCourtAdd = () => {
+        addTennisCourt(tennisCourt).then(() => {
+            navigate('/');
+            window.location.reload()
+        }).catch(() => toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
     }
 
     const validation = (court) => {
@@ -62,7 +80,6 @@ export const TennisCourtAddChange = () => {
         if (!lettersRegex.test(court.address.country)) errors.country = "Only letters are allowed!"
         if (!lettersRegex.test(court.address.city)) errors.city = "Only letters are allowed!"
         if (!lettersRegex.test(court.address.street)) errors.street = "Only letters are allowed!"
-        if (!streetNumberRegex.test(court.address.number)) errors.number = "Only digits are allowed!"
         setEmptyForm(false);
         return errors;
     };
@@ -76,7 +93,6 @@ export const TennisCourtAddChange = () => {
 
     useEffect(() => {
         if (id)
-
             getTennisCourt(id).then(
                 response => {
                     setTennisCourt(response.data)
@@ -86,6 +102,8 @@ export const TennisCourtAddChange = () => {
                     setChangedType(response.data.surfaceType)
                     setSurface(response.data.surfaceType)
                 }
+            ).catch(
+                () => toast
             )
     }, [])
 
@@ -93,20 +111,20 @@ export const TennisCourtAddChange = () => {
         <form onSubmit={onSubmit} className="addTennisCourt-form">
             <div>
                 <label>Name</label>
-                <input type='text' className="addTennisCourt-input" id="name" name='name' placeholder="Add name of tennis court" value={tennisCourt.name} onChange={handleChange}></input>
+                <input type='text' className="addTennisCourt-input" id="name" name='name' placeholder="Add name of tennis court" value={tennisCourt.name} onChange={handleChangeOfTennisCourt}></input>
                 <p className='errors'>{formErrors.name} </p>
             </div>
             <div>
                 <label>Description</label>
-                <textarea type='text' className="addTennisCourt-input" id="description" name='description' placeholder="Add description of tennis court" value={tennisCourt.description} onChange={handleChange}></textarea>
+                <textarea type='text' className="addTennisCourt-input" id="description" name='description' placeholder="Add description of tennis court" value={tennisCourt.description} onChange={handleChangeOfTennisCourt}></textarea>
                 <p className='errors'>{formErrors.description} </p>
             </div>
             <div>
                 <label>Image</label>
-                <input type="file" className="form-control" onChange={setImages} />
+                <input type="file" className="form-control" onChange={onImageChange} />
             </div>
             {
-                check ? <img className='picture-preview' src={require('../images/' + image)} /> : ""
+                check && <img className='picture-preview' src={require('../images/' + image)} />
             }
             <select className="form-select select-option" value={changedType} onChange={handleChangeSurfaceType}>
                 <option value="GRASS" onSelect={handleChangeSurfaceType}>GRASS</option>
@@ -132,7 +150,6 @@ export const TennisCourtAddChange = () => {
             <div>
                 <label>Number</label>
                 <input type='number' placeholder="Add number" id="number" name='number' className="addTennisCourt-input" value={address.number} onChange={handleChangeAddress}></input>
-                <p className='errors'>{formErrors.number} </p>
             </div>
             <div className="row">
                 <div className="col">
@@ -142,6 +159,7 @@ export const TennisCourtAddChange = () => {
                     <button className='addTennisCourt-cancelBtn' onClick={onCancel}>Cancel</button>
                 </div>
             </div>
+            <ToastContainer />
         </form>
     );
 }
