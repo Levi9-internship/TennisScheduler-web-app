@@ -19,3 +19,8 @@ export async function getUserById(id) {
     const response = await axiosInstance.get(`persons/${id}`);
     return response;
 }
+
+export async function getAllPerson() {
+    const response = await axiosInstance.get('persons/');
+    return response;
+}

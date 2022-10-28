@@ -10,3 +10,14 @@ export async function postTimeslot(timeslot) {
     const response = await axiosInstance.post('timeslots/', timeslot);
     return response;
 }
+
+export async function deleteTimeslot(id) {
+    const response = await axiosInstance.delete(`timeslots/${id}`);
+    return response;
+}
+
+export async function updateTimeslot(id,timeslot) {
+    const response = await axiosInstance.put(`timeslots/${id}`,timeslot);
+    return response;
+}
+
