@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react"
-import '../styles/ProfileComponent.css';
 import { Link } from 'react-router-dom'
 import { ChangePassword } from "./ChangePassword";
 import { getLoggedUser } from "../api/PersonApi";
 import Moment from 'moment';
+import '../styles/ProfileComponent.css';
 
 export const Profile = () => {
     const [showModal, setShowModal] = useState(false);
