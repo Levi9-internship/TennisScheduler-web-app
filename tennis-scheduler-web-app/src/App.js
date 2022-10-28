@@ -1,3 +1,4 @@
+
 import "./App.css";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
@@ -9,6 +10,9 @@ import { TennisCourtAddChange } from "./components/TennisCourtAddChange";
 import Timeslots from "./pages/Timeslots";
 import { Profile } from "./components/Profile";
 import { EditProfile } from "./components/EditProfile";
+import { TennisPlayers } from './components/TennisPlayers';
+
+
 
 function App() {
   return (
@@ -22,7 +26,9 @@ function App() {
         <Route path="/tennis-court" element={<TennisCourtAddChange />} />
         <Route path="/tennis-court/:id" element={<TennisCourtAddChange />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile />} />
         <Route path="/profile-info" element={<EditProfile />} />
+        <Route path="/players" element={<TennisPlayers />} />
       </Routes>
     </div>
   );

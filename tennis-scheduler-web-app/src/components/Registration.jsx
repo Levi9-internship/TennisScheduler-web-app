@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 import { register } from "../api/PersonApi";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Registration = () => {
   const [formValues, setFormValues] = useState({
@@ -12,15 +14,13 @@ export const Registration = () => {
     gender: "MALE",
     address: {
       street: "",
-      number: 0,
+      number: undefined,
       city: "",
       country: ""
     }
   });
 
   const [formErrors, setFormErrors] = useState({});
-  const [registrationMessage, setRegistrationMessage] = useState('');
-  const [colorChange, setColorChange] = useState(false);
   const [isFormEmpty, setIsFormEmpty] = useState(true);
 
   const handleChange = e => {
@@ -33,19 +33,23 @@ export const Registration = () => {
     setFormErrors(validation(formValues));
 
     if (Object.keys(formErrors).length === 0 && !isFormEmpty) {
-      register(formValues).then(() =>
-        setRegistrationMessage("You registred sucessfully, go and log in with your email and password"))
-        .catch((error) => {
-          console.log(error);
-          setRegistrationMessage("Your registration failed, try again!");
-          setColorChange(true);
-        })
+      alert(Object.keys(formErrors).length)
+      register(formValues).then(() => {
+        toast.success('You registred sucessfully, go and log in with your email and password', { position: toast.POSITION.BOTTOM_CENTER });
+      }).catch((error) => {
+        if (error.response.status === 401) {
+          toast.error('This email is taken', { position: toast.POSITION.BOTTOM_CENTER });
+        } else {
+          toast.error('Something went wrong, try again later.', { position: toast.POSITION.BOTTOM_CENTER });
+        }
+      })
     }
   };
 
   const validation = form => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    setIsFormEmpty(false);
     if (!form.firstName) errors.name = "Name is required!";
     if (!form.lastName) errors.surname = "Surname is required!";
     if (!form.email) errors.email = "Email is required!";
@@ -67,13 +71,13 @@ export const Registration = () => {
       <h2 className="header-style"> Register</h2>
       <form onSubmit={registrationSubmit} className="register-form">
         <label htmlFor="firstName"> Your name</label>
-        <input type="text" value={formValues.firstName} onChange={handleChange} placeholder="John" id="firstName" name="firstName" />
+        <input type="text" value={formValues.firstName} onChange={handleChange} placeholder="Name" id="firstName" name="firstName" />
         <p className="errors"> {formErrors.name}</p>
         <label htmlFor="surname"> Your surname</label>
-        <input type="text" value={formValues.lastName} onChange={handleChange} placeholder="Marks" id="lastName" name="lastName" />
+        <input type="text" value={formValues.lastName} onChange={handleChange} placeholder="Surname" id="lastName" name="lastName" />
         <p className="errors"> {formErrors.surname}</p>
         <label htmlFor="email"> Your email</label>
-        <input type="text" value={formValues.email} onChange={handleChange} placeholder="youremail@mail.com" id="email" name="email" />
+        <input type="text" value={formValues.email} onChange={handleChange} placeholder="Email" id="email" name="email" />
         <p className="errors"> {formErrors.email}</p>
         <label htmlFor="gender">Gender</label>
         <div className="row gender-row">
@@ -93,7 +97,7 @@ export const Registration = () => {
         <input type="password" value={formValues.confirmPassword} onChange={handleChange} placeholder="********" id="confirmPassword" name="confirmPassword" />
         <p className="errors"> {formErrors.confirmPassword}</p>
         <button type="submit" className="button-forms"> Register</button>
-        <p style={{ backgroundColor: 'white', color: colorChange ? 'red' : 'green' }}> {registrationMessage}</p>
+        <ToastContainer />
       </form>
       <Link to="/login">
         <button className="link-button">
