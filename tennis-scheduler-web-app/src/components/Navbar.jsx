@@ -54,8 +54,8 @@ export const NavbarStart = () => {
                 <>
                   <Nav className="me-auto">
                     <Link className="nav-link" to="/profile">Profile</Link>
-                    <Link className="nav-link" to="/court">New tennis court</Link>
                     <Link className='nav-link' to="/players">Tennis players</Link>
+                    <Link className="nav-link" to="/tennis-court">New tennis court</Link>
                     <Link className="nav-link" to="/timeslots">Timeslots</Link>
                   </Nav>
                   <button className="logout-button" onClick={logout}>Log out</button>
