@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 import { login } from "../api/PersonApi";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Login = () => {
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const [formErrors, setFormErrors] = useState({});
-  const [loginMessage, setLoginMessage] = useState("");
   const navigate = useNavigate();
 
   const loginSubmit = e => {
@@ -16,7 +17,7 @@ export const Login = () => {
         localStorage.setItem("token", response.data.accessToken);
         navigate('/profile');
         window.location.reload();
-      }).catch(() => setLoginMessage("Wrong credencials, try again!"))
+      }).catch(() => toast.error('Wrong credentials, try again.', { position: toast.POSITION.BOTTOM_CENTER }))
     }
   };
 
@@ -41,13 +42,13 @@ export const Login = () => {
       <h2 className="header-style"> Login</h2>
       <form onSubmit={loginSubmit} className="login-form">
         <label htmlFor="email"> Your email</label>
-        <input type="text" value={formValues.email} onChange={handleChange} placeholder="youremail@mail.com" id="email" name="email" />
+        <input type="text" value={formValues.email} onChange={handleChange} placeholder="email" id="email" name="email" />
         <p className="errors"> {formErrors.email}</p>
         <label htmlFor="password"> Your password</label>
         <input type="password" value={formValues.password} onChange={handleChange} placeholder="********" id="password" name="password" />
         <p className="errors"> {formErrors.password}</p>
         <button type="submit" className="button-forms"> Log in</button>
-        <p className="errors">{loginMessage}</p>
+        <ToastContainer />
       </form>
       <Link to="/registration">
         <button className="link-button">
