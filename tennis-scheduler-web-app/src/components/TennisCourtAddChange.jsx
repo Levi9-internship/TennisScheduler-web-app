@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { addTennisCourt, getTennisCourt, changeTennisCourt } from '../api/TennisCourtApi'
 import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const TennisCourtAddChange = () => {
     const [address, setAddress] = useState({ country: "", city: "", street: "", number: "" })
@@ -24,10 +26,10 @@ export const TennisCourtAddChange = () => {
         setAddress((address) => ({ ...address, [name]: value }));
     };
 
-    const onImageChange  = e => {
+    const onImageChange = e => {
         const tennisCourtImage = e.target.value.split("fakepath")[1].substring(1);
         setImage(tennisCourtImage)
-        setTennisCourt( tennisCourt => ({
+        setTennisCourt(tennisCourt => ({
             ...tennisCourt,
             image: tennisCourtImage
         }))
@@ -36,11 +38,11 @@ export const TennisCourtAddChange = () => {
 
     const onSubmit = e => {
         e.preventDefault()
-        setTennisCourt( tennisCourt => ({
+        setTennisCourt(tennisCourt => ({
             ...tennisCourt,
             address: address
         }))
-        setTennisCourt( tennisCourt => ({
+        setTennisCourt(tennisCourt => ({
             ...tennisCourt,
             surfaceType: surface
         }))
@@ -57,14 +59,15 @@ export const TennisCourtAddChange = () => {
         changeTennisCourt(tennisCourt).then(() => {
             navigate('/');
             window.location.reload()
-        })
+        }).catch(() =>
+            toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
     }
 
     const tennisCourtAdd = () => {
         addTennisCourt(tennisCourt).then(() => {
             navigate('/');
             window.location.reload()
-        })
+        }).catch(() => toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
     }
 
     const validation = (court) => {
@@ -77,7 +80,6 @@ export const TennisCourtAddChange = () => {
         if (!lettersRegex.test(court.address.country)) errors.country = "Only letters are allowed!"
         if (!lettersRegex.test(court.address.city)) errors.city = "Only letters are allowed!"
         if (!lettersRegex.test(court.address.street)) errors.street = "Only letters are allowed!"
-        if (!streetNumberRegex.test(court.address.number)) errors.number = "Only digits are allowed!"
         setEmptyForm(false);
         return errors;
     };
@@ -100,6 +102,8 @@ export const TennisCourtAddChange = () => {
                     setChangedType(response.data.surfaceType)
                     setSurface(response.data.surfaceType)
                 }
+            ).catch(
+                () => toast
             )
     }, [])
 
@@ -117,10 +121,10 @@ export const TennisCourtAddChange = () => {
             </div>
             <div>
                 <label>Image</label>
-                <input type="file" className="form-control" onChange={onImageChange } />
+                <input type="file" className="form-control" onChange={onImageChange} />
             </div>
             {
-                check && <img className='picture-preview' src={require('../images/' + image)} /> 
+                check && <img className='picture-preview' src={require('../images/' + image)} />
             }
             <select className="form-select select-option" value={changedType} onChange={handleChangeSurfaceType}>
                 <option value="GRASS" onSelect={handleChangeSurfaceType}>GRASS</option>
@@ -146,7 +150,6 @@ export const TennisCourtAddChange = () => {
             <div>
                 <label>Number</label>
                 <input type='number' placeholder="Add number" id="number" name='number' className="addTennisCourt-input" value={address.number} onChange={handleChangeAddress}></input>
-                <p className='errors'>{formErrors.number} </p>
             </div>
             <div className="row">
                 <div className="col">
@@ -156,6 +159,7 @@ export const TennisCourtAddChange = () => {
                     <button className='addTennisCourt-cancelBtn' onClick={onCancel}>Cancel</button>
                 </div>
             </div>
+            <ToastContainer />
         </form>
     );
 }
