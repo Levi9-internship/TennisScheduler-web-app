@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {TennisCourtInfo} from "./TennisCourtInfo";
-import RolandGarrosCentral from "../assets/RolandGarrosCentral.jpg";
 import {getTennisCourts} from "../api/TennisCourtApi";
+import { Link } from "react-router-dom";
+
 import "../styles/courts.css";
 
 export const TennisCourts = () => {
-
   const [tennisCourts, setTennisCourts] = useState([]);
   const [errorTenniCourt, setErrorTennisCourt] = useState("");
   const [isShow, setIsShow] = useState(false);
@@ -24,14 +24,13 @@ export const TennisCourts = () => {
 
   return (
     <div className="court">
-      <h1 className="courtTitle">Tennis courts</h1>
       {isShow ? <h2 className="error-msg">{errorTenniCourt}</h2> : null}
       <div className="courtList">
-        {tennisCourts.map((tennisCourt) => (
-          <div className="courtItemBtn" key={tennisCourt.id}>
+        {tennisCourts.sort((a, b) => a.id > b.id ? 1 : -1).map((tennisCourt)  => (
+          <div className="courtItemCard" key={tennisCourt.id}>
             <TennisCourtInfo
               id={tennisCourt.id}
-              image={RolandGarrosCentral}
+              image={tennisCourt.image}
               name={tennisCourt.name}
               description={tennisCourt.description}
               surfaceType={tennisCourt.surfaceType}
