@@ -48,6 +48,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
         <button className="addTimeslotBtn" onClick={add}>{buttonName}</button>
       </div>
       {showAddTimeslot && <AddTimeslot errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
+      <ToastContainer></ToastContainer>
     </>
   );
 };

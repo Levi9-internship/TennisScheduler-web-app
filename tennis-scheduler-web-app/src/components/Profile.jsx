@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { Link, useParams } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 import { ChangePassword } from "./ChangePassword";
 import { getLoggedUser, getUserById } from "../api/PersonApi";
 import Moment from 'moment';
