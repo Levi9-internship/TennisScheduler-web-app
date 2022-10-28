@@ -102,9 +102,7 @@ export const TennisCourtAddChange = () => {
                     setChangedType(response.data.surfaceType)
                     setSurface(response.data.surfaceType)
                 }
-            ).catch(
-                () => toast
-            )
+            ).catch(() => toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
     }, [])
 
     return (
