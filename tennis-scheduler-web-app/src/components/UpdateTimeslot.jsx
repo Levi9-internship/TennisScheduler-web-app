@@ -1,6 +1,5 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { getTimeslot } from "../api/TimeslotApi";
 import { updateTimeslot } from '../api/TimeslotApi'
 import { useState } from 'react';
 
