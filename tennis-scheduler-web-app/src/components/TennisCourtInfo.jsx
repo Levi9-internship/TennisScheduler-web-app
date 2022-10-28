@@ -48,10 +48,10 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
     let newTimeslot = {
       dateStart: `${timeslot.timeslotDate}T${timeslot.startTime}:02.174Z`,
       dateEnd: `${timeslot.timeslotDate}T${timeslot.endTime}:02.174Z`,
-      personId: 1,
+      personId: timeslot.person,
       courtId: timeslot.id
     };
-
+    console.log(newTimeslot)
     postTimeslot(newTimeslot).then(() => {
       setTimeslotErrors("");
       toast.success('You sucessfully reserved your timeslot!', { position: toast.POSITION.BOTTOM_CENTER })

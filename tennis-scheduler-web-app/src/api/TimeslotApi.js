@@ -12,7 +12,7 @@ export async function postTimeslot(timeslot) {
 }
 
 export async function deleteTimeslot(id) {
-    const response = await axiosInstance.delete(`timeslots/${id}`);
+    const response = await axiosInstance.put(`timeslots/cancel/${id}`);
     return response;
 }
 
