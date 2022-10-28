@@ -1,21 +1,20 @@
-import { useState } from 'react'
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import { addTennisCourt, getTennisCourt, changeTennisCourt } from '../api/TennisCourtApi'
 import { useNavigate, useParams } from "react-router-dom";
 
 export const TennisCourtAddChange = () => {
     const [address, setAddress] = useState({ country: "", city: "", street: "", number: "" })
-    const [surface, setSurface] = useState('')
+    const [surface, setSurface] = useState("")
     const [image, setImage] = useState("")
     const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: "", description: "", image: "", address: address })
     const [check, setCheck] = useState(false);
-    const [changedType, setChangedType] = useState('');
+    const [changedType, setChangedType] = useState("");
     const [formErrors, setFormErrors] = useState({});
     const [emptyForm, setEmptyForm] = useState(true);
     const id = useParams().id
     const navigate = useNavigate();
 
-    const handleChange = e => {
+    const handleChangeOfTennisCourt = e => {
         const { name, value } = e.target;
         setTennisCourt((tennisCourt) => ({ ...tennisCourt, [name]: value }));
     };
@@ -25,12 +24,12 @@ export const TennisCourtAddChange = () => {
         setAddress((address) => ({ ...address, [name]: value }));
     };
 
-    const setImages = e => {
-        const im = e.target.value.split("fakepath")[1].substring(1);
-        setImage(im)
+    const onImageChange  = e => {
+        const tennisCourtImage = e.target.value.split("fakepath")[1].substring(1);
+        setImage(tennisCourtImage)
         setTennisCourt( tennisCourt => ({
             ...tennisCourt,
-            image: im
+            image: tennisCourtImage
         }))
         setCheck(true)
     }
@@ -108,20 +107,20 @@ export const TennisCourtAddChange = () => {
         <form onSubmit={onSubmit} className="addTennisCourt-form">
             <div>
                 <label>Name</label>
-                <input type='text' className="addTennisCourt-input" id="name" name='name' placeholder="Add name of tennis court" value={tennisCourt.name} onChange={handleChange}></input>
+                <input type='text' className="addTennisCourt-input" id="name" name='name' placeholder="Add name of tennis court" value={tennisCourt.name} onChange={handleChangeOfTennisCourt}></input>
                 <p className='errors'>{formErrors.name} </p>
             </div>
             <div>
                 <label>Description</label>
-                <textarea type='text' className="addTennisCourt-input" id="description" name='description' placeholder="Add description of tennis court" value={tennisCourt.description} onChange={handleChange}></textarea>
+                <textarea type='text' className="addTennisCourt-input" id="description" name='description' placeholder="Add description of tennis court" value={tennisCourt.description} onChange={handleChangeOfTennisCourt}></textarea>
                 <p className='errors'>{formErrors.description} </p>
             </div>
             <div>
                 <label>Image</label>
-                <input type="file" className="form-control" onChange={setImages} />
+                <input type="file" className="form-control" onChange={onImageChange } />
             </div>
             {
-                check ? <img className='picture-preview' src={require('../images/' + image)} /> : ""
+                check && <img className='picture-preview' src={require('../images/' + image)} /> 
             }
             <select className="form-select select-option" value={changedType} onChange={handleChangeSurfaceType}>
                 <option value="GRASS" onSelect={handleChangeSurfaceType}>GRASS</option>
