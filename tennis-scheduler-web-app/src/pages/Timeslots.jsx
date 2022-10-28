@@ -22,7 +22,6 @@ const Timeslots = () => {
 
   return (
     <div className="timeslotList">
-      <h1>Timeslots</h1>
       {isShow ? <h2 className="error-msg">{errorMessage}</h2> : null}
       {timeslots.sort((a, b) => a.id > b.id ? 1 : -1).map((timeslot) => (
         <Timeslot
