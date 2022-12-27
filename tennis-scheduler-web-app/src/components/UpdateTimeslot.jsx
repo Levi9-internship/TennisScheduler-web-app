@@ -21,6 +21,7 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
     const addTimeslot = async (timeslot) => {
 
         let newTimeslot = {
+            "id": timeslot.id,
             "dateStart": `${timeslot.updatedDate}T${timeslot.updatedStartTime}.174Z`,
             "dateEnd": `${timeslot.updatedDate}T${timeslot.updatedEndTime}.174Z`,
             "personId": timeslot.personId,
