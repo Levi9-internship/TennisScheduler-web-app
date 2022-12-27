@@ -38,7 +38,8 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
   const deleteTC = () => {
     deleteTennisCourt(id).then (
       navigate('/'),
-      window.location.reload()
+      window.location.reload() 
+      // Potrebno ubaciti drugi reload
     )
   }
 

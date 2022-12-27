@@ -20,18 +20,15 @@ const AddTimeslot = ({ onAdd, id, errorMessage }) => {
     setInvalidStartTime("");
     setInvalidEndTime("");
 
-    if (timeslotDate === "") {
+    if (timeslotDate === "") 
       setInvalidDate("Please choose date");
-      return
-    }
-    if (startTime === "") {
+    if (startTime === "") 
       setInvalidStartTime("Please choose start time");
-      return
-    }
-    if (endTime === "") {
+    if (endTime === "") 
       setInvalidEndTime("Please choose end time");
+
+    if(endTime==="" || startTime==="" || timeslotDate=="")
       return
-    }
 
     onAdd({ id, startTime, endTime, timeslotDate });
 
