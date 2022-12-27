@@ -49,7 +49,7 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
         if (updatedEndTime === "") 
             setInvalidEndTime("Please choose end time");
         
-        if(endTime==="" || startTime==="" || timeslotDate=="")
+        if(updatedDate==="" || updatedStartTime==="" || updatedEndTime=="")
             return
 
         addTimeslot({ id, updatedStartTime, updatedEndTime, updatedDate, personId, tennisCourtId });
