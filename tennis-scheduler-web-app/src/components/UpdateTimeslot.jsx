@@ -1,10 +1,12 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { updateTimeslot } from '../api/TimeslotApi'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import jwtDecode from 'jwt-decode'
 
 const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson }) => {
-
+    const [tennisPlayer, setTennisPlayer] = useState(false);
+    const [admin, setAdmin] = useState(false);
     const [invalidDate, setInvalidDate] = useState("");
     const [invalidStarTime, setInvalidStartTime] = useState("");
     const [invalidEndTime, setInvalidEndTime] = useState("");
@@ -17,6 +19,23 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
     const [updatedDate, setTimeslotDate] = useState(date);
     const [updatedStartTime, setStartTime] = useState(startTime);
     const [updatedEndTime, setEndTime] = useState(endTime);
+
+    useEffect(() => {
+        whoAmI()
+    }, []);
+    
+    const whoAmI = () => {
+        if (getUserRole() === 'ROLE_TENNIS_PLAYER')
+          setTennisPlayer(true);
+        if (getUserRole() === 'ROLE_ADMIN')
+          setAdmin(true);
+      }
+    
+    const getUserRole = () => {
+    if (localStorage.getItem("token"))
+        return jwtDecode(localStorage.getItem("token")).role;
+    else return ""
+    }
 
     const addTimeslot = async (timeslot) => {
 
@@ -95,18 +114,7 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
                     <p>{invalidEndTime}</p>
                 </Form.Text>
             </Form.Group>
-            <Form.Group>
-                <Form.Label>Choose tennis court:</Form.Label>
-                <Form.Select className='tennisCourtsSelect' onChange={(e) => {
-                    setTennisCourtId(e.target.value)
-                }} defaultValue={courtId}>
-                    {tennisCourts.map(tennisCourt => (
-                        <option key={tennisCourt.id} value={tennisCourt.id}>
-                            {tennisCourt.name}
-                        </option>
-                    ))}
-                </Form.Select>
-            </Form.Group>
+            {admin ?  <span>
             <Form.Group>
                 <Form.Label>Choose person:</Form.Label>
                 <Form.Select className='personSelect' onChange={(e) => {
@@ -116,6 +124,20 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
                         <option key={person.id}
                             value={person.id}>
                             {person.firstName} {person.lastName}
+                        </option>
+                    ))}
+                </Form.Select>
+            </Form.Group>
+            </span>
+            : ""}
+            <Form.Group>
+                <Form.Label>Choose tennis court:</Form.Label>
+                <Form.Select className='tennisCourtsSelect' onChange={(e) => {
+                    setTennisCourtId(e.target.value)
+                }} defaultValue={courtId}>
+                    {tennisCourts.map(tennisCourt => (
+                        <option key={tennisCourt.id} value={tennisCourt.id}>
+                            {tennisCourt.name}
                         </option>
                     ))}
                 </Form.Select>
