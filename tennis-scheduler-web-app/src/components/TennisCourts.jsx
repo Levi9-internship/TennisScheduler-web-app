@@ -24,9 +24,9 @@ export const TennisCourts = () => {
   return (
     <div className="court">
       {isShow ? <h2 className="error-msg">{errorTenniCourt}</h2> : null}
-      <div className="courtList">
+      <div className="courtList" class="row" key="unique">
         {tennisCourts.sort((a, b) => a.id > b.id ? 1 : -1).map((tennisCourt)  => (
-          <div className="courtItemCard" key={tennisCourt.id}>
+          <div className="courtItemCard" class="col-md-4" key={tennisCourt.id}>
             <TennisCourtInfo
               id={tennisCourt.id}
               image={tennisCourt.image}

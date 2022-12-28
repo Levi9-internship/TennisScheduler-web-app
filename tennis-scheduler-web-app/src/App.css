@@ -4,12 +4,13 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
       rgba(255, 255, 255, 0.021),
       rgba(255, 255, 255, 0.1)
     ),
-    url("images/background.jpg");
+    url("images/background.jpg"); */
   background-size: cover;
+  background-color: rgb(200, 209, 209);
 }
 
 .auth-form-container,

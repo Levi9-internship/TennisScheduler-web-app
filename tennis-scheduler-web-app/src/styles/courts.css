@@ -23,7 +23,7 @@
 .courtItem {
   border-radius: 30px;
   background-color: whitesmoke;
-  height: max-content;
+  height: 100%;
   margin: 20px 20px 0px 20px;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
 }
@@ -35,7 +35,7 @@
 
 .courtItem div {
   width: 100%;
-  height: 160px;
+  height: 10rem;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -44,14 +44,10 @@
 .courtImage {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  height:25rem;
+  height:22rem;
   width:100%;
 }
 
-.courtItem h1,
-.courtItem p {
-  margin-left: 20px;
-}
 
 @media only screen and (max-width: 1300px) {
   .courtList {
@@ -66,8 +62,6 @@
 }
 
 .courtInfo {
-  background-color: whitesmoke;
-  height: max-content;
   padding-top: 30px;
 }
 
@@ -84,12 +78,13 @@
 .addTimeslotBtn{
   border: none;
   padding: 10px;
-  margin-left: 5px;
+  margin-left: 1px;
   margin-top: 5px;
   cursor: pointer;
   width: 32%;
-  background-color: rgba(255, 255, 0, 0.726);
-  color: rgb(4, 73, 4);
+  height: 8%;
+  background-color: rgba(107, 107, 104, 0.726);
+  color: rgb(255, 255, 255);
   font-weight: bold;
   border-radius: 10px;
 }
@@ -112,7 +107,6 @@
 .courtItemCard{
   margin-top: 3rem;
   width: 70%;
-  height: max-content;
 }
 
 .form{

@@ -11,7 +11,7 @@ import { deleteTennisCourt } from '../api/TennisCourtApi'
 export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) => {
 
   const [timeslotErrors, setTimeslotErrors] = useState("");
-  const [buttonName, setButtonName] = useState("Add timeslot");
+  const [buttonName, setButtonName] = useState("New");
   const [showAddTimeslot, setAddTimeslot] = useState(false);
   const [tennisPlayer, setTennisPlayer] = useState(false);
   const [admin, setAdmin] = useState(false);
@@ -63,7 +63,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
 
   const add = () => {
     setAddTimeslot(!showAddTimeslot);
-    showAddTimeslot ? setButtonName("Add timeslot") : setButtonName("Close form")
+    showAddTimeslot ? setButtonName("New") : setButtonName("Close form")
   }
 
   return (
@@ -71,7 +71,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
       <div className="courtItem" >
         <img className="courtImage" src={require('../images/' + image)} />
         <div className="courtInfo">
-          <h1> {name} </h1>
+          <h3> {name} </h3>
           <p> {description} </p>
           <p> {surfaceType} </p>
         </div>

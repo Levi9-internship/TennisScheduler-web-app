@@ -80,7 +80,7 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
         </ListGroup.Item>
         <div className="btnWrapper">
           <Button className="updateTimeslotBtn" variant="warning" onClick={addForm}>{buttonName}</Button>
-          <Button className='deleteTimeslotBtn' variant="danger" onClick={eraseTimeslot}>Delete timeslot</Button>
+          <Button className='deleteTimeslotBtn' variant="danger" onClick={eraseTimeslot}>Cancel timeslot</Button>
         </div>
         {showUpdateTimeslotForm && <UpdateTimeslot
           existingTimeslot={timeslot}
