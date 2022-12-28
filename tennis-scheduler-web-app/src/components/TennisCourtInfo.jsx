@@ -51,7 +51,6 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
       personId: timeslot.person,
       courtId: timeslot.id
     };
-    console.log(newTimeslot)
     postTimeslot(newTimeslot).then(() => {
       setTimeslotErrors("");
       toast.success('You sucessfully reserved your timeslot!', { position: toast.POSITION.BOTTOM_CENTER })

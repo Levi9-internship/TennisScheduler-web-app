@@ -6,6 +6,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export const TennisCourtAddChange = () => {
     const [address, setAddress] = useState({ country: "", city: "", street: "", number: "" })
+    const [workingTime, setWorkingTime] = useState({ startWorkingTimeWeekDay: "", endWorkingTimeWeekDay: "", startWorkingTimeWeekend: "", endWorkingTimeWeekend: "" })
+    // const [startWorkDay,setStartWorkDay] = useState("");
+    // const [endWorkDay,setEndWorkDay] = useState("");
+    // const [startWeekDay,setStartWeekDay] = useState("");
+    // const [endWeekDay,setEndWeekDay] = useState("");
     const [surface, setSurface] = useState("")
     const [image, setImage] = useState("")
     const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: "", description: "", image: "", address: address })
@@ -25,6 +30,11 @@ export const TennisCourtAddChange = () => {
         const { name, value } = e.target;
         setAddress((address) => ({ ...address, [name]: value }));
     };
+    const handleChangeWorkingTime = e => {
+        console.log(e.target.name+e.target.value.toString())
+        const { name, value } = e.target;
+        setWorkingTime((workingTime) => ({ ...workingTime, [name]: value }));
+    };
 
     const onImageChange = e => {
         const tennisCourtImage = e.target.value.split("fakepath")[1].substring(1);
@@ -38,14 +48,18 @@ export const TennisCourtAddChange = () => {
 
     const onSubmit = e => {
         e.preventDefault()
+        
         setTennisCourt(tennisCourt => ({
             ...tennisCourt,
-            address: address
+            address: address,
+            workingTime: workingTime
         }))
         setTennisCourt(tennisCourt => ({
             ...tennisCourt,
             surfaceType: surface
         }))
+        console.log(workingTime)
+        console.log(tennisCourt)
         setFormErrors(validation(tennisCourt))
         if (Object.keys(formErrors).length === 0 && !emptyForm) {
             if (id)
@@ -97,6 +111,11 @@ export const TennisCourtAddChange = () => {
                 response => {
                     setTennisCourt(response.data)
                     setAddress(response.data.address)
+                    // setStartWeekDay(response.data.workingTime.startWeekDay)
+                    // setStartWorkDay()
+                    // setEndWeekDay()
+                    // setEndWorkDay()
+                    setWorkingTime(response.data.workingTime)
                     setCheck(true)
                     setImage(response.data.image)
                     setChangedType(response.data.surfaceType)
@@ -130,6 +149,30 @@ export const TennisCourtAddChange = () => {
                 <option value="HARD" onSelect={handleChangeSurfaceType}>HARD</option>
             </select>
             <p className='errors'>{formErrors.surfaceType} </p>
+
+{/* ===================================== */}
+            <div className='working_time'>
+                <div className='weekday'>
+                    <h5>Working hours on weekdays</h5>
+                    <label htmlFor="">Start:</label>
+                    <input type='time' className="startWorkingTimeWeekDay" id="startWorkingTimeWeekDay" name='startWorkingTimeWeekDay' value={workingTime.startWorkingTimeWeekDay} onChange={handleChangeWorkingTime}></input>
+                    <p className='errors'>{formErrors.startWorkingTimeWeekDay} </p>
+                    <label htmlFor="">End:</label>
+                    <input type='time' className="endWorkingTimeWeekDay" id="endWorkingTimeWeekDay" name='endWorkingTimeWeekDay' value={workingTime.endWorkingTimeWeekDay} onChange={handleChangeWorkingTime}></input>
+                    <p className='errors'>{formErrors.endWorkingTimeWeekDay} </p>
+                </div>
+                <div className='weekend'>
+                    <h5>Working hours on weekend</h5>
+                    <label htmlFor="">Start:</label>
+                    <input type='time' className="startWorkingTimeWeekend" id="startWorkingTimeWeekend" name='startWorkingTimeWeekend' value={workingTime.startWorkingTimeWeekend} onChange={handleChangeWorkingTime}></input>
+                    <p className='errors'>{formErrors.startWorkingTimeWeekend} </p>
+                    <label htmlFor="">End:</label>
+                    <input type='time' className="endWorkingTimeWeekend" id="endWorkingTimeWeekend" name='endWorkingTimeWeekend' value={workingTime.endWorkingTimeWeekend} onChange={handleChangeWorkingTime}></input>
+                    <p className='errors'>{formErrors.endWorkingTimeWeekend} </p>
+                </div>
+            </div>
+{/* ===================================== */}
+
             <div>
                 <label>Country</label>
                 <input type='text' placeholder="Add country" className="addTennisCourt-input" id="country" name='country' value={address.country} onChange={handleChangeAddress}></input>
