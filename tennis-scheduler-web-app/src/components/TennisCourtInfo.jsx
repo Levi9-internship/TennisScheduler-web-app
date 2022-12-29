@@ -86,8 +86,8 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description, ref
             { (admin || tennisPlayer) ? <button className="addTimeslotBtn" onClick={add}>{buttonName}</button> : ""}
             { admin ? <span><Link to={`/tennis-court/${id}`}>
               <button className="addTimeslotBtn" >Change</button>
-              <button className="addTimeslotBtn"  onClick={() => { setShowModal(true) }}> Deleteeee</button>
             </Link>
+            <button className="addTimeslotBtn"  onClick={() => { setShowModal(true) }}> Delete</button>
             </span> : ""}
           </div>
         </div>

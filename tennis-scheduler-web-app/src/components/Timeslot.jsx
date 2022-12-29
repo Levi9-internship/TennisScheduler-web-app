@@ -97,7 +97,7 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots, refresh}) => {
           refresh = {refresh}
           showForm = {showUpdateTimeslotForm}
         />}
-         {showModal && <DeleteTimeslot show={showModal} close={() => setShowModal(false)} idTimeslot = {newTimeslot.id} refresh = {refresh}></DeleteTimeslot>}
+        {showModal && <DeleteTimeslot show={showModal} close={() => setShowModal(false)} idTimeslot = {newTimeslot.id} refresh = {refresh}></DeleteTimeslot>}
       </ListGroup>
     </>
   )
