@@ -4,7 +4,7 @@ import { updateTimeslot } from '../api/TimeslotApi'
 import { useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode'
 
-const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson }) => {
+const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson, refresh }) => {
     const [tennisPlayer, setTennisPlayer] = useState(false);
     const [admin, setAdmin] = useState(false);
     const [invalidDate, setInvalidDate] = useState("");
@@ -19,6 +19,8 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
     const [updatedDate, setTimeslotDate] = useState(date);
     const [updatedStartTime, setStartTime] = useState(startTime);
     const [updatedEndTime, setEndTime] = useState(endTime);
+
+    const [showForm, setShowForm] = useState(true);
 
     useEffect(() => {
         whoAmI()
@@ -72,16 +74,20 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
         if(updatedDate==="" || updatedStartTime==="" || updatedEndTime=="")
             return
 
-        addTimeslot({ id, updatedStartTime, updatedEndTime, updatedDate, personId, tennisCourtId });
-
-        setTimeslotDate(updatedDate);
-        setStartTime(updatedStartTime);
-        setEndTime(updatedEndTime);
-        window.location.reload(false);
+        addTimeslot({ id, updatedStartTime, updatedEndTime, updatedDate, personId, tennisCourtId })
+        .then(
+            () => {
+                refresh();
+                setTimeslotDate(updatedDate);
+                setStartTime(updatedStartTime);
+                setEndTime(updatedEndTime);
+                setShowForm(false);
+            }
+        );
     }
     
-    return (
-        <Form className='form' onSubmit={onSubmit}>
+    return ( <div>
+        { showForm && <Form className='form' onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Choose date:</Form.Label>
                 <Form.Control
@@ -146,7 +152,8 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
                 <p>{timeslotErrors}</p>
             </Form.Text>
         </Form>
-    )
+        }
+    </div>)
 }
 
 export default UpdateTimeslot
