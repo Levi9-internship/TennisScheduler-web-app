@@ -4,17 +4,20 @@ import { postTimeslot } from "../api/TimeslotApi"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../styles/courts.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-import { deleteTennisCourt } from '../api/TennisCourtApi'
+import DeleteTennisCourt from "./DeleteTennisCourt";
+import { Button } from "react-bootstrap";
 
-export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) => {
+export const TennisCourtInfo = ({ id, image, name, surfaceType, description, refresh}) => {
 
   const [timeslotErrors, setTimeslotErrors] = useState("");
   const [buttonName, setButtonName] = useState("New");
   const [showAddTimeslot, setAddTimeslot] = useState(false);
   const [tennisPlayer, setTennisPlayer] = useState(false);
   const [admin, setAdmin] = useState(false);
+
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     whoAmI()
@@ -26,21 +29,11 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
     else return ""
   }
 
-  const navigate = useNavigate();
-
   const whoAmI = () => {
     if (getUserRole() === 'ROLE_TENNIS_PLAYER')
       setTennisPlayer(true);
     if (getUserRole() === 'ROLE_ADMIN')
       setAdmin(true);
-  }
-
-  const deleteTC = () => {
-    deleteTennisCourt(id).then (
-      navigate('/'),
-      window.location.reload() 
-      // Potrebno ubaciti drugi reload
-    )
   }
 
   const addTimeslot = async (timeslot) => {
@@ -51,7 +44,6 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
       personId: timeslot.person,
       courtId: timeslot.id
     };
-    console.log(newTimeslot)
     postTimeslot(newTimeslot).then(() => {
       setTimeslotErrors("");
       toast.success('You sucessfully reserved your timeslot!', { position: toast.POSITION.BOTTOM_CENTER })
@@ -79,10 +71,11 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
         { admin ? <span><Link to={`/tennis-court/${id}`}>
           <button className="addTimeslotBtn" >Change</button>
         </Link>
-        <button className="addTimeslotBtn" onClick={deleteTC}> Delete</button>
+        <button className="addTimeslotBtn"  onClick={() => { setShowModal(true) }}> Delete</button>
         </span> : ""}
       </div>
       {showAddTimeslot && <AddTimeslot errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
+      { showModal && <DeleteTennisCourt show={showModal} close={() => setShowModal(false)} idTennisCourt= {id} refresh = {refresh}></DeleteTennisCourt>}
       <ToastContainer></ToastContainer>
     </>
   );

@@ -9,6 +9,18 @@ export const TennisCourts = () => {
   const [errorTenniCourt, setErrorTennisCourt] = useState("");
   const [isShow, setIsShow] = useState(false);
 
+  const getAll = () => {
+    getTennisCourts().then((data) => {
+      setTennisCourts(data.data);
+      setErrorTennisCourt("");
+      setIsShow(false);
+    })
+    .catch(() => {
+      setErrorTennisCourt("Couldn't load tennis courts.");
+      setIsShow(true);
+    });
+  }
+
   useEffect(() => {
     getTennisCourts().then((data) => {
       setTennisCourts(data.data);
@@ -33,6 +45,7 @@ export const TennisCourts = () => {
               name={tennisCourt.name}
               description={tennisCourt.description}
               surfaceType={tennisCourt.surfaceType}
+              refresh={getAll}
             />
           </div>
         ))}
