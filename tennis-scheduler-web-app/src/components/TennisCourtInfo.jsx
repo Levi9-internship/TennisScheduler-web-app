@@ -9,7 +9,8 @@ import jwtDecode from "jwt-decode";
 import DeleteTennisCourt from "./DeleteTennisCourt";
 import { Button } from "react-bootstrap";
 
-export const TennisCourtInfo = ({ id, image, name, surfaceType, description, refresh}) => {
+
+export const TennisCourtInfo = ({ id, image, name, surfaceType, description, refresh, workingTime }) => {
 
   const [timeslotErrors, setTimeslotErrors] = useState("");
   const [buttonName, setButtonName] = useState("New");
@@ -59,24 +60,40 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description, ref
   }
 
   return (
-    <>
       <div className="courtItem" >
         <img className="courtImage" src={require('../images/' + image)} />
         <div className="courtInfo">
           <h3> {name} </h3>
-          <p> {description} </p>
-          <p> {surfaceType} </p>
+          <div className="lineWork"></div>
+          <div className="headWork">
+            <h6>Working time:</h6>
+            <div className="workingTime">
+              <div className="weekDay"><p>Work day:</p> <div>{workingTime.startWorkingTimeWeekDay.substring(0,5)} - {workingTime.endWorkingTimeWeekDay.substring(0,5)}</div></div>
+              <div className="weekEnd"><p>Weekend:</p> <div>{workingTime.startWorkingTimeWeekend.substring(0,5)} - {workingTime.endWorkingTimeWeekend.substring(0,5)}</div></div>
+            </div>
+          </div>
+          <div className="lineWork"></div>
+          <div className="desc">
+            <h6>Description:</h6>
+            <p > {description} </p>
+          </div>
+          <div className="lineWork"></div>
+          <div className="surface">
+            <h6>Surface type:</h6>
+            <p> {surfaceType.toLowerCase()} </p>
+          </div>
+          <div className="courtButton">
+            { (admin || tennisPlayer) ? <button className="addTimeslotBtn" onClick={add}>{buttonName}</button> : ""}
+            { admin ? <span><Link to={`/tennis-court/${id}`}>
+              <button className="addTimeslotBtn" >Change</button>
+              <button className="addTimeslotBtn"  onClick={() => { setShowModal(true) }}> Deleteeee</button>
+            </Link>
+            </span> : ""}
+          </div>
         </div>
-        { (admin || tennisPlayer) ? <button className="addTimeslotBtn" onClick={add}>{buttonName}</button> : ""}
-        { admin ? <span><Link to={`/tennis-court/${id}`}>
-          <button className="addTimeslotBtn" >Change</button>
-        </Link>
-        <button className="addTimeslotBtn"  onClick={() => { setShowModal(true) }}> Delete</button>
-        </span> : ""}
+        {showAddTimeslot && <AddTimeslot errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
+        { showModal && <DeleteTennisCourt show={showModal} close={() => setShowModal(false)} idTennisCourt= {id} refresh = {refresh}></DeleteTennisCourt>}
+        <ToastContainer></ToastContainer>
       </div>
-      {showAddTimeslot && <AddTimeslot errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
-      { showModal && <DeleteTennisCourt show={showModal} close={() => setShowModal(false)} idTennisCourt= {id} refresh = {refresh}></DeleteTennisCourt>}
-      <ToastContainer></ToastContainer>
-    </>
-  );
-};
+    );
+}

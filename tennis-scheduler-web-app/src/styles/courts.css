@@ -1,3 +1,4 @@
+
 .court {
   width: 90%;
   height: auto;
@@ -5,6 +6,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 100px;
 }
 .court .courtTitle {
   font-family: cursive;
@@ -16,15 +18,17 @@
   height: auto;
   display: contents;
   width: 80%;
+  
 }
 
 /* MENU ITEM STYLING */
 
 .courtItem {
   border-radius: 30px;
-  background-color: whitesmoke;
-  height: 100%;
-  margin: 20px 20px 0px 20px;
+  /* background-color: whitesmoke; */
+  background-color: rgb(97, 235, 92);
+  height: 97%;
+  padding-bottom: 15px;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
 }
 .courtItem:hover {
@@ -35,7 +39,6 @@
 
 .courtItem div {
   width: 100%;
-  height: 10rem;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -44,7 +47,7 @@
 .courtImage {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  height:22rem;
+  height:15rem;
   width:100%;
 }
 
@@ -63,6 +66,11 @@
 
 .courtInfo {
   padding-top: 30px;
+  padding-bottom: 10px;
+}
+.courtInfo h3{
+  font-family:"Rockwell";
+  padding-bottom: 5px;
 }
 
 .link-brand {
@@ -195,4 +203,35 @@ color: rgb(158, 11, 11);
   display: grid;
   padding-left: 10px;
   padding-right: 10px;
+}
+.workingTime{
+  display: flex;
+  margin: 0px;
+}
+.workingTime p{
+  font-weight:500;
+}
+.weekDay{
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.Toastify{
+  margin-bottom: 15px;
+}
+.desc{
+  font-weight:200px;
+  padding-top: 5px;
+}
+.lineWork{
+  border-top: 1px solid black;
+}
+.headWork{
+  padding-top: 8px;
+}
+.surface{
+  margin-top: 5px;
+}
+.courtButton button{
+  background-color: rgb(41, 41, 41);
 }
