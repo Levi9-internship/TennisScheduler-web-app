@@ -31,6 +31,7 @@ export const TennisCourts = () => {
               id={tennisCourt.id}
               image={tennisCourt.image}
               name={tennisCourt.name}
+              workingTime={tennisCourt.workingTimeDto}
               description={tennisCourt.description}
               surfaceType={tennisCourt.surfaceType}
             />

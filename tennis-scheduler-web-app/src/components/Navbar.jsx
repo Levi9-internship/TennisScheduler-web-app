@@ -35,7 +35,7 @@ export const NavbarStart = () => {
 
   return (
     <Navbar bg="light" expand="lg" fixed="top">
-      <Container>
+      <Container >
         <Link className="nav-link-brand" to="/">
           Tennis scheduler{" "}
         </Link>

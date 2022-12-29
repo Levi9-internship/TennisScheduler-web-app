@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { deleteTennisCourt } from '../api/TennisCourtApi'
 
-export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) => {
+export const TennisCourtInfo = ({ id, image, name, surfaceType, description, workingTime }) => {
 
   const [timeslotErrors, setTimeslotErrors] = useState("");
   const [buttonName, setButtonName] = useState("New");
@@ -72,15 +72,33 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description }) =
         <img className="courtImage" src={require('../images/' + image)} />
         <div className="courtInfo">
           <h3> {name} </h3>
-          <p> {description} </p>
-          <p> {surfaceType} </p>
+          <div className="lineWork"></div>
+          <div className="headWork">
+            <h6>Working time:</h6>
+            <div className="workingTime">
+              <div className="weekDay"><p>Work day:</p> <div>{workingTime.startWorkingTimeWeekDay.substring(0,5)} - {workingTime.endWorkingTimeWeekDay.substring(0,5)}</div></div>
+              <div className="weekEnd"><p>Weekend:</p> <div>{workingTime.startWorkingTimeWeekend.substring(0,5)} - {workingTime.endWorkingTimeWeekend.substring(0,5)}</div></div>
+            </div>
+          </div>
+          <div className="lineWork"></div>
+          <div className="desc">
+            <h6>Description:</h6>
+            <p > {description} </p>
+          </div>
+          <div className="lineWork"></div>
+          <div className="surface">
+            <h6>Surface type:</h6>
+            <p> {surfaceType.toLowerCase()} </p>
+          </div>
+          <div className="courtButton">
+          { (admin || tennisPlayer) ? <button className="addTimeslotBtn" onClick={add}>{buttonName}</button> : ""}
+          { admin ? <span><Link to={`/tennis-court/${id}`}>
+            <button className="addTimeslotBtn" >Change</button>
+          </Link>
+          <button className="addTimeslotBtn" onClick={deleteTC}> Delete</button>
+          </span> : ""}
+          </div>
         </div>
-        { (admin || tennisPlayer) ? <button className="addTimeslotBtn" onClick={add}>{buttonName}</button> : ""}
-        { admin ? <span><Link to={`/tennis-court/${id}`}>
-          <button className="addTimeslotBtn" >Change</button>
-        </Link>
-        <button className="addTimeslotBtn" onClick={deleteTC}> Delete</button>
-        </span> : ""}
       </div>
       {showAddTimeslot && <AddTimeslot errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
       <ToastContainer></ToastContainer>

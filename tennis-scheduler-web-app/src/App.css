@@ -9,8 +9,14 @@
       rgba(255, 255, 255, 0.1)
     ),
     url("images/background.jpg"); */
-  background-size: cover;
-  background-color: rgb(200, 209, 209);
+  /* background-color: rgb(204, 231, 203);
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.021),
+    rgba(255, 255, 255, 0.1)
+  ),url(/src/images/imageBG.png);
+  background-repeat: no-repeat;
+  background-size: auto; */
+  background: linear-gradient(rgb(204, 231, 203), #75dd78);
 }
 
 .auth-form-container,
@@ -27,10 +33,10 @@
 
 .auth-form-container {
   padding: 1rem;
-  border: 1px solid rgba(255, 255, 0, 0.726);
+  border: 1px solid rgb(3, 163, 11);
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
-  margin-top: 4rem;
+  background-color: rgb(52, 202, 47);
+  margin-top: 120px;
 }
 
 label {
@@ -50,8 +56,8 @@ input {
   padding: 12px;
   border-radius: 10px;
   cursor: pointer;
-  background-color: rgba(255, 255, 0, 0.726);
-  color: black;
+  background-color: white;
+  color: rgb(97, 235, 92);
   font-weight: bold;
 }
 
@@ -64,15 +70,16 @@ input {
 }
 
 .header-style {
-  color: rgba(255, 255, 0, 0.726);
+  color: white;
   font-style: italic;
 }
 
 .nav-link {
   margin-left: 2%;
   text-decoration: none;
-  color: gray;
+  color: rgb(255, 255, 255) !important;
   width: 10rem;
+  font-weight:500;
 }
 
 .errors {
@@ -81,12 +88,14 @@ input {
 }
 
 .logout-button{
-  border:  2px solid gray;
+  border:  2px solid rgb(34, 170, 0);
     padding: 12px;
     border-radius: 10px;
     cursor: pointer;
-    background-color: gray;
-    color: white;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    background-color: rgb(5, 219, 5);
+    color: rgb(255, 255, 255);
     font-weight: bold;
 }
 
@@ -102,12 +111,15 @@ input {
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
   margin-right: 1rem;
-  font-size: 1.25rem;
+  font-size: 27px;
   text-decoration: none;
   white-space: nowrap;
-  color: grey;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
 }
-
+.navbar{
+  background-color: rgb(63, 204, 63) !important; 
+}
 .error-msg {
   color: red;
   font-size: 30px;
