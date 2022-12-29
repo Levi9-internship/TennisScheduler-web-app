@@ -2,14 +2,14 @@ import { useState, useEffect } from "react"
 import { getTennisCourts } from "../api/TennisCourtApi";
 import { getAllPerson } from "../api/PersonApi";
 import UpdateTimeslot from "./UpdateTimeslot";
-import { deleteTimeslot } from "../api/TimeslotApi";
+import DeleteTimeslot from "./DeleteTimeslot";
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import moment from "moment/moment";
 import '../styles/timeslot.css'
 
 
-const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
+const Timeslot = ({ newTimeslot, setTimeslots, timeslots, refresh}) => {
 
   const date = moment(newTimeslot.dateEnd).format('YYYY-MM-DD');
   const startTime = moment.utc(newTimeslot.dateStart).format("HH:mm:ss");
@@ -24,6 +24,8 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
   const [errorMessageTennisCourts, setErrorMessageTennisCourts] = useState("");
   const [isShowMessagePersons, setIsShowMessagePersons] = useState(false);
   const [isShowMessageTennisCourts, setIsShowTennisCourts] = useState(false);
+
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     getTennisCourts().then((data) => {
@@ -45,11 +47,6 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
       setIsShowMessagePersons(true)
     })
   }, []);
-
-  const eraseTimeslot = () => {
-    deleteTimeslot(newTimeslot.id);
-    setTimeslots(timeslots.filter((timeslot) => timeslot.id !== newTimeslot.id))
-  }
 
   const addForm = () => {
     setUpdateTimeslotForm(!showUpdateTimeslotForm);
@@ -80,7 +77,7 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
         </ListGroup.Item>
         <div className="btnWrapper">
           <Button className="updateTimeslotBtn" variant="warning" onClick={addForm}>{buttonName}</Button>
-          <Button className='deleteTimeslotBtn' variant="danger" onClick={eraseTimeslot}>Cancel timeslot</Button>
+          <Button className='deleteTimeslotBtn' variant="danger" onClick={() => { setShowModal(true) }}>Cancel timeslot</Button>
         </div>
         {showUpdateTimeslotForm && <UpdateTimeslot
           existingTimeslot={timeslot}
@@ -98,8 +95,8 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
           timeslots={timeslots}
           setTimeslots={setTimeslots}
         />}
+         {showModal && <DeleteTimeslot show={showModal} close={() => setShowModal(false)} idTimeslot = {newTimeslot.id} refresh = {refresh}></DeleteTimeslot>}
       </ListGroup>
-
     </>
   )
 }
