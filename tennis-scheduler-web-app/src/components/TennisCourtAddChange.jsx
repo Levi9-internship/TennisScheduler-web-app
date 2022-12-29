@@ -9,7 +9,7 @@ export const TennisCourtAddChange = () => {
     const [workingTime, setWorkingTime] = useState({ startWorkingTimeWeekDay: "", endWorkingTimeWeekDay: "", startWorkingTimeWeekend: "", endWorkingTimeWeekend: "" })
     const [surface, setSurface] = useState("")
     const [image, setImage] = useState("")
-    const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: "", description: "", image: "", address: address, workingTime:workingTime })
+    const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: "", description: "", image: "", address: address, workingTimeDto:workingTime })
     const [check, setCheck] = useState(false);
     const [changedType, setChangedType] = useState("");
     const [formErrors, setFormErrors] = useState({});
@@ -50,13 +50,12 @@ export const TennisCourtAddChange = () => {
         }))
         setTennisCourt(tennisCourt => ({
             ...tennisCourt,
-            workingTime: workingTime
+            workingTimeDto: workingTime
         }))
         setTennisCourt(tennisCourt => ({
             ...tennisCourt,
             surfaceType: surface
         }))
-        console.log("AAAAAAAAAAAAAAAA"+workingTime)
         setFormErrors(validation(tennisCourt))
         if (Object.keys(formErrors).length === 0 && !emptyForm) {
             if (id)
@@ -69,7 +68,6 @@ export const TennisCourtAddChange = () => {
     const tennisCourtChange = () => {
         changeTennisCourt(tennisCourt).then(() => {
             navigate('/');
-            window.location.reload()
         }).catch(() =>
             toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
     }
@@ -78,7 +76,6 @@ export const TennisCourtAddChange = () => {
         addTennisCourt(tennisCourt).then(() => {
             console.log(tennisCourt)
             navigate('/');
-            window.location.reload()
         }).catch(() => toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
     }
 
