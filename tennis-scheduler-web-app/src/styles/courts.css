@@ -187,3 +187,12 @@ color: rgb(158, 11, 11);
   width: 20rem;
   border-radius: 10px;
 }
+
+.working-section{
+  display: flex;
+}
+.working-class{
+  display: grid;
+  padding-left: 10px;
+  padding-right: 10px;
+}
