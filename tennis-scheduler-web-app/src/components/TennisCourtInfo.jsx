@@ -11,8 +11,7 @@ import { deleteTennisCourt } from '../api/TennisCourtApi'
 export const TennisCourtInfo = ({ id, image, name, surfaceType, description, workingTime }) => {
 
   const [timeslotErrors, setTimeslotErrors] = useState("");
-  const [buttonName, setButtonName] = useState("New");
-  const [showAddTimeslot, setAddTimeslot] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [tennisPlayer, setTennisPlayer] = useState(false);
   const [admin, setAdmin] = useState(false);
 
@@ -62,8 +61,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description, wor
   }
 
   const add = () => {
-    setAddTimeslot(!showAddTimeslot);
-    showAddTimeslot ? setButtonName("New") : setButtonName("Close form")
+    setShowModal(true);
   }
 
   return (
@@ -91,7 +89,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description, wor
             <p> {surfaceType.toLowerCase()} </p>
           </div>
           <div className="courtButton">
-          { (admin || tennisPlayer) ? <button className="addTimeslotBtn" onClick={add}>{buttonName}</button> : ""}
+          { (admin || tennisPlayer) ? <button className="addTimeslotBtn" onClick={add}>New</button> : ""}
           { admin ? <span><Link to={`/tennis-court/${id}`}>
             <button className="addTimeslotBtn" >Change</button>
           </Link>
@@ -100,7 +98,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description, wor
           </div>
         </div>
       </div>
-      {showAddTimeslot && <AddTimeslot errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
+      {<AddTimeslot show={showModal} close={() => setShowModal(false)} errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
       <ToastContainer></ToastContainer>
     </>
   );

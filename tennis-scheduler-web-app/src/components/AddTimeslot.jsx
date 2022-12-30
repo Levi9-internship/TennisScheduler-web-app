@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-
+import { Modal } from "react-bootstrap";
 import { getAllPerson } from "../api/PersonApi";
 import jwtDecode from 'jwt-decode'
 import "../styles/courts.css";
 
 
-const AddTimeslot = ({ onAdd, id, errorMessage }) => {
+const AddTimeslot = ({ show, close, onAdd, id, errorMessage }) => {
   const [tennisPlayer, setTennisPlayer] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [timeslotDate, setTimeslotDate] = useState("");
@@ -24,7 +24,6 @@ const AddTimeslot = ({ onAdd, id, errorMessage }) => {
       setPersons(data.data);
     })
   }, []);
-
 
   useEffect(() => {
     whoAmI()
@@ -69,59 +68,71 @@ const AddTimeslot = ({ onAdd, id, errorMessage }) => {
   }
 
   return (
-    <Form className='form' onSubmit={onSubmit}>
-      <div className="form-position"> 
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Choose date:</Form.Label>
-        <Form.Control
-          type="date"
-          value={timeslotDate}
-          onChange={(e) => setTimeslotDate(e.target.value.toString())} />
-        <Form.Text className="text-muted">
-          <p>{invalidDate}</p>
-        </Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Start time:</Form.Label>
-        <Form.Control
-          type="time"
-          value={startTime}
-          onChange={(e) => setStartTime(e.target.value.toString())} />
-        <Form.Text className="text-muted">
-          <p>{invalidStarTime}</p>
-        </Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>End time:</Form.Label>
-        <Form.Control type="time"
-          value={endTime}
-          onChange={(e) => setEndTime(e.target.value.toString())} />
-        <Form.Text className="text-muted">
-          <p>{invalidEndTime}</p>
-        </Form.Text>
-      </Form.Group>
-      {admin ? <span><Form.Group>
-                <Form.Label>Choose person:</Form.Label>
-                <Form.Select className='personSelect' onChange={(e) => {
-                    setPerson(e.target.value)
-                    console.log(person)}}>
-                    {persons.map(person => (
-                        <option key={person.id}
-                            value={person.id}>
-                            {person.firstName} {person.lastName}
-                        </option>
-                    ))}
-                </Form.Select>
-            </Form.Group>
-            </span> : "" }
-      <Button variant="primary" type="submit">
-        Save reservation
-      </Button>
-      <Form.Text className="text-muted">
-        <p>{errorMessage}</p>
-      </Form.Text>
-      </div>
-    </Form>
+    <Modal show={show} cancel={close} size="lg" centered>
+
+      <Form className='form' onSubmit={onSubmit}>
+        <div className="form-position"> 
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Choose date:</Form.Label>
+          <Form.Control
+            type="date"
+            value={timeslotDate}
+            onChange={(e) => setTimeslotDate(e.target.value.toString())} />
+          <Form.Text className="text-muted">
+            <p>{invalidDate}</p>
+          </Form.Text>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Start time:</Form.Label>
+          <Form.Control
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value.toString())} />
+          <Form.Text className="text-muted">
+            <p>{invalidStarTime}</p>
+          </Form.Text>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>End time:</Form.Label>
+          <Form.Control type="time"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value.toString())} />
+          <Form.Text className="text-muted">
+            <p>{invalidEndTime}</p>
+          </Form.Text>
+        </Form.Group>
+        {admin ? <span><Form.Group>
+                  <Form.Label>Choose person:</Form.Label>
+                  <Form.Select className='personSelect' onChange={(e) => {
+                      setPerson(e.target.value)
+                      console.log(person)}}>
+                      {persons.map(person => (
+                          <option key={person.id}
+                              value={person.id}>
+                              {person.firstName} {person.lastName}
+                          </option>
+                      ))}
+                  </Form.Select>
+              </Form.Group>
+              </span> : "" }
+          <div className='buttonsForm'>
+          <div className='saveResBtn'>   
+          <Button variant="primary" type="submit">
+            Save reservation
+          </Button>
+          <Form.Text className="text-muted">
+            <p>{errorMessage}</p>
+          </Form.Text>
+          </div>
+          <div>
+          <Button variant="primary" onClick={close}>
+            Close
+          </Button>
+          </div>
+          </div>
+        </div>
+      </Form>
+    </Modal>
   )
 }
 

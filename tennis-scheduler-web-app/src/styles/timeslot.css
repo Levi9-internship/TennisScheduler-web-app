@@ -22,3 +22,7 @@
 .personSelect{
     margin-bottom: 50px;
 }
+.timeslotList h1{
+    font-family:"Rockwell";
+    color: rgb(14, 109, 11);
+}

@@ -96,13 +96,13 @@
   font-weight: bold;
   border-radius: 10px;
 }
-
+.modal-content{
+  border-radius: 20px;
+}
 .form{
   background-color: white;
   margin: 20px;
-  padding: 20px;
-  border-radius: 20px;
-  align-content: center;
+  padding: 10px;
 }
 .form-position{
   width: 70%;
@@ -234,4 +234,9 @@ color: rgb(158, 11, 11);
 }
 .courtButton button{
   background-color: rgb(41, 41, 41);
+}
+.buttonsForm{
+  margin-top:30px ;
+  display: flex;
+  justify-content: space-between;
 }
