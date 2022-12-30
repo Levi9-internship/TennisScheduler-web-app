@@ -165,6 +165,7 @@ color: rgb(158, 11, 11);
   padding: 12px;
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(43, 194, 56, 0.726);
+  font-weight: 500;
 }
 
 .addTennisCourt-addButton {
