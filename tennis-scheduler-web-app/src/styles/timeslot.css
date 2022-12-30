@@ -11,26 +11,14 @@
 .updateTimeslotBtn{
     width: 50%;
     border-radius: 0 0 0 20px;
-    background-color: rgba(77, 185, 104, 0.616);
-    border: 0px;
-    font-weight: 500;
-    color: rgb(255, 244, 244);
 }
 .deleteTimeslotBtn{
-    font-weight: 500;
-    border: 0px;
     width: 50%;
     border-radius: 0 0 20px 0;
-    background-color: rgb(240, 161, 88);
-    color: white;
 }
 .tennisCourtsSelect{
     margin-bottom: 30px;
 }
 .personSelect{
     margin-bottom: 50px;
-}
-.timeslotList h1{
-    font-family:"Rockwell";
-    color: rgb(14, 109, 11);
 }

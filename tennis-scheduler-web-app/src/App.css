@@ -128,6 +128,5 @@ input {
 .player-table{
   width: 60%;
   height: max-content;
-  background-color: rgb(99, 209, 99);
-  border-radius: 20px;
+  background-color: white;
 }
