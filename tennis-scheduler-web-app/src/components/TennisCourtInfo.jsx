@@ -13,8 +13,7 @@ import { Button } from "react-bootstrap";
 export const TennisCourtInfo = ({ id, image, name, surfaceType, description, refresh, workingTime }) => {
 
   const [timeslotErrors, setTimeslotErrors] = useState("");
-  const [buttonName, setButtonName] = useState("New");
-  const [showAddTimeslot, setAddTimeslot] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [tennisPlayer, setTennisPlayer] = useState(false);
   const [admin, setAdmin] = useState(false);
 
@@ -55,8 +54,7 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description, ref
   }
 
   const add = () => {
-    setAddTimeslot(!showAddTimeslot);
-    showAddTimeslot ? setButtonName("New") : setButtonName("Close form")
+    setShowModal(true);
   }
 
   return (
