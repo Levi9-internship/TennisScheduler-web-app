@@ -1,10 +1,12 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { updateTimeslot } from '../api/TimeslotApi'
+import { getAllPerson } from "../api/PersonApi";
 import { useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode'
+import { Modal } from "react-bootstrap";
 
-const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson }) => {
+const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson, show, close }) => {
     const [tennisPlayer, setTennisPlayer] = useState(false);
     const [admin, setAdmin] = useState(false);
     const [invalidDate, setInvalidDate] = useState("");
@@ -18,10 +20,13 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
     const [timeslotErrors, setTimeslotErrors] = useState("");
     const [updatedDate, setTimeslotDate] = useState(date);
     const [updatedStartTime, setStartTime] = useState(startTime);
-    const [updatedEndTime, setEndTime] = useState(endTime);
+    const [updatedEndTime, setEndTime] = useState(endTime);    
 
     useEffect(() => {
-        whoAmI()
+        whoAmI();
+        getAllPerson().then((data) => {
+            setPerson(data.data);
+          })
     }, []);
     
     const whoAmI = () => {
@@ -37,7 +42,7 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
     else return ""
     }
 
-    const addTimeslot = async (timeslot) => {
+    const addTimeslot = async (timeslot, close) => {
 
         let newTimeslot = {
             "id": timeslot.id,
@@ -81,71 +86,82 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
     }
     
     return (
-        <Form className='form' onSubmit={onSubmit}>
+        <Modal show={show} cancel={close} size="lg" centered>
+            <Form className='form' onSubmit={onSubmit}>
+            <div className="form-position"> 
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Choose date:</Form.Label>
                 <Form.Control
-                    type="date"
-                    value={updatedDate}
-                    onChange={(e) => setTimeslotDate(e.target.value.toString())} />
+                type="date"
+                value={updatedDate}
+                onChange={(e) => setTimeslotDate(e.target.value.toString())} />
                 <Form.Text className="text-muted">
-                    <p>{invalidDate}</p>
+                <p>{invalidDate}</p>
                 </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Start time:</Form.Label>
                 <Form.Control
-                    type="time"
-                    value={updatedStartTime}
-                    onChange={(e) => setStartTime(e.target.value.toString())} />
+                type="time"
+                value={updatedStartTime}
+                onChange={(e) => setStartTime(e.target.value.toString())} />
                 <Form.Text className="text-muted">
-                    <p>{invalidStarTime}</p>
+                <p>{invalidStarTime}</p>
                 </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>End time:</Form.Label>
                 <Form.Control type="time"
-                    value={updatedEndTime}
-                    onChange={(e) => setEndTime(e.target.value.toString())} />
+                value={updatedEndTime}
+                onChange={(e) => setEndTime(e.target.value.toString())} />
                 <Form.Text className="text-muted">
-                    <p>{invalidEndTime}</p>
+                <p>{invalidEndTime}</p>
                 </Form.Text>
             </Form.Group>
-            {admin ?  <span>
-            <Form.Group>
-                <Form.Label>Choose person:</Form.Label>
-                <Form.Select className='personSelect' onChange={(e) => {
-                    setPersonId(e.target.value)
-                }} defaultValue={personId}>
-                    {persons.map(person => (
-                        <option key={person.id}
-                            value={person.id}>
-                            {person.firstName} {person.lastName}
-                        </option>
-                    ))}
-                </Form.Select>
-            </Form.Group>
-            </span>
-            : ""}
-            <Form.Group>
+            {admin ? <span><Form.Group>
+                        <Form.Label>Choose person:</Form.Label>
+                        <Form.Select className='personSelect' onChange={(e) => {
+                            setPerson(e.target.value)
+                            }}>
+                            {persons.map(person => (
+                                <option key={person.id}
+                                    value={person.id}>
+                                    {person.firstName} {person.lastName}
+                                </option>
+                            ))}
+                        </Form.Select>
+                    </Form.Group>
+                    </span> : "" }
+                    <Form.Group>
                 <Form.Label>Choose tennis court:</Form.Label>
-                <Form.Select className='tennisCourtsSelect' onChange={(e) => {
-                    setTennisCourtId(e.target.value)
-                }} defaultValue={courtId}>
-                    {tennisCourts.map(tennisCourt => (
-                        <option key={tennisCourt.id} value={tennisCourt.id}>
-                            {tennisCourt.name}
-                        </option>
-                    ))}
-                </Form.Select>
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Save reservation
-            </Button>
-            <Form.Text className="text-muted">
-                <p>{timeslotErrors}</p>
-            </Form.Text>
-        </Form>
+                    <Form.Select className='tennisCourtsSelect' onChange={(e) => {
+                        setTennisCourtId(e.target.value)
+                    }} defaultValue={courtId}>
+                        {tennisCourts.map(tennisCourt => (
+                            <option key={tennisCourt.id} value={tennisCourt.id}>
+                                {tennisCourt.name}
+                            </option>
+                        ))}
+                    </Form.Select>
+                </Form.Group>
+                <div className='buttonsForm'>
+                <div className='saveResBtn'>   
+                <Button variant="primary" type="submit">
+                Update
+                </Button>
+                <Form.Text className="text-muted">
+                {/* <p>{errorMessage}</p> */}
+                </Form.Text>
+                </div>
+                <div>
+                <Button variant="primary" onClick={close}>
+                Close
+                </Button>
+                </div>
+                </div>
+            </div>
+            </Form>
+        </Modal>
     )
 }
 

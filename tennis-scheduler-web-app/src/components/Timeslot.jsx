@@ -17,13 +17,14 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
 
   const [tennisCourts, setTennisCourts] = useState([]);
   const [persons, setPerson] = useState([]);
-  const [showUpdateTimeslotForm, setUpdateTimeslotForm] = useState(false);
+  const [showUpdateTimeslotForm, setShowUpdateTimeslotForm] = useState(false);
   const [buttonName, setButtonName] = useState("Update timeslot");
   const [timeslot, setTimeslot] = useState(newTimeslot);
   const [errorMessagePersons, setErrorMessagePerson] = useState("");
   const [errorMessageTennisCourts, setErrorMessageTennisCourts] = useState("");
   const [isShowMessagePersons, setIsShowMessagePersons] = useState(false);
   const [isShowMessageTennisCourts, setIsShowTennisCourts] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     getTennisCourts().then((data) => {
@@ -51,10 +52,6 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
     setTimeslots(timeslots.filter((timeslot) => timeslot.id !== newTimeslot.id))
   }
 
-  const addForm = () => {
-    setUpdateTimeslotForm(!showUpdateTimeslotForm);
-    showUpdateTimeslotForm ? setButtonName("Update timeslot") : setButtonName("Close form")
-  }
   return (
     <>
 
@@ -79,7 +76,7 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
           ))}
         </ListGroup.Item>
         <div className="btnWrapper">
-          <Button className="updateTimeslotBtn" variant="none" onClick={addForm}>{buttonName}</Button>
+          <Button className="updateTimeslotBtn" variant="none" onClick={() => { setShowUpdateTimeslotForm(true) }}>Change timeslot</Button>
           <Button className='deleteTimeslotBtn' variant="none"  onClick={eraseTimeslot}>Cancel timeslot</Button>
         </div>
         {showUpdateTimeslotForm && <UpdateTimeslot
@@ -97,6 +94,7 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots }) => {
           setPerson={setPerson}
           timeslots={timeslots}
           setTimeslots={setTimeslots}
+          show={showUpdateTimeslotForm} close={() => setShowUpdateTimeslotForm(false)}  
         />}
       </ListGroup>
 
