@@ -41,7 +41,7 @@ export const TennisCourtAddChange = () => {
         }))
         setCheck(true)
     }
-    useEffect(() => {
+
     const onSubmit = e => {
         e.preventDefault()
         setFormErrors({});
@@ -58,18 +58,13 @@ export const TennisCourtAddChange = () => {
             surfaceType: surface
         }))   
         setFormErrors(validation(tennisCourt))
-        console.log()
         if (Object.keys(formErrors).length === 0 && !emptyForm) {
             if (id)
                 tennisCourtChange();
-            else{
-                
-                    tennisCourtAdd();
-                
-            }
+            else
+                tennisCourtAdd();
         }
     }
-}, [])
 
     const tennisCourtChange = () => {
         changeTennisCourt(tennisCourt).then(() => {
@@ -77,13 +72,13 @@ export const TennisCourtAddChange = () => {
         }).catch(() =>
             toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
     }
-    useEffect(() => {
+
     const tennisCourtAdd = () => {
         addTennisCourt(tennisCourt).then(() => {
             navigate('/');
         }).catch(() => toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
     }
-    }, [])
+
     const validation = (court) => {
         const errors = {};
         const lettersRegex = new RegExp(/^$|^[A-Za-z ]+$/);
