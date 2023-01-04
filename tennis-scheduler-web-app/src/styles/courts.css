@@ -2,7 +2,7 @@
 .court {
   width: 90%;
   height: auto;
-  display: flex;
+  display: block;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -207,6 +207,9 @@ color: rgb(158, 11, 11);
   display: grid;
   padding-left: 10px;
   padding-right: 10px;
+}
+.working-section label{
+  text-align: center;
 }
 .workingTime{
   display: flex;

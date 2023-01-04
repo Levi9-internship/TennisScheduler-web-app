@@ -15,7 +15,7 @@ export const Login = () => {
     if (Object.keys(formErrors).length === 0) {
       login(formValues).then((response) => {
         localStorage.setItem("token", response.data.accessToken);
-        navigate('/profile');
+        navigate('/');
         window.location.reload();
       }).catch(() => toast.error('Wrong credentials, try again.', { position: toast.POSITION.BOTTOM_CENTER }))
     }

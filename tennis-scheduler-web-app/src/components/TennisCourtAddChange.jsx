@@ -7,11 +7,10 @@ import 'react-toastify/dist/ReactToastify.css';
 export const TennisCourtAddChange = () => {
     const [address, setAddress] = useState({ country: "", city: "", street: "", number: "" })
     const [workingTime, setWorkingTime] = useState({ startWorkingTimeWeekDay: "", endWorkingTimeWeekDay: "", startWorkingTimeWeekend: "", endWorkingTimeWeekend: "" })
-    const [surface, setSurface] = useState("")
+    const [surface, setSurface] = useState("GRASS")
     const [image, setImage] = useState("")
-    const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: "", description: "", image: "", address: address, workingTimeDto:workingTime })
+    const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: "GRASS", description: "", image: "", address: address, workingTimeDto:workingTime })
     const [check, setCheck] = useState(false);
-    const [changedType, setChangedType] = useState("");
     const [formErrors, setFormErrors] = useState({});
     const [emptyForm, setEmptyForm] = useState(true);
     const id = useParams().id
@@ -30,7 +29,9 @@ export const TennisCourtAddChange = () => {
         const { name, value } = e.target;
         setWorkingTime((workingTime) => ({ ...workingTime, [name]: value+":00" }));
     };
-
+    const handleChangeSurfaceType = e => {
+        setSurface(e.target.value)
+    }
     const onImageChange = e => {
         const tennisCourtImage = e.target.value.split("fakepath")[1].substring(1);
         setImage(tennisCourtImage)
@@ -40,10 +41,10 @@ export const TennisCourtAddChange = () => {
         }))
         setCheck(true)
     }
-
+    useEffect(() => {
     const onSubmit = e => {
         e.preventDefault()
-        
+        setFormErrors({});
         setTennisCourt(tennisCourt => ({
             ...tennisCourt,
             address: address
@@ -55,15 +56,20 @@ export const TennisCourtAddChange = () => {
         setTennisCourt(tennisCourt => ({
             ...tennisCourt,
             surfaceType: surface
-        }))
+        }))   
         setFormErrors(validation(tennisCourt))
+        console.log()
         if (Object.keys(formErrors).length === 0 && !emptyForm) {
             if (id)
                 tennisCourtChange();
-            else
-                tennisCourtAdd();
+            else{
+                
+                    tennisCourtAdd();
+                
+            }
         }
     }
+}, [])
 
     const tennisCourtChange = () => {
         changeTennisCourt(tennisCourt).then(() => {
@@ -71,47 +77,37 @@ export const TennisCourtAddChange = () => {
         }).catch(() =>
             toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
     }
-
+    useEffect(() => {
     const tennisCourtAdd = () => {
         addTennisCourt(tennisCourt).then(() => {
-            console.log(tennisCourt)
             navigate('/');
         }).catch(() => toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
     }
-
+    }, [])
     const validation = (court) => {
         const errors = {};
         const lettersRegex = new RegExp(/^$|^[A-Za-z ]+$/);
-        const streetNumberRegex = new RegExp("^\\d+$");
         if (!court.name) errors.name = "Name is required!";
         if (!court.description) errors.description = "Description is required";
-        if (!court.surfaceType) errors.surfaceType = "You have to select surface type!";
+        if (!court.image) errors.image = "Image is required";
+        if (!(court.workingTimeDto.startWorkingTimeWeekDay && court.workingTimeDto.endWorkingTimeWeekDay && court.workingTimeDto.startWorkingTimeWeekend && court.workingTimeDto.endWorkingTimeWeekend)
+            || (court.workingTimeDto.startWorkingTimeWeekDay >= court.workingTimeDto.endWorkingTimeWeekDay || court.workingTimeDto.startWorkingTimeWeekend >= court.workingTimeDto.endWorkingTimeWeekend))
+            errors.workingTime = "Working time isn't valid";
         if (!lettersRegex.test(court.address.country)) errors.country = "Only letters are allowed!"
         if (!lettersRegex.test(court.address.city)) errors.city = "Only letters are allowed!"
-        if (!lettersRegex.test(court.address.street)) errors.street = "Only letters are allowed!"//?????????
         setEmptyForm(false);
         return errors;
     };
-
-    const handleChangeSurfaceType = e => {
-        setSurface(e.target.value)
-        setChangedType(e.target.value)
-    }
-
-    const onCancel = e => navigate('/')
 
     useEffect(() => {
         if (id)
             getTennisCourt(id).then(
                 response => {
                     setTennisCourt(response.data)
-                    console.log(response.data.address)
                     setAddress(response.data.address)
-                    console.log(response.data.workingTimeDto)
                     setWorkingTime(response.data.workingTimeDto)
                     setCheck(true)
                     setImage(response.data.image)
-                    setChangedType(response.data.surfaceType)
                     setSurface(response.data.surfaceType)
                 }
             ).catch(() => toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
@@ -132,18 +128,17 @@ export const TennisCourtAddChange = () => {
             <div>
                 <label>Image</label>
                 <input type="file" id="image" className="form-control" onChange={onImageChange} />
+                <p className='errors'>{formErrors.image} </p>
             </div>
             {
                 check && <img className='picture-preview' src={require('../images/' + image)} alt = "Isn't loaded" />
             }
-            <select className="form-select select-option" value={changedType} onChange={handleChangeSurfaceType}>
+            <select className="form-select select-option" value={surface} onChange={handleChangeSurfaceType}>
                 <option value="GRASS" onSelect={handleChangeSurfaceType}>GRASS</option>
                 <option value="CLAY" onSelect={handleChangeSurfaceType}>CLAY</option>
                 <option value="HARD" onSelect={handleChangeSurfaceType}>HARD</option>
             </select>
             <p className='errors'>{formErrors.surfaceType} </p>
-
-{/* ===================================== */}
             <div className='working_time'>
                 <div>
                     <h5>Working hours on weekdays</h5>
@@ -151,12 +146,11 @@ export const TennisCourtAddChange = () => {
                             <div className="working-class">
                                 <label htmlFor="">Start:</label>
                                 <input type='time' className="start-week-day" id="startWorkingTimeWeekDay" name='startWorkingTimeWeekDay' value={workingTime.startWorkingTimeWeekDay} onChange={handleChangeWorkingTime}></input>
-                                <p className='errors'>{formErrors.startWorkingTimeWeekDay} </p>
+                                
                             </div>
                             <div className="working-class">
                                 <label htmlFor="">End:</label>
                                 <input type='time' className="end-week-day" id="endWorkingTimeWeekDay" name='endWorkingTimeWeekDay' value={workingTime.endWorkingTimeWeekDay} onChange={handleChangeWorkingTime}></input>
-                                <p className='errors'>{formErrors.endWorkingTimeWeekDay} </p>
                             </div>
                     </div>
                 </div>
@@ -166,18 +160,15 @@ export const TennisCourtAddChange = () => {
                         <div className="working-class">
                             <label htmlFor="">Start:</label>
                             <input type='time' className="start-weekend" id="startWorkingTimeWeekend" name='startWorkingTimeWeekend' value={workingTime.startWorkingTimeWeekend} onChange={handleChangeWorkingTime}></input>
-                            <p className='errors'>{formErrors.startWorkingTimeWeekend} </p>
                         </div>
                         <div className="working-class">
                             <label htmlFor="">End:</label>
                             <input type='time' className="end-weekend" id="endWorkingTimeWeekend" name='endWorkingTimeWeekend' value={workingTime.endWorkingTimeWeekend} onChange={handleChangeWorkingTime}></input>
-                            <p className='errors'>{formErrors.endWorkingTimeWeekend} </p>
                         </div>
                     </div>
                 </div>
+                <p className='errors'>{formErrors.workingTime} </p>
             </div>
-{/* ===================================== */}
-
             <div>
                 <label>Country</label>
                 <input type='text' placeholder="Add country" className="addTennisCourt-input" id="country" name='country' value={address.country} onChange={handleChangeAddress}></input>
@@ -202,7 +193,7 @@ export const TennisCourtAddChange = () => {
                     <button className='addTennisCourt-addButton' type='submit'>Yes</button>
                 </div>
                 <div className="col">
-                    <button className='addTennisCourt-cancelBtn' onClick={onCancel}>Cancel</button>
+                    <button className='addTennisCourt-cancelBtn' onClick={()=>navigate('/')}>Cancel</button>
                 </div>
             </div>
             <ToastContainer />
