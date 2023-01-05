@@ -9,7 +9,7 @@ const Timeslots = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isShow, setIsShow] = useState(false);
 
-  useEffect(() => {
+  function getAllTimeslots(){
     getTimeslot().then((data) => {
       setTimeslots(data.data);
       setErrorMessage("");
@@ -18,6 +18,10 @@ const Timeslots = () => {
       setErrorMessage("Couldn't load timeslots.");
       setIsShow(true);
     })
+  }
+
+  useEffect(() => {
+    getAllTimeslots();
   }, []);
 
   return (
@@ -30,6 +34,7 @@ const Timeslots = () => {
           newTimeslot={timeslot}
           setTimeslots={setTimeslots}
           timeslots={timeslots}
+          refresh={getAllTimeslots}
         />
       ))}
     </div>

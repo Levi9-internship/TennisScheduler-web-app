@@ -6,18 +6,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import "../styles/courts.css";
 import { Link, useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-import { deleteTennisCourt } from '../api/TennisCourtApi'
+import DeleteTennisCourt from "./DeleteTennisCourt";
 
-export const TennisCourtInfo = ({ id, image, name, surfaceType, description, workingTime }) => {
+export const TennisCourtInfo = ({ id, image, name, workingTime, description, surfaceType, refresh }) => {
 
   const [timeslotErrors, setTimeslotErrors] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [tennisPlayer, setTennisPlayer] = useState(false);
   const [admin, setAdmin] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
 
   useEffect(() => {
     whoAmI()
   }, []);
+
 
   const getUserRole = () => {
     if (localStorage.getItem("token"))
@@ -25,21 +27,11 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description, wor
     else return ""
   }
 
-  const navigate = useNavigate();
-
   const whoAmI = () => {
     if (getUserRole() === 'ROLE_TENNIS_PLAYER')
       setTennisPlayer(true);
     if (getUserRole() === 'ROLE_ADMIN')
       setAdmin(true);
-  }
-
-  const deleteTC = () => {
-    deleteTennisCourt(id).then (
-      navigate('/'),
-      window.location.reload() 
-      // Potrebno ubaciti drugi reload
-    )
   }
 
   const addTimeslot = async (timeslot) => {
@@ -92,12 +84,13 @@ export const TennisCourtInfo = ({ id, image, name, surfaceType, description, wor
           { admin ? <span><Link to={`/tennis-court/${id}`}>
             <button className="addTimeslotBtn" >Change</button>
           </Link>
-          <button className="addTimeslotBtn" onClick={deleteTC}> Delete</button>
+          <button className="addTimeslotBtn"  onClick={() => { setShowModalDelete(true) }}> Delete</button>
           </span> : ""}
           </div>
         </div>
       </div>
       {<AddTimeslot show={showModal} close={() => setShowModal(false)} errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
+      { showModalDelete && <DeleteTennisCourt show={showModalDelete}  close={() => { setShowModalDelete(false) }} idTennisCourt= {id} refresh = {refresh}></DeleteTennisCourt>}
       <ToastContainer></ToastContainer>
     </>
   );

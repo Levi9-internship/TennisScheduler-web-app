@@ -37,6 +37,7 @@ export const TennisCourts = () => {
                   workingTime={tennisCourt.workingTimeDto}
                   description={tennisCourt.description}
                   surfaceType={tennisCourt.surfaceType}
+                  refresh={getTennisCourts}
                 />
                 </div>
               </Col>

@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode'
 import { Modal } from "react-bootstrap";
 
-const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson, show, close }) => {
+const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson, show, close, refresh }) => {
     const [tennisPlayer, setTennisPlayer] = useState(false);
     const [admin, setAdmin] = useState(false);
     const [invalidDate, setInvalidDate] = useState("");
@@ -54,6 +54,7 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
 
         await updateTimeslot(timeslot.id, newTimeslot).then(() => {
             setTimeslotErrors("");
+            refresh();
         }).catch((errorMessage) => {
             setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
         })
@@ -82,7 +83,7 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
         setTimeslotDate(updatedDate);
         setStartTime(updatedStartTime);
         setEndTime(updatedEndTime);
-        window.location.reload(false);
+        refresh();
     }
     
     return (
