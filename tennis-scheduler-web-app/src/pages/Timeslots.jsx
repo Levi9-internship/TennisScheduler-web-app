@@ -1,13 +1,37 @@
 import { useState, useEffect } from "react";
 import Timeslot from "../components/Timeslot";
 import { getTimeslot } from "../api/TimeslotApi";
-
+import jwtDecode from "jwt-decode"
+import AddTimeslot from "../components/AddTimeslot";
+import { postTimeslot } from "../api/TimeslotApi"
+import { ToastContainer, toast } from 'react-toastify';
 
 const Timeslots = () => {
 
   const [timeslots, setTimeslots] = useState([]);
+  const [timeslotErrors, setTimeslotErrors] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isShow, setIsShow] = useState(false);
+  const [tennisPlayer, setTennisPlayer] = useState(false);
+  const [admin, setAdmin] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    whoAmI()
+  }, []);
+
+  const getUserRole = () => {
+    if (localStorage.getItem("token"))
+      return jwtDecode(localStorage.getItem("token")).role;
+    else return ""
+  }
+
+  const whoAmI = () => {
+    if (getUserRole() === 'ROLE_TENNIS_PLAYER')
+      setTennisPlayer(true);
+    if (getUserRole() === 'ROLE_ADMIN')
+      setAdmin(true);
+  }
 
   function getAllTimeslots(){
     getTimeslot().then((data) => {
@@ -20,6 +44,29 @@ const Timeslots = () => {
     })
   }
 
+  const add = () => {
+    setShowModal(true);
+  }
+
+  const addTimeslot = async (timeslot) => {
+
+    let newTimeslot = {
+      dateStart: `${timeslot.timeslotDate}T${timeslot.startTime}:02.174Z`,
+      dateEnd: `${timeslot.timeslotDate}T${timeslot.endTime}:02.174Z`,
+      personId: timeslot.person,
+      courtId: timeslot.id
+    };
+    postTimeslot(newTimeslot).then(() => {
+      setTimeslotErrors("");
+      toast.success('You sucessfully reserved your timeslot!', { position: toast.POSITION.BOTTOM_CENTER })
+      getAllTimeslots();
+    }).catch((errorMessage) => {
+      setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
+    })
+
+  }
+
+
   useEffect(() => {
     getAllTimeslots();
   }, []);
@@ -27,6 +74,7 @@ const Timeslots = () => {
   return (
     <div className="timeslotList">
       <h1>Timeslots</h1>
+      { admin ? <button className="addTimeslotBtn" onClick={add}>New</button> : ""}
       {isShow ? <h2 className="error-msg">{errorMessage}</h2> : null}
       {timeslots.sort((a, b) => a.id > b.id ? 1 : -1).map((timeslot) => (
         <Timeslot
@@ -37,6 +85,8 @@ const Timeslots = () => {
           refresh={getAllTimeslots}
         />
       ))}
+       {<AddTimeslot show={showModal} close={() => setShowModal(false)} errorMessage={timeslotErrors} id={-1} onAdd={addTimeslot} />}
+       <ToastContainer></ToastContainer>
     </div>
   )
 }

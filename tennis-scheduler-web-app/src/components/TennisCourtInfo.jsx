@@ -4,7 +4,7 @@ import { postTimeslot } from "../api/TimeslotApi"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../styles/courts.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import DeleteTennisCourt from "./DeleteTennisCourt";
 
@@ -80,7 +80,7 @@ export const TennisCourtInfo = ({ id, image, name, workingTime, description, sur
             <p> {surfaceType.toLowerCase()} </p>
           </div>
           <div className="courtButton">
-          { (admin || tennisPlayer) ? <button className="addTimeslotBtn" onClick={add}>New</button> : ""}
+          { tennisPlayer ? <button className="addTimeslotBtn" onClick={add}>New</button> : ""}
           { admin ? <span><Link to={`/tennis-court/${id}`}>
             <button className="addTimeslotBtn" >Change</button>
           </Link>

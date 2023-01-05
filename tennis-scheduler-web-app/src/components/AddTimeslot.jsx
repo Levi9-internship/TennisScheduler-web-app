@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Modal } from "react-bootstrap";
 import { getAllPerson } from "../api/PersonApi";
+import {getTennisCourts} from "../api/TennisCourtApi";
 import jwtDecode from 'jwt-decode'
 import "../styles/courts.css";
 
@@ -18,15 +19,17 @@ const AddTimeslot = ({ show, close, onAdd, id, errorMessage }) => {
   const [invalidEndTime, setInvalidEndTime] = useState("");
   const [persons, setPersons] = useState([]);
   const [person, setPerson] = useState(1);
+  const [courtId, setTennisCourtId] = useState(1);
+  const [tennisCourts, setTennisCourts] = useState([]);
 
   useEffect(() => {
+    whoAmI();
     getAllPerson().then((data) => {
       setPersons(data.data);
-    })
-  }, []);
-
-  useEffect(() => {
-    whoAmI()
+    });
+    getTennisCourts().then((data) => {
+      setTennisCourts(data.data);
+    });
   }, []);
 
   const whoAmI = () => {
@@ -60,8 +63,12 @@ const AddTimeslot = ({ show, close, onAdd, id, errorMessage }) => {
     if(endTime==="" || startTime==="" || timeslotDate=="")
       return
 
-    onAdd({ id, startTime, endTime, timeslotDate, person });
-
+    if (id != -1){
+      onAdd({ id, startTime, endTime, timeslotDate, person })
+    }
+    else{
+      onAdd({ "id" : courtId, startTime, endTime, timeslotDate, person })
+    }
     setTimeslotDate("");
     setStartTime("");
     setEndTime("");
@@ -69,7 +76,6 @@ const AddTimeslot = ({ show, close, onAdd, id, errorMessage }) => {
 
   return (
     <Modal show={show} cancel={close} size="lg" centered>
-
       <Form className='form' onSubmit={onSubmit}>
         <div className="form-position"> 
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -101,11 +107,10 @@ const AddTimeslot = ({ show, close, onAdd, id, errorMessage }) => {
             <p>{invalidEndTime}</p>
           </Form.Text>
         </Form.Group>
-        {admin ? <span><Form.Group>
+        {admin ? <div><Form.Group>
                   <Form.Label>Choose person:</Form.Label>
                   <Form.Select className='personSelect' onChange={(e) => {
-                      setPerson(e.target.value)
-                      console.log(person)}}>
+                      setPerson(e.target.value)}}>
                       {persons.map(person => (
                           <option key={person.id}
                               value={person.id}>
@@ -114,7 +119,20 @@ const AddTimeslot = ({ show, close, onAdd, id, errorMessage }) => {
                       ))}
                   </Form.Select>
               </Form.Group>
-              </span> : "" }
+              <Form.Group>
+                <Form.Label>Choose tennis court:</Form.Label>
+                    <Form.Select className='tennisCourtsSelect'
+                        onChange={(e) => {
+                        setTennisCourtId(e.target.value)
+                    }}>
+                        {tennisCourts.map(tennisCourt => (
+                            <option key={tennisCourt.id} value={tennisCourt.id}>
+                                {tennisCourt.name}
+                            </option>
+                        ))}
+                    </Form.Select>
+                </Form.Group>
+              </div> : "" }
           <div className='buttonsForm'>
           <div className='saveResBtn'>   
           <Button variant="primary" type="submit">
