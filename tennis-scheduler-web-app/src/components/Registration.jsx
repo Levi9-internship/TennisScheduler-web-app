@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import { register } from "../api/PersonApi";
+import { useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 
 export const Registration = () => {
@@ -19,9 +20,12 @@ export const Registration = () => {
       country: ""
     }
   });
-
-  const [formErrors, setFormErrors] = useState({});
-  const [isFormEmpty, setIsFormEmpty] = useState(true);
+  const navigate = useNavigate();
+  const [nameError, setNameError] = useState("");
+  const [surnameError, setSurnameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError , setPasswordError] = useState("");
+  const [confirmPasswordError , setConfirmPasswordError] = useState("");
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -30,40 +34,45 @@ export const Registration = () => {
 
   const registrationSubmit = e => {
     e.preventDefault();
-    setFormErrors(validation(formValues));
 
-    if (Object.keys(formErrors).length === 0 && !isFormEmpty) {
-      alert(Object.keys(formErrors).length)
-      register(formValues).then(() => {
-        toast.success('You registred sucessfully, go and log in with your email and password', { position: toast.POSITION.BOTTOM_CENTER });
-      }).catch((error) => {
-        if (error.response.status === 401) {
-          toast.error('This email is taken', { position: toast.POSITION.BOTTOM_CENTER });
-        } else {
-          toast.error('Something went wrong, try again later.', { position: toast.POSITION.BOTTOM_CENTER });
-        }
-      })
-    }
+    validation(formValues);
+
+    // if(!formValues.firstName || !formValues.lastName || !formValues.email || !formValues.email)
+
+    register(formValues).then(() => {
+      toast.success('You registred sucessfully, go and log in with your email and password', { position: toast.POSITION.BOTTOM_CENTER });
+      navigate('/login');
+    }).catch((error) => {
+      if (error.response.status === 401) {
+        toast.error('This email is taken', { position: toast.POSITION.BOTTOM_CENTER });
+      } else {
+        toast.error('Something went wrong, try again later.', { position: toast.POSITION.BOTTOM_CENTER });
+      }
+    })
+    
   };
 
-  const validation = form => {
-    const errors = {};
+  const validation = (form) => {
+    setNameError("")
+    setSurnameError("")
+    setEmailError("")
+    setPasswordError("")
+    setConfirmPasswordError("")
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    setIsFormEmpty(false);
-    if (!form.firstName) errors.name = "Name is required!";
-    if (!form.lastName) errors.surname = "Surname is required!";
-    if (!form.email) errors.email = "Email is required!";
+    if (!form.firstName) setNameError("Name is required!");
+    if (!form.lastName) setSurnameError("Surname is required!");
+    if (!form.email) setEmailError("Email is required!");
     else if (!regex.test(form.email))
-      errors.email = "This is not a valid email format!";
-    if (!form.password) errors.password = "Password is required!";
+      setEmailError("This is not a valid email format!");
+    if (!form.password) setPasswordError("Password is required!");
     else if (form.password.length < 8)
-      errors.password = "Password must have minimum 8 characters";
+      setPasswordError("Password must have minimum 8 characters");
     if (!form.confirmPassword)
-      errors.confirmPassword = "Confirm password is required!";
+      setConfirmPasswordError("Confirm password is required!");
     else if (form.confirmPassword !== form.password)
-      errors.confirmPassword = "Passwords must be equals!";
-    setIsFormEmpty(false);
-    return errors;
+      setConfirmPasswordError("Passwords must be equals!");
+    
+    return
   };
 
   return (
@@ -72,13 +81,13 @@ export const Registration = () => {
       <form onSubmit={registrationSubmit} className="register-form">
         <label htmlFor="firstName"> Your name</label>
         <input type="text" value={formValues.firstName} onChange={handleChange} placeholder="Name" id="firstName" name="firstName" />
-        <p className="errors"> {formErrors.name}</p>
+        <p className="errors"> {nameError}</p>
         <label htmlFor="surname"> Your surname</label>
         <input type="text" value={formValues.lastName} onChange={handleChange} placeholder="Surname" id="lastName" name="lastName" />
-        <p className="errors"> {formErrors.surname}</p>
+        <p className="errors"> {surnameError}</p>
         <label htmlFor="email"> Your email</label>
         <input type="text" value={formValues.email} onChange={handleChange} placeholder="Email" id="email" name="email" />
-        <p className="errors"> {formErrors.email}</p>
+        <p className="errors"> {emailError}</p>
         <label htmlFor="gender">Gender</label>
         <div className="row gender-row">
           <div className="col">
@@ -92,10 +101,10 @@ export const Registration = () => {
         </div>
         <label htmlFor="password"> Your password</label>
         <input type="password" value={formValues.password} onChange={handleChange} placeholder="********" id="password" name="password" />
-        <p className="errors"> {formErrors.password}</p>
+        <p className="errors"> {passwordError}</p>
         <label htmlFor="confirmPassword"> Confirm password</label>
         <input type="password" value={formValues.confirmPassword} onChange={handleChange} placeholder="********" id="confirmPassword" name="confirmPassword" />
-        <p className="errors"> {formErrors.confirmPassword}</p>
+        <p className="errors"> {confirmPasswordError}</p>
         <button type="submit" className="button-forms"> Register</button>
         <ToastContainer />
       </form>

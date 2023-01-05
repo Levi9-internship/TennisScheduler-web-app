@@ -11,7 +11,6 @@ export const EditProfile = () => {
 
     const [errorName, setErrorName] = useState("")
     const [errorSurname, setErrorSurname] = useState("")
-    const [isFormEmpty, setIsFormEmpty] = useState(true)
     const [errorMessage,setErrorMessage]=useState("");
 
     useEffect(() => {
@@ -30,9 +29,9 @@ export const EditProfile = () => {
         setErrorName("")
 
         if (user.firstName === "")
-            setErrorName("name isnt valid");
+            setErrorName("Name isn't valid!");
         if (user.lastName === "") 
-            setErrorSurname("surname isnt valid");
+            setErrorSurname("Surname isn't valid!");
         
         if(user.firstName === "" || user.lastName === "")
             return
