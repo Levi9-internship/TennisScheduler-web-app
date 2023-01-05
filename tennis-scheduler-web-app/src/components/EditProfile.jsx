@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
+import { getLoggedUser, changeProfileInformation } from "../api/PersonApi";
 import '../styles/ProfileComponent.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { getLoggedUser, changeProfileInformation } from "../api/PersonApi";
+
 
 export const EditProfile = () => {
     const [user, setUser] = useState({ id: 0, firstName: "", lastName: "", email: "", phoneNumber: "", birthday: undefined, gender: undefined, address: { id: 0, street: "", city: "", number: undefined, country: "" } });

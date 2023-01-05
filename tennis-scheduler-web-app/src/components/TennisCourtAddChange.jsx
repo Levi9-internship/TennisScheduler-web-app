@@ -44,7 +44,6 @@ export const TennisCourtAddChange = () => {
 
     const onSubmit = e => {
         e.preventDefault()
-        setFormErrors({});
         setTennisCourt(tennisCourt => ({
             ...tennisCourt,
             address: address
