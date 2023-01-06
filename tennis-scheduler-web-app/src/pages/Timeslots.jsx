@@ -16,7 +16,7 @@ const Timeslots = () => {
   const [tennisPlayer, setTennisPlayer] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
+  const [isError,setIsError] = useState(false);
   useEffect(() => {
     whoAmI()
   }, []);
@@ -61,13 +61,17 @@ const Timeslots = () => {
       setTimeslotErrors("");
       toast.success('You sucessfully reserved your timeslot!', { position: toast.POSITION.BOTTOM_CENTER })
       getAllTimeslots();
+      setIsError(false);
     }).catch((errorMessage) => {
+      setIsError(true);
       setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
     })
-
+    
   }
 
-
+  const showModalFalse=()=>{
+    setShowModal(false)
+  }
   useEffect(() => {
     getAllTimeslots();
   }, []);
@@ -86,7 +90,7 @@ const Timeslots = () => {
           refresh={getAllTimeslots}
         />
       ))}
-       {<AddTimeslot show={showModal} close={() => setShowModal(false)} errorMessage={timeslotErrors} id={-1} onAdd={addTimeslot} />}
+       {<AddTimeslot show={showModal} close={showModalFalse} isError={isError} errorMessage={timeslotErrors} id={-1} onAdd={addTimeslot} />}
        <ToastContainer></ToastContainer>
     </div>
   )

@@ -15,6 +15,7 @@ export const TennisCourtInfo = ({ id, image, name, workingTime, description, sur
   const [tennisPlayer, setTennisPlayer] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
+  const [isError,setIsError] = useState(false);
 
   useEffect(() => {
     whoAmI()
@@ -44,17 +45,27 @@ export const TennisCourtInfo = ({ id, image, name, workingTime, description, sur
     };
     postTimeslot(newTimeslot).then(() => {
       setTimeslotErrors("");
+      setIsError(false);
       toast.success('You sucessfully reserved your timeslot!', { position: toast.POSITION.BOTTOM_CENTER })
     }).catch((errorMessage) => {
       setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
+      setIsError(true);
     })
 
   }
 
-  const add = () => {
+  const addModal = () => {
     setShowModal(true);
   }
-
+  const closeModal = () => {
+    setShowModal(false);
+  }
+  const closeDelete=() => { 
+    setShowModalDelete(false)
+  }
+  const openDelete=() => { 
+    setShowModalDelete(true)
+  }
   return (
     <>
       <div className="courtItem" >
@@ -80,17 +91,17 @@ export const TennisCourtInfo = ({ id, image, name, workingTime, description, sur
             <p> {surfaceType.toLowerCase()} </p>
           </div>
           <div className="courtButton">
-          { tennisPlayer ? <button className="addTimeslotBtn" onClick={add}>New</button> : ""}
+          { tennisPlayer ? <button className="addTimeslotBtn" onClick={addModal}>New</button> : ""}
           { admin ? <span><Link to={`/tennis-court/${id}`}>
             <button className="addTimeslotBtn" >Change</button>
           </Link>
-          <button className="addTimeslotBtn"  onClick={() => { setShowModalDelete(true) }}> Delete</button>
+          <button className="addTimeslotBtn"  onClick={openDelete}> Delete</button>
           </span> : ""}
           </div>
         </div>
       </div>
-      {<AddTimeslot show={showModal} close={() => setShowModal(false)} errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />}
-      { showModalDelete && <DeleteTennisCourt show={showModalDelete}  close={() => { setShowModalDelete(false) }} idTennisCourt= {id} refresh = {refresh}></DeleteTennisCourt>}
+      {showModal ? <AddTimeslot show={showModal} isError={isError} close={closeModal} errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />:""}
+      { showModalDelete && <DeleteTennisCourt show={showModalDelete}  close={closeDelete} idTennisCourt= {id} refresh = {refresh}></DeleteTennisCourt>}
       <ToastContainer></ToastContainer>
     </>
   );

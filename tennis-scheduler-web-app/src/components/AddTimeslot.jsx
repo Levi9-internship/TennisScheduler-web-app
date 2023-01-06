@@ -8,7 +8,7 @@ import jwtDecode from 'jwt-decode'
 import "../styles/courts.css";
 
 
-const AddTimeslot = ({ show, close, onAdd, id, errorMessage }) => {
+const AddTimeslot = ({ show, close, onAdd, id, errorMessage,isError }) => {
   const [tennisPlayer, setTennisPlayer] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [timeslotDate, setTimeslotDate] = useState("");
@@ -71,13 +71,16 @@ const AddTimeslot = ({ show, close, onAdd, id, errorMessage }) => {
     else{
       onAdd({ "id" : courtId, startTime, endTime, timeslotDate, person })
     }
+    if(isError)
+      close(e)
+
     setTimeslotDate("");
     setStartTime("");
     setEndTime("");
   }
 
   return (
-    <Modal show={show} cancel={close} size="lg" centered>
+    <Modal show={show} size="lg" centered>
       <Form className='form' onSubmit={onSubmit}>
         <div className="form-position"> 
         <Form.Group className="mb-3" controlId="formBasicEmail">

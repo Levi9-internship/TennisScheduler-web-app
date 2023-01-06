@@ -20,7 +20,8 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
     const [timeslotErrors, setTimeslotErrors] = useState("");
     const [updatedDate, setTimeslotDate] = useState(date);
     const [updatedStartTime, setStartTime] = useState(startTime);
-    const [updatedEndTime, setEndTime] = useState(endTime);    
+    const [updatedEndTime, setEndTime] = useState(endTime);   
+    const [isError,setIsError] = useState(false); 
 
     useEffect(() => {
         whoAmI();
@@ -42,7 +43,7 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
     else return ""
     }
 
-    const addTimeslot = async (timeslot, close) => {
+    const addTimeslot = async (timeslot) => {
 
         let newTimeslot = {
             "id": timeslot.id,
@@ -54,9 +55,11 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
 
         await updateTimeslot(timeslot.id, newTimeslot).then(() => {
             setTimeslotErrors("");
+            setIsError(false)
             refresh();
         }).catch((errorMessage) => {
             setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
+            setIsError(false)
         })
     }
 
@@ -80,6 +83,9 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
 
         addTimeslot({ id, updatedStartTime, updatedEndTime, updatedDate, personId, tennisCourtId });
 
+        if(isError)
+            close(e)
+
         setTimeslotDate(updatedDate);
         setStartTime(updatedStartTime);
         setEndTime(updatedEndTime);
@@ -87,7 +93,7 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
     }
     
     return (
-        <Modal show={show} cancel={close} size="lg" centered>
+        <Modal show={show} size="lg" centered>
             <Form className='form' onSubmit={onSubmit}>
             <div className="form-position"> 
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -151,7 +157,6 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
                 Update
                 </Button>
                 <Form.Text className="text-muted">
-                {/* <p>{errorMessage}</p> */}
                 </Form.Text>
                 </div>
                 <div>

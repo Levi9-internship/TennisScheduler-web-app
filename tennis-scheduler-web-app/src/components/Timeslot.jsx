@@ -24,7 +24,6 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots, refresh }) => {
   const [isShowMessagePersons, setIsShowMessagePersons] = useState(false);
   const [isShowMessageTennisCourts, setIsShowTennisCourts] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
   useEffect(() => {
     getTennisCourts().then((data) => {
       setTennisCourts(data.data);
@@ -46,6 +45,18 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots, refresh }) => {
     })
   }, []);
 
+  const timeslotFormFalse =() => {
+    setShowUpdateTimeslotForm(false)
+  }
+  const timeslotFormTrue =() => {
+    setShowUpdateTimeslotForm(true)
+  }
+  const showModalFalse = () =>{
+     setShowModal(false);
+  }
+  const showModalTrue = () =>{
+    setShowModal(true);
+  }
   return (
     <>
 
@@ -70,8 +81,8 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots, refresh }) => {
           ))}
         </ListGroup.Item>
         <div className="btnWrapper">
-          <Button className="updateTimeslotBtn" variant="none" onClick={() => { setShowUpdateTimeslotForm(true) }}>Change timeslot</Button>
-          <Button className='deleteTimeslotBtn' variant="danger" onClick={() => { setShowModal(true) }}>Cancel timeslot</Button>
+          <Button className="updateTimeslotBtn" variant="none" onClick={timeslotFormTrue}>Change timeslot</Button>
+          <Button className='deleteTimeslotBtn' variant="danger" onClick={showModalTrue}>Cancel timeslot</Button>
         </div>
         {showUpdateTimeslotForm && <UpdateTimeslot
           existingTimeslot={timeslot}
@@ -89,9 +100,9 @@ const Timeslot = ({ newTimeslot, setTimeslots, timeslots, refresh }) => {
           timeslots={timeslots}
           setTimeslots={setTimeslots}
           refresh = {refresh}
-          show={showUpdateTimeslotForm} close={() => setShowUpdateTimeslotForm(false)}  
+          show={showUpdateTimeslotForm} close={timeslotFormFalse}  
         />}
-        {showModal && <DeleteTimeslot show={showModal} close={() => setShowModal(false)} idTimeslot = {newTimeslot.id} refresh = {refresh}></DeleteTimeslot>}
+        {showModal && <DeleteTimeslot show={showModal} close={showModalFalse} idTimeslot = {newTimeslot.id} refresh = {refresh}></DeleteTimeslot>}
       </ListGroup>
 
     </>
