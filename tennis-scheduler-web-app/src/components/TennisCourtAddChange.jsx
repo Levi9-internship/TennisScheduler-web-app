@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { addTennisCourt, getTennisCourt, changeTennisCourt } from '../api/TennisCourtApi'
+import { getTennisCourt, changeTennisCourt,addTennisCourt } from '../api/TennisCourtApi'
 import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,17 +9,13 @@ export const TennisCourtAddChange = () => {
     const [workingTime, setWorkingTime] = useState({ startWorkingTimeWeekDay: "", endWorkingTimeWeekDay: "", startWorkingTimeWeekend: "", endWorkingTimeWeekend: "" })
     const [surface, setSurface] = useState("GRASS")
     const [image, setImage] = useState("")
-    const [tennisCourt, setTennisCourt] = useState({ name: "", surfaceType: "GRASS", description: "", image: "", address: address, workingTimeDto:workingTime })
+    const [name, setName] = useState("")
+    const [description, setDescription] = useState("")
+
     const [check, setCheck] = useState(false);
     const [formErrors, setFormErrors] = useState({});
-    const [emptyForm, setEmptyForm] = useState(true);
     const id = useParams().id
     const navigate = useNavigate();
-
-    const handleChangeOfTennisCourt = e => {
-        const { name, value } = e.target;
-        setTennisCourt((tennisCourt) => ({ ...tennisCourt, [name]: value }));
-    };
 
     const handleChangeAddress = e => {
         const { name, value } = e.target;
@@ -35,69 +31,64 @@ export const TennisCourtAddChange = () => {
     const onImageChange = e => {
         const tennisCourtImage = e.target.value.split("fakepath")[1].substring(1);
         setImage(tennisCourtImage)
-        setTennisCourt(tennisCourt => ({
-            ...tennisCourt,
-            image: tennisCourtImage
-        }))
         setCheck(true)
     }
 
     const onSubmit = e => {
         e.preventDefault()
-        setTennisCourt(tennisCourt => ({
-            ...tennisCourt,
-            address: address
-        }))
-        setTennisCourt(tennisCourt => ({
-            ...tennisCourt,
-            workingTimeDto: workingTime
-        }))
-        setTennisCourt(tennisCourt => ({
-            ...tennisCourt,
-            surfaceType: surface
-        }))   
-        setFormErrors(validation(tennisCourt))
-        if (Object.keys(formErrors).length === 0 && !emptyForm) {
-            if (id)
-                tennisCourtChange();
-            else
-                tennisCourtAdd();
+         
+        let errors = {};
+        setFormErrors({...formErrors,name:"Name is required!"})
+
+        const lettersRegex = new RegExp(/^$|^[A-Za-z ]+$/);
+        if (Object.keys(name).length === 0)
+            errors.name="Name is required!";
+        if (!description)
+            errors.description="Description is required!";
+        if (!image)
+            errors.image="Image is required!"
+        if (!(workingTime.startWorkingTimeWeekDay && workingTime.endWorkingTimeWeekDay && workingTime.startWorkingTimeWeekend && workingTime.endWorkingTimeWeekend)
+            || (workingTime.startWorkingTimeWeekDay >= workingTime.endWorkingTimeWeekDay || workingTime.startWorkingTimeWeekend >= workingTime.endWorkingTimeWeekend))
+            errors.workingTime="Working time isn't valid";
+        if (!lettersRegex.test(address.country)) errors.country = "Only letters are allowed!"
+        if (!lettersRegex.test(address.city)) errors.city = "Only letters are allowed!"
+
+        setFormErrors(errors)
+        if(Object.keys(errors).length!==0)
+            return
+
+
+        let newTennisCourt = {
+            "id":id,
+            "name": name,
+            "surfaceType": surface,
+            "description": description,
+            "image": image,
+            "address": address,
+            "workingTimeDto": workingTime 
+        };
+        
+        if (id){
+            changeTennisCourt(newTennisCourt).then(() => {
+                navigate('/');
+            }).catch(() =>
+                toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
+        }
+        else{
+            addTennisCourt(newTennisCourt).then(() => {
+                navigate('/');
+            }).catch(() =>
+                toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
         }
     }
 
-    const tennisCourtChange = () => {
-        changeTennisCourt(tennisCourt).then(() => {
-            navigate('/');
-        }).catch(() =>
-            toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
-    }
-
-    const tennisCourtAdd = () => {
-        addTennisCourt(tennisCourt).then(() => {
-            navigate('/');
-        }).catch(() => toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
-    }
-
-    const validation = (court) => {
-        const errors = {};
-        const lettersRegex = new RegExp(/^$|^[A-Za-z ]+$/);
-        if (!court.name) errors.name = "Name is required!";
-        if (!court.description) errors.description = "Description is required";
-        if (!court.image) errors.image = "Image is required";
-        if (!(court.workingTimeDto.startWorkingTimeWeekDay && court.workingTimeDto.endWorkingTimeWeekDay && court.workingTimeDto.startWorkingTimeWeekend && court.workingTimeDto.endWorkingTimeWeekend)
-            || (court.workingTimeDto.startWorkingTimeWeekDay >= court.workingTimeDto.endWorkingTimeWeekDay || court.workingTimeDto.startWorkingTimeWeekend >= court.workingTimeDto.endWorkingTimeWeekend))
-            errors.workingTime = "Working time isn't valid";
-        if (!lettersRegex.test(court.address.country)) errors.country = "Only letters are allowed!"
-        if (!lettersRegex.test(court.address.city)) errors.city = "Only letters are allowed!"
-        setEmptyForm(false);
-        return errors;
-    };
 
     useEffect(() => {
         if (id)
             getTennisCourt(id).then(
                 response => {
-                    setTennisCourt(response.data)
+                    setName(response.data.name)
+                    setDescription(response.data.description)
                     setAddress(response.data.address)
                     setWorkingTime(response.data.workingTimeDto)
                     setCheck(true)
@@ -105,18 +96,18 @@ export const TennisCourtAddChange = () => {
                     setSurface(response.data.surfaceType)
                 }
             ).catch(() => toast.error("Something went wrong, try again!", { position: toast.POSITION.BOTTOM_CENTER }))
-    }, [])
+    }, [id])
 
     return (
         <form onSubmit={onSubmit} className="addTennisCourt-form">
             <div>
                 <label>Name</label>
-                <input type='text' className="addTennisCourt-input" id="name" name='name' placeholder="Add name of tennis court" value={tennisCourt.name} onChange={handleChangeOfTennisCourt}></input>
+                <input type='text' className="addTennisCourt-input" id="name" name='name' placeholder="Add name of tennis court" value={name} onChange={e=>setName(e.target.value)}></input>
                 <p className='errors'>{formErrors.name} </p>
             </div>
             <div>
                 <label>Description</label>
-                <textarea type='text' className="addTennisCourt-input" id="description" name='description' placeholder="Add description of tennis court" value={tennisCourt.description} onChange={handleChangeOfTennisCourt}></textarea>
+                <textarea type='text' className="addTennisCourt-input" id="description" name='description' placeholder="Add description of tennis court" value={description} onChange={e=>setDescription(e.target.value)}></textarea>
                 <p className='errors'>{formErrors.description} </p>
             </div>
             <div>
@@ -132,7 +123,6 @@ export const TennisCourtAddChange = () => {
                 <option value="CLAY" onSelect={handleChangeSurfaceType}>CLAY</option>
                 <option value="HARD" onSelect={handleChangeSurfaceType}>HARD</option>
             </select>
-            <p className='errors'>{formErrors.surfaceType} </p>
             <div className='working_time'>
                 <div>
                     <h5>Working hours on weekdays</h5>
