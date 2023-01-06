@@ -25,8 +25,8 @@ const AddTimeslot = ({ show, close, onAdd, id, errorMessage,isError }) => {
   useEffect(() => {
     whoAmI();
     getAllPerson().then((data) => {
-      setPersons(data.data);
-      setPerson(data.data[0].id);
+    setPersons(data.data);
+    setPerson(data.data[0].id);
     });
     getTennisCourts().then((data) => {
       setTennisCourts(data.data);

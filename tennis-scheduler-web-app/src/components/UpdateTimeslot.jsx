@@ -128,8 +128,8 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
             {admin ? <span><Form.Group>
                         <Form.Label>Choose person:</Form.Label>
                         <Form.Select className='personSelect' onChange={(e) => {
-                            setPerson(e.target.value)
-                            }}>
+                            setPersonId(e.target.value)
+                            }} defaultValue={persId}>
                             {persons.map(person => (
                                 <option key={person.id}
                                     value={person.id}>
@@ -157,6 +157,7 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
                 Update
                 </Button>
                 <Form.Text className="text-muted">
+                    <p>{timeslotErrors}</p>
                 </Form.Text>
                 </div>
                 <div>
