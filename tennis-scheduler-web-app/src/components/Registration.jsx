@@ -21,11 +21,7 @@ export const Registration = () => {
     }
   });
   const navigate = useNavigate();
-  const [nameError, setNameError] = useState("");
-  const [surnameError, setSurnameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError , setPasswordError] = useState("");
-  const [confirmPasswordError , setConfirmPasswordError] = useState("");
+  const [formErrors, setFormErrors] = useState({});
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -35,31 +31,23 @@ export const Registration = () => {
   const registrationSubmit = e => {
     e.preventDefault();
 
-    //validation(formValues);
-
-    setNameError("")
-    setSurnameError("")
-    setEmailError("")
-    setPasswordError("")
-    setConfirmPasswordError("")
+    const errors = {}
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!formValues.firstName) setNameError("Name is required!");
-    if (!formValues.lastName) setSurnameError("Surname is required!");
-    if (!formValues.email) setEmailError("Email is required!");
-    else if (!regex.test(formValues.email))
-      setEmailError("This is not a valid email format!");
-    if (!formValues.password) setPasswordError("Password is required!");
+    if (!formValues.firstName) errors.name="Name is required!"
+    if (!formValues.lastName) errors.surname="Surname is required!"
+    if (!formValues.email) errors.email="Email is required!"
+    else if (!regex.test(formValues.email)) errors.email="This is not a valid email format!"
+    if (!formValues.password) errors.password="Password is required!"
     else if (formValues.password.length < 8)
-      setPasswordError("Password must have minimum 8 characters");
+      errors.password="Password must have minimum 8 characters"
     if (!formValues.confirmPassword)
-      setConfirmPasswordError("Confirm password is required!");
+      errors.confirmPassword="Confirm password is required!"
     else if (formValues.confirmPassword !== formValues.password)
-      setConfirmPasswordError("Passwords must be equals!");
+      errors.confirmPassword="Passwords must be equals!"
 
+    setFormErrors(errors);
 
-    if(!formValues.firstName || !formValues.lastName || !formValues.email 
-      || !regex.test(formValues.email)|| !formValues.password || (formValues.confirmPassword !== formValues.password) ||
-      !formValues.confirmPassword || (formValues.password.length < 8))
+    if(Object.keys(errors).length!==0)
       return
     
 
@@ -76,40 +64,19 @@ export const Registration = () => {
     
   };
 
-  // const validation = (form) => {
-  //   setNameError("")
-  //   setSurnameError("")
-  //   setEmailError("")
-  //   setPasswordError("")
-  //   setConfirmPasswordError("")
-  //   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-  //   if (!form.firstName) setNameError("Name is required!");
-  //   if (!form.lastName) setSurnameError("Surname is required!");
-  //   if (!form.email) setEmailError("Email is required!");
-  //   else if (!regex.test(form.email))
-  //     setEmailError("This is not a valid email format!");
-  //   if (!form.password) setPasswordError("Password is required!");
-  //   else if (form.password.length < 8)
-  //     setPasswordError("Password must have minimum 8 characters");
-  //   if (!form.confirmPassword)
-  //     setConfirmPasswordError("Confirm password is required!");
-  //   else if (form.confirmPassword !== form.password)
-  //     setConfirmPasswordError("Passwords must be equals!");
-  // };
-
   return (
     <div className="auth-form-container">
       <h2 className="header-style"> Register</h2>
       <form onSubmit={registrationSubmit} className="register-form">
         <label htmlFor="firstName"> Your name</label>
         <input type="text" value={formValues.firstName} onChange={handleChange} placeholder="Name" id="firstName" name="firstName" />
-        <p className="errors"> {nameError}</p>
+        <p className="errors"> {formErrors.name}</p>
         <label htmlFor="surname"> Your surname</label>
         <input type="text" value={formValues.lastName} onChange={handleChange} placeholder="Surname" id="lastName" name="lastName" />
-        <p className="errors"> {surnameError}</p>
+        <p className="errors"> {formErrors.surname}</p>
         <label htmlFor="email"> Your email</label>
         <input type="text" value={formValues.email} onChange={handleChange} placeholder="Email" id="email" name="email" />
-        <p className="errors"> {emailError}</p>
+        <p className="errors"> {formErrors.email}</p>
         <label htmlFor="gender">Gender</label>
         <div className="row gender-row">
           <div className="col">
@@ -123,10 +90,10 @@ export const Registration = () => {
         </div>
         <label htmlFor="password"> Your password</label>
         <input type="password" value={formValues.password} onChange={handleChange} placeholder="********" id="password" name="password" />
-        <p className="errors"> {passwordError}</p>
+        <p className="errors"> {formErrors.password}</p>
         <label htmlFor="confirmPassword"> Confirm password</label>
         <input type="password" value={formValues.confirmPassword} onChange={handleChange} placeholder="********" id="confirmPassword" name="confirmPassword" />
-        <p className="errors"> {confirmPasswordError}</p>
+        <p className="errors"> {formErrors.confirmPassword}</p>
         <button type="submit" className="button-forms"> Register</button>
         <ToastContainer />
       </form>

@@ -12,7 +12,7 @@ export const EditProfile = () => {
     const [errorName, setErrorName] = useState("")
     const [errorSurname, setErrorSurname] = useState("")
     const [errorMessage,setErrorMessage]=useState("");
-
+ 
     useEffect(() => {
         getLoggedUser().then((response) => setUser(response.data)).catch(() => setErrorMessage("Something went wrong, try again."))
     }, []);
