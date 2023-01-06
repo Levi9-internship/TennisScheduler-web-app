@@ -26,9 +26,11 @@ const AddTimeslot = ({ show, close, onAdd, id, errorMessage }) => {
     whoAmI();
     getAllPerson().then((data) => {
       setPersons(data.data);
+      setPerson(data.data[0].id);
     });
     getTennisCourts().then((data) => {
       setTennisCourts(data.data);
+      setTennisCourtId(data.data[0].id);
     });
   }, []);
 
