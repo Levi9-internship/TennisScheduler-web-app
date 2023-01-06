@@ -6,6 +6,7 @@ import AddTimeslot from "../components/AddTimeslot";
 import { postTimeslot } from "../api/TimeslotApi"
 import { ToastContainer, toast } from 'react-toastify';
 
+
 const Timeslots = () => {
 
   const [timeslots, setTimeslots] = useState([]);
@@ -73,8 +74,8 @@ const Timeslots = () => {
 
   return (
     <div className="timeslotList">
-      <h1>Timeslots</h1>
-      { admin ? <button className="addTimeslotBtn" onClick={add}>New</button> : ""}
+      <h1>Timeslots</h1> 
+      { admin ? <button className="new" onClick={add}>New timeslot</button> : ""}
       {isShow ? <h2 className="error-msg">{errorMessage}</h2> : null}
       {timeslots.sort((a, b) => a.id > b.id ? 1 : -1).map((timeslot) => (
         <Timeslot

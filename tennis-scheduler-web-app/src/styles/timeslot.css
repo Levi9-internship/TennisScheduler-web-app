@@ -34,3 +34,20 @@
     font-family:"Rockwell";
     color: rgb(14, 109, 11);
 }
+
+h1 {
+    margin: 0;
+    display: inline-block;
+}
+
+.new {
+    width: 25%;
+    border-radius: 10%;
+    background-color: rgba(77, 185, 104, 0.616);
+    border: 10px;
+    font-weight: 500;
+    color: rgb(255, 244, 244);
+    margin-left: 7%;
+    margin-bottom: 1%;
+}
+ 
