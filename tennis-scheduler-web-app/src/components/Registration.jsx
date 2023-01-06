@@ -35,13 +35,37 @@ export const Registration = () => {
   const registrationSubmit = e => {
     e.preventDefault();
 
-    validation(formValues);
+    //validation(formValues);
 
-    // if(!formValues.firstName || !formValues.lastName || !formValues.email || !formValues.email)
+    setNameError("")
+    setSurnameError("")
+    setEmailError("")
+    setPasswordError("")
+    setConfirmPasswordError("")
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!formValues.firstName) setNameError("Name is required!");
+    if (!formValues.lastName) setSurnameError("Surname is required!");
+    if (!formValues.email) setEmailError("Email is required!");
+    else if (!regex.test(formValues.email))
+      setEmailError("This is not a valid email format!");
+    if (!formValues.password) setPasswordError("Password is required!");
+    else if (formValues.password.length < 8)
+      setPasswordError("Password must have minimum 8 characters");
+    if (!formValues.confirmPassword)
+      setConfirmPasswordError("Confirm password is required!");
+    else if (formValues.confirmPassword !== formValues.password)
+      setConfirmPasswordError("Passwords must be equals!");
+
+
+    if(!formValues.firstName || !formValues.lastName || !formValues.email 
+      || !regex.test(formValues.email)|| !formValues.password || (formValues.confirmPassword !== formValues.password) ||
+      !formValues.confirmPassword || (formValues.password.length < 8))
+      return
+    
 
     register(formValues).then(() => {
-      toast.success('You registred sucessfully, go and log in with your email and password', { position: toast.POSITION.BOTTOM_CENTER });
       navigate('/login');
+      toast.success('You registred sucessfully, go and log in with your email and password', { position: toast.POSITION.BOTTOM_CENTER });
     }).catch((error) => {
       if (error.response.status === 401) {
         toast.error('This email is taken', { position: toast.POSITION.BOTTOM_CENTER });
@@ -52,28 +76,26 @@ export const Registration = () => {
     
   };
 
-  const validation = (form) => {
-    setNameError("")
-    setSurnameError("")
-    setEmailError("")
-    setPasswordError("")
-    setConfirmPasswordError("")
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!form.firstName) setNameError("Name is required!");
-    if (!form.lastName) setSurnameError("Surname is required!");
-    if (!form.email) setEmailError("Email is required!");
-    else if (!regex.test(form.email))
-      setEmailError("This is not a valid email format!");
-    if (!form.password) setPasswordError("Password is required!");
-    else if (form.password.length < 8)
-      setPasswordError("Password must have minimum 8 characters");
-    if (!form.confirmPassword)
-      setConfirmPasswordError("Confirm password is required!");
-    else if (form.confirmPassword !== form.password)
-      setConfirmPasswordError("Passwords must be equals!");
-    
-    return
-  };
+  // const validation = (form) => {
+  //   setNameError("")
+  //   setSurnameError("")
+  //   setEmailError("")
+  //   setPasswordError("")
+  //   setConfirmPasswordError("")
+  //   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+  //   if (!form.firstName) setNameError("Name is required!");
+  //   if (!form.lastName) setSurnameError("Surname is required!");
+  //   if (!form.email) setEmailError("Email is required!");
+  //   else if (!regex.test(form.email))
+  //     setEmailError("This is not a valid email format!");
+  //   if (!form.password) setPasswordError("Password is required!");
+  //   else if (form.password.length < 8)
+  //     setPasswordError("Password must have minimum 8 characters");
+  //   if (!form.confirmPassword)
+  //     setConfirmPasswordError("Confirm password is required!");
+  //   else if (form.confirmPassword !== form.password)
+  //     setConfirmPasswordError("Passwords must be equals!");
+  // };
 
   return (
     <div className="auth-form-container">
