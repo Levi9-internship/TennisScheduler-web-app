@@ -1,14 +1,14 @@
 import { Modal } from "react-bootstrap";
+import { deleteTennisCourt } from "../api/TennisCourtApi";
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/ProfileComponent.css';
 import '../App.css';
-import { deleteTennisCourt } from "../api/TennisCourtApi";
 
 const DeleteTennisCourt = ({refresh, show, close, idTennisCourt}) => {
 
     const deleteCourt = (e) => {
        deleteTennisCourt(idTennisCourt)
-            .then(()=>{refresh()})
+            .then(()=>{window.location.reload(false);})
         close(e)
       }
 
