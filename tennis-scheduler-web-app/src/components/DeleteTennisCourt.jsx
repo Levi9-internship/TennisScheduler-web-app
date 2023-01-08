@@ -6,11 +6,10 @@ import { deleteTennisCourt } from "../api/TennisCourtApi";
 
 const DeleteTennisCourt = ({refresh, show, close, idTennisCourt}) => {
 
-    const deleteCourt = () => {
+    const deleteCourt = (e) => {
        deleteTennisCourt(idTennisCourt)
-            .then(() => {
-                refresh()
-        })
+            .then(()=>{refresh()})
+        close(e)
       }
 
     return (

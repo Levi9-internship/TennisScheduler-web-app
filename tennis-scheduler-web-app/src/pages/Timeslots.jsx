@@ -58,15 +58,15 @@ const Timeslots = () => {
       courtId: timeslot.id
     };
     postTimeslot(newTimeslot).then(() => {
+      setIsError(false);
       setTimeslotErrors("");
       toast.success('You sucessfully reserved your timeslot!', { position: toast.POSITION.BOTTOM_CENTER })
       getAllTimeslots();
-      setIsError(false);
+      showModalFalse()
     }).catch((errorMessage) => {
       setIsError(true);
       setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
     })
-    
   }
 
   const showModalFalse=()=>{

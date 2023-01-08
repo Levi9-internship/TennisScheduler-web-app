@@ -8,7 +8,7 @@ import jwtDecode from 'jwt-decode'
 import "../styles/courts.css";
 
 
-const AddTimeslot = ({ show, close, onAdd, id, errorMessage,isError }) => {
+const AddTimeslot = ({ show, close, onAdd, id, errorMessage, }) => {
   const [tennisPlayer, setTennisPlayer] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [timeslotDate, setTimeslotDate] = useState("");
@@ -71,8 +71,6 @@ const AddTimeslot = ({ show, close, onAdd, id, errorMessage,isError }) => {
     else{
       onAdd({ "id" : courtId, startTime, endTime, timeslotDate, person })
     }
-    if(isError)
-      close(e)
 
     setTimeslotDate("");
     setStartTime("");

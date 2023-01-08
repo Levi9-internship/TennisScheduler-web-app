@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import jwtDecode from 'jwt-decode'
 import { Modal } from "react-bootstrap";
 
-const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot, timeslotId, courtId, date, startTime, endTime, tennisCourts, persId, setTennisCourts, persons, setPerson, show, close, refresh }) => {
+const UpdateTimeslot = ({ existingTimeslot, courtId, date, startTime, endTime, tennisCourts, persId, persons, setPerson, show, close, refresh }) => {
     const [tennisPlayer, setTennisPlayer] = useState(false);
     const [admin, setAdmin] = useState(false);
     const [invalidDate, setInvalidDate] = useState("");
@@ -21,7 +21,6 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
     const [updatedDate, setTimeslotDate] = useState(date);
     const [updatedStartTime, setStartTime] = useState(startTime);
     const [updatedEndTime, setEndTime] = useState(endTime);   
-    const [isError,setIsError] = useState(false); 
 
     useEffect(() => {
         whoAmI();
@@ -43,7 +42,7 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
     else return ""
     }
 
-    const addTimeslot = async (timeslot) => {
+    const addTimeslot = async (e,timeslot) => {
 
         let newTimeslot = {
             "id": timeslot.id,
@@ -55,12 +54,12 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
 
         await updateTimeslot(timeslot.id, newTimeslot).then(() => {
             setTimeslotErrors("");
-            setIsError(false)
+            close(e)
             refresh();
         }).catch((errorMessage) => {
             setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
-            setIsError(false)
         })
+
     }
 
     const onSubmit = (e) => {
@@ -78,13 +77,10 @@ const UpdateTimeslot = ({ setTimeslots, timeslots, existingTimeslot, setTimeslot
         if (updatedEndTime === "") 
             setInvalidEndTime("Please choose end time");
         
-        if(updatedDate==="" || updatedStartTime==="" || updatedEndTime=="")
+        if(updatedDate==="" || updatedStartTime==="" || updatedEndTime==="")
             return
 
-        addTimeslot({ id, updatedStartTime, updatedEndTime, updatedDate, personId, tennisCourtId });
-
-        if(isError)
-            close(e)
+        addTimeslot(e,{ id, updatedStartTime, updatedEndTime, updatedDate, personId, tennisCourtId });
 
         setTimeslotDate(updatedDate);
         setStartTime(updatedStartTime);

@@ -15,7 +15,6 @@ export const TennisCourtInfo = ({ id, image, name, workingTime, description, sur
   const [tennisPlayer, setTennisPlayer] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
-  const [isError,setIsError] = useState(false);
 
   useEffect(() => {
     whoAmI()
@@ -45,11 +44,10 @@ export const TennisCourtInfo = ({ id, image, name, workingTime, description, sur
     };
     postTimeslot(newTimeslot).then(() => {
       setTimeslotErrors("");
-      setIsError(false);
+      closeModal()
       toast.success('You sucessfully reserved your timeslot!', { position: toast.POSITION.BOTTOM_CENTER })
     }).catch((errorMessage) => {
       setTimeslotErrors(errorMessage.response.data.message[0].defaultMessage);
-      setIsError(true);
     })
 
   }
@@ -66,6 +64,7 @@ export const TennisCourtInfo = ({ id, image, name, workingTime, description, sur
   const openDelete=() => { 
     setShowModalDelete(true)
   }
+  
   return (
     <>
       <div className="courtItem" >
@@ -100,7 +99,7 @@ export const TennisCourtInfo = ({ id, image, name, workingTime, description, sur
           </div>
         </div>
       </div>
-      {showModal ? <AddTimeslot show={showModal} isError={isError} close={closeModal} errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />:""}
+      {showModal ? <AddTimeslot show={showModal} close={closeModal} errorMessage={timeslotErrors} id={id} onAdd={addTimeslot} />:""}
       { showModalDelete && <DeleteTennisCourt show={showModalDelete}  close={closeDelete} idTennisCourt= {id} refresh = {refresh}></DeleteTennisCourt>}
       <ToastContainer></ToastContainer>
     </>

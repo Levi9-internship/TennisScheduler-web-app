@@ -52,8 +52,8 @@ export const Registration = () => {
     
 
     register(formValues).then(() => {
-      navigate('/login');
       toast.success('You registred sucessfully, go and log in with your email and password', { position: toast.POSITION.BOTTOM_CENTER });
+      navigate('/login');
     }).catch((error) => {
       if (error.response.status === 401) {
         toast.error('This email is taken', { position: toast.POSITION.BOTTOM_CENTER });
